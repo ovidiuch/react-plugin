@@ -1,5 +1,5 @@
 {
-  "name": "@skidding/linked-list",
+  "name": "react-plugin",
   "version": "0.0.1",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin",
