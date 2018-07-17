@@ -1,0 +1,22 @@
+{
+  "name": "@skidding/linked-list",
+  "version": "0.0.1",
+  "description": "API for composable 3rd party React plugins",
+  "repository": "https://github.com/skidding/react-plugin",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist --ignore '**/*.test.js'",
+    "build:watch": "yarn build --watch"
+  },
+  "dependencies": {
+    "@skidding/linked-list": "^1.0.1",
+    "react": "^16.4.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/preset-react": "^7.0.0-beta.54"
+  }
+}
