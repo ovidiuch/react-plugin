@@ -3,7 +3,7 @@ import { create } from 'react-test-renderer';
 import { registerPlugin, Zone } from '../';
 import { __reset } from '../store';
 
-beforeEach(__reset);
+afterEach(__reset);
 
 it('overrides plugin previously applied on same zone', () => {
   // The first plugins opens up the possibility for a future plugin to override

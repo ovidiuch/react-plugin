@@ -3,7 +3,7 @@ import { create } from 'react-test-renderer';
 import { registerPlugin, Zone } from '../';
 import { __reset } from '../store';
 
-beforeEach(__reset);
+afterEach(__reset);
 
 it('composes plugins registered inside-out', () => {
   registerPreviewIframe();

@@ -3,7 +3,7 @@ import { create } from 'react-test-renderer';
 import { registerPlugin, Zone } from '../';
 import { __reset } from '../store';
 
-beforeEach(__reset);
+afterEach(__reset);
 
 it('composes with plugins previously applied on same zone', () => {
   // The first plugins opens up the possibility for a future plugin to override
@@ -14,6 +14,7 @@ it('composes with plugins previously applied on same zone', () => {
       <span>I was here first</span>
     </Zone>
   );
+
   // The second plugins continues to allow next plugins to override or compose.
   registerPlugin('root', ({ children }) => (
     <Zone name="root">
@@ -23,6 +24,7 @@ it('composes with plugins previously applied on same zone', () => {
       </>
     </Zone>
   ));
+
   registerPlugin('root', ({ children }) => (
     <Zone name="root">
       <>
