@@ -12,7 +12,8 @@
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
-    "@skidding/linked-list": "^1.0.1"
+    "@skidding/linked-list": "^1.0.1",
+    "react-is": "^16.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",

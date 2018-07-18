@@ -1,4 +1,5 @@
-import React, { Component, createContext } from 'react';
+import React, { Component, createElement, createContext } from 'react';
+import { isValidElementType } from 'react-is';
 import createLinkedList from '@skidding/linked-list';
 import { getPluginsForZone } from './store';
 import { getZoneContext } from './context';
@@ -31,9 +32,12 @@ export class Zone extends Component {
             return children;
           }
 
+          // TODO: Create global data store and pass it to all plugins
           return (
             <Provider value={next()}>
-              {typeof plugin === 'function' ? plugin({ children }) : plugin}
+              {isValidElementType(plugin) && typeof plugin !== 'string'
+                ? createElement(plugin, { children })
+                : plugin}
             </Provider>
           );
         }}
