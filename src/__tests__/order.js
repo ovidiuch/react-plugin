@@ -5,12 +5,6 @@ import { __reset } from '../store';
 
 beforeEach(__reset);
 
-// TODO: Document types of plugins. Eg.
-// - Plugin that injects itself into a zone and overrides any other children (from other plugins)
-// - Plugin that injects itself into a zone and sits beside other children (from other plugins)
-// - Plugin that consumes/overrides/replaces/takes up a zone and injects the zone inside itself (for other plugins to inject there)
-// - Plugin that consumes/overrides/replaces/takes up a zone and doesn't allow any other plugin to use that zone afterwards
-
 it('composes plugins registered inside-out', () => {
   registerPreviewIframe();
 
@@ -48,7 +42,6 @@ it('composes plugins registered outside-in', () => {
   <div
     className="nav"
   />
-  [zone 'preview' end]
 </div>
 `);
 
@@ -70,24 +63,24 @@ it('composes plugins registered outside-in', () => {
 
 function registerPreviewIframe() {
   registerPlugin(
-    'preview',
-    <Zone name="preview">
+    'root',
+    <Zone name="root">
       <Preview />
     </Zone>
   );
 }
 
 function registerNav() {
-  registerPlugin('preview', ({ children }) => (
+  registerPlugin('root', ({ children }) => (
     <div>
       <Nav />
-      <Zone name="preview">{children}</Zone>
+      <Zone name="root">{children}</Zone>
     </div>
   ));
 }
 
 function Root() {
-  return <Zone name="preview" />;
+  return <Zone name="root" />;
 }
 
 function Nav() {

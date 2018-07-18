@@ -1,8 +1,7 @@
-// @flow
-
 import React, { Component, createContext } from 'react';
 import createLinkedList from '@skidding/linked-list';
 import { getPluginsForZone } from './store';
+import { getZoneContext } from './context';
 
 export class Zone extends Component {
   render() {
@@ -13,7 +12,7 @@ export class Zone extends Component {
     if (!plugins) {
       // No plugins are registered for this zone in this render-cycle. Plugins
       // for this zone may be registered later.
-      return `[zone '${name}' empty]`;
+      return null;
     }
 
     // Children are either
@@ -26,7 +25,7 @@ export class Zone extends Component {
             if (!children) {
               // All registered plugins for this zone have been rendered (for
               // now). More plugins for this zone can be registered later.
-              return `[zone '${name}' end]`;
+              return null;
             }
 
             return children;
@@ -43,18 +42,10 @@ export class Zone extends Component {
   }
 }
 
-const zoneContexts = {};
-
-function getZoneContext(zoneName) {
-  if (!zoneContexts[zoneName]) {
-    zoneContexts[zoneName] = createContext(undefined);
-  }
-
-  return zoneContexts[zoneName];
-}
-
 function getFirstLinkedPlugin(plugins) {
-  // TODO: Understand how come both work
-  // return createLinkedList([...plugins].reverse());
+  // Plugins are traversed in the order they're applied. But this doesn't mean
+  // top-down from a component hierarchy point of view. The traversal of the
+  // plugins can go up and down the component hierachy repeatedly, based on the
+  // type of each plugin and how they end up composing together.
   return createLinkedList(plugins);
 }
