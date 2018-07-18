@@ -1,25 +1,29 @@
-export function registerZoneElement(zoneName, element) {
-  const zoneElements = getAllZoneElements();
+export function registerPlugin(zoneName, element) {
+  const zones = getZones();
 
-  if (!zoneElements[zoneName]) {
-    zoneElements[zoneName] = [];
+  if (!zones[zoneName]) {
+    zones[zoneName] = [];
   }
 
-  zoneElements[zoneName].push(element);
+  zones[zoneName].push(element);
 }
 
-export function getZoneElements(zoneName) {
-  const allZoneElements = getAllZoneElements();
+export function getPluginsForZone(zoneName) {
+  const zones = getZones();
 
-  return allZoneElements[zoneName];
+  return zones[zoneName];
 }
 
-// Zone elements are shared between multiple code bundles in the same page,
+export function __reset() {
+  global.__REACT_PLUGIN_ZONES = {};
+}
+
+// Zone plugins are shared between multiple code bundles in the same page,
 // which is why we're hooking into the global object.
-function getAllZoneElements() {
-  if (!global.__cosmosZoneElements) {
-    global.__cosmosZoneElements = {};
+function getZones() {
+  if (!global.__REACT_PLUGIN_ZONES) {
+    global.__REACT_PLUGIN_ZONES = {};
   }
 
-  return global.__cosmosZoneElements;
+  return global.__REACT_PLUGIN_ZONES;
 }

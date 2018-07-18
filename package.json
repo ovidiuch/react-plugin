@@ -6,17 +6,26 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --ignore '**/*.test.js'",
+    "test:watch": "jest --watch",
+    "test": "jest --coverage",
+    "build": "babel src --out-dir dist --ignore '**/__tests__/**'",
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
-    "@skidding/linked-list": "^1.0.1"
+    "@skidding/linked-list": "^1.0.1",
+    "react-is": "^16.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",
     "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
-    "react": "^16.4.1"
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.0",
+    "jest": "^23.4.1",
+    "prettier": "^1.13.7",
+    "react": "^16.4.1",
+    "react-test-renderer": "^16.4.1"
   }
 }
