@@ -14,6 +14,10 @@ export function getZoneElements(zoneName) {
   return zones[zoneName];
 }
 
+export function __reset() {
+  global.__REACT_PLUGIN_ZONES = {};
+}
+
 // Zone elements are shared between multiple code bundles in the same page,
 // which is why we're hooking into the global object.
 function getZones() {

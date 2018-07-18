@@ -7,6 +7,7 @@ export class MultiZone extends Component {
     const zoneElements = getZoneElements(name);
 
     if (!zoneElements) {
+      // TODO: Remove error
       throw new Error(`No plugin registered for zone "${name}"`);
     }
 
