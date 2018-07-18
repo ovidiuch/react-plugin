@@ -2,29 +2,30 @@
 
 import React, { Component, createContext } from 'react';
 import createLinkedList from '@skidding/linked-list';
-import { getZoneElements } from './store';
+import { getPluginsForZone } from './store';
 
-// TODO: Rename "element" to "plugin"?
 export class Zone extends Component {
   render() {
     const { name, children } = this.props;
     const { Provider, Consumer } = getZoneContext(name);
 
-    const zoneElements = getZoneElements(name);
-    if (!zoneElements) {
-      // No plugins are registered for this zone (yet). Plugins that hook up
-      // into this zone can be registered at any point in time.
+    const plugins = getPluginsForZone(name);
+    if (!plugins) {
+      // No plugins are registered for this zone in this render-cycle. Plugins
+      // for this zone may be registered later.
       return `[zone '${name}' empty]`;
     }
 
     // Children are either
-    // - passed to the next zone element or,
+    // - passed to the next plugin or,
     // - if this is the last plugin for this zone, rendered directly.
     return (
       <Consumer>
-        {(zoneEl = getFirstLinkedZoneEl(zoneElements)) => {
-          if (!zoneEl.value) {
+        {({ value: plugin, next } = getFirstLinkedPlugin(plugins)) => {
+          if (!plugin) {
             if (!children) {
+              // All registered plugins for this zone have been rendered (for
+              // now). More plugins for this zone can be registered later.
               return `[zone '${name}' end]`;
             }
 
@@ -32,10 +33,8 @@ export class Zone extends Component {
           }
 
           return (
-            <Provider value={zoneEl.next()}>
-              {typeof zoneEl.value === 'function'
-                ? zoneEl.value({ children })
-                : zoneEl.value}
+            <Provider value={next()}>
+              {typeof plugin === 'function' ? plugin({ children }) : plugin}
             </Provider>
           );
         }}
@@ -54,8 +53,8 @@ function getZoneContext(zoneName) {
   return zoneContexts[zoneName];
 }
 
-function getFirstLinkedZoneEl(zoneElements) {
+function getFirstLinkedPlugin(plugins) {
   // TODO: Understand how come both work
-  // return createLinkedList([...zoneElements].reverse());
-  return createLinkedList(zoneElements);
+  // return createLinkedList([...plugins].reverse());
+  return createLinkedList(plugins);
 }

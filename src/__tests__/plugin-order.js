@@ -1,6 +1,6 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Zone } from '../';
+import { registerPlugin, Zone } from '../';
 import { __reset } from '../store';
 
 beforeEach(__reset);
@@ -11,7 +11,7 @@ beforeEach(__reset);
 // - Plugin that consumes/overrides/replaces/takes up a zone and injects the zone inside itself (for other plugins to inject there)
 // - Plugin that consumes/overrides/replaces/takes up a zone and doesn't allow any other plugin to use that zone afterwards
 
-it('should compose plugins registered inside-out', () => {
+it('composes plugins registered inside-out', () => {
   registerPreviewIframe();
 
   // Assert checkpoint
@@ -38,7 +38,7 @@ it('should compose plugins registered inside-out', () => {
 `);
 });
 
-it('should compose plugins registered outside-in', () => {
+it('composes plugins registered outside-in', () => {
   registerNav();
   const wrapper = create(<Root />);
 
@@ -69,27 +69,16 @@ it('should compose plugins registered outside-in', () => {
 });
 
 function registerPreviewIframe() {
-  // XXX Facts:
-  // - Anything that was plugged into `preview` will render _around_ <Preview />.
-  // - This plugin will override any other child plugins of the `preview` zone
-  register(
+  registerPlugin(
     'preview',
     <Zone name="preview">
       <Preview />
     </Zone>
   );
-  // XXX Alt.
-  // register('preview', ({ children }) => (
-  //   <Zone name="preview">
-  //     <Preview />
-  //   </Zone>
-  // ));
 }
 
 function registerNav() {
-  // XXX Facts:
-  // - Render <Nav /> alongside anything that was plugged into `preview`
-  register('preview', ({ children }) => (
+  registerPlugin('preview', ({ children }) => (
     <div>
       <Nav />
       <Zone name="preview">{children}</Zone>
