@@ -1,54 +1,59 @@
-// TODO: Method for subscribing to plugin list
-
 export function registerPlugin(pluginDef) {
-  const { plugins, enabledPlugins } = getGlobalStore();
   const plugin = {
     ...pluginDef,
     id: generatePluginId()
   };
 
-  plugins.push(plugin);
-  // TODO: Add `enabled` bool arg
-  enabledPlugins.push(plugin.id);
+  addPlugin(plugin);
+  enablePlugin(plugin.id);
 
   return plugin;
 }
 
 export function enablePlugin(pluginId) {
-  const { enabledPlugins } = getGlobalStore();
+  const store = getGlobalStore();
+  const { enabledPlugins } = store;
   const index = enabledPlugins.indexOf(pluginId);
+
   if (index === -1) {
-    enabledPlugins.push(pluginId);
+    store.enabledPlugins = [...enabledPlugins, pluginId];
   }
 }
 
 export function disablePlugin(pluginId) {
-  const { enabledPlugins } = getGlobalStore();
+  const store = getGlobalStore();
+  const { enabledPlugins } = store;
   const index = enabledPlugins.indexOf(pluginId);
 
   if (index !== -1) {
-    enabledPlugins.splice(index, 1);
+    store.enabledPlugins = [
+      ...enabledPlugins.slice(0, index),
+      ...enabledPlugins.slice(index + 1)
+    ];
   }
 }
 
 export function getEnabledPlugsForSlot(slotName) {
-  const enabledPlugins = getEnabledPlugins();
+  const enabledPlugins = getPlugins().filter(plugin => plugin.enabled);
 
   return enabledPlugins
     .reduce(
-      (acc, next) => [
+      (acc, { plugs }) => [
         ...acc,
-        ...next.plugs.filter(plug => plug.slot === slotName)
+        ...plugs.filter(plug => plug.slot === slotName)
       ],
       []
     )
     .map(plug => plug.render);
 }
 
-function getEnabledPlugins() {
+export function getPlugins() {
   const { plugins, enabledPlugins } = getGlobalStore();
 
-  return plugins.filter(plugin => enabledPlugins.indexOf(plugin.id) !== -1);
+  return plugins.map(plugin => ({
+    ...plugin,
+    enabled: enabledPlugins.indexOf(plugin.id) !== -1
+  }));
 }
 
 // Exported for testing cleanup purposes
@@ -68,6 +73,12 @@ function getGlobalStore() {
   }
 
   return global.__REACT_PLUGIN;
+}
+
+function addPlugin(plugin) {
+  const store = getGlobalStore();
+
+  store.plugins = [...store.plugins, plugin];
 }
 
 function generatePluginId() {
