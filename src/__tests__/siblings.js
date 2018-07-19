@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React from 'react';
 import { create } from 'react-test-renderer';
 import { register, Slot } from '../';
 import { __reset } from '../store';

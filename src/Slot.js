@@ -1,10 +1,16 @@
-import React, { Component, createElement, createContext } from 'react';
+import { string, node } from 'prop-types';
+import React, { Component, createElement } from 'react';
 import { isValidElementType } from 'react-is';
 import createLinkedList from '@skidding/linked-list';
 import { getPluginsForSlot } from './store';
 import { getSlotContext } from './context';
 
 export class Slot extends Component {
+  static propTypes = {
+    name: string,
+    children: node
+  };
+
   render() {
     const { name, children } = this.props;
     const { Provider, Consumer } = getSlotContext(name);
