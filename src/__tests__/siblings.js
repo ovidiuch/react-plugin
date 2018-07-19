@@ -1,13 +1,14 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Slot } from '../';
+import { Slot } from '../';
 import { __reset } from '../store';
+import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
 function registerButton(label) {
   // This is an example of a high-level plugin register function
-  register('buttons', ({ children = [] }) => (
+  registerPlug('buttons', ({ children = [] }) => (
     <Slot name="buttons">
       {[...children, <button key={children.length}>{label}</button>]}
     </Slot>

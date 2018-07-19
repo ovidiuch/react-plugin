@@ -1,32 +1,45 @@
-// TODO: Method for enabling/disabling plugins (How to identify?)
+// TODO: Method for enabling/disabling plugins
 // TODO: Method for subscribing to plugin list
 
-export function register(slotName, element) {
-  const slots = getSlots();
-
-  if (!slots[slotName]) {
-    slots[slotName] = [];
-  }
-
-  slots[slotName].push(element);
+// TODO: Add pluginId
+// TODO: Add autoEnable arg
+export function registerPlugin(pluginDef) {
+  const { plugins, enabledPlugins } = getGlobalStore();
+  plugins.push(pluginDef);
+  enabledPlugins.push(pluginDef.name);
 }
 
-export function getPluginsForSlot(slotName) {
-  const slots = getSlots();
+export function getEnabledPlugsForSlot(slotName) {
+  const enabledPlugins = getEnabledPlugins();
 
-  return slots[slotName];
+  return enabledPlugins
+    .reduce(
+      (acc, next) => [
+        ...acc,
+        ...next.plugs.filter(plug => plug.slot === slotName)
+      ],
+      []
+    )
+    .map(plug => plug.render);
 }
 
+function getEnabledPlugins() {
+  const { plugins, enabledPlugins } = getGlobalStore();
+
+  return plugins.filter(plugin => enabledPlugins.indexOf(plugin.name) !== -1);
+}
+
+// Exported for testing cleanup purposes
 export function __reset() {
-  global.__REACT_PLUGIN_ZONES = {};
+  global.__REACT_PLUGIN = { plugins: [], enabledPlugins: [] };
 }
 
-// Slot plugins are shared between multiple code bundles in the same page,
-// which is why we're hooking into the global object.
-function getSlots() {
-  if (!global.__REACT_PLUGIN_ZONES) {
-    global.__REACT_PLUGIN_ZONES = {};
+// Plugins are shared between multiple code bundles in the same page, which is
+// why we're hooking into the global object.
+function getGlobalStore() {
+  if (!global.__REACT_PLUGIN) {
+    __reset();
   }
 
-  return global.__REACT_PLUGIN_ZONES;
+  return global.__REACT_PLUGIN;
 }

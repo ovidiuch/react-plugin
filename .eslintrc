@@ -9,5 +9,13 @@
   ],
   "globals": {
     "global": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["jest.config.js"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
 }
