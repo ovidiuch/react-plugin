@@ -7,16 +7,11 @@ afterEach(__reset);
 
 function registerButton(label) {
   // This is an example of a high-level plugin register function
-  registerPlugin('buttons', ({ children }) => {
-    const nextButton = <button>{label}</button>;
-    const buttons = children ? [...children, nextButton] : [nextButton];
-
-    return (
-      <Zone name="buttons">
-        {buttons.map((button, index) => cloneElement(button, { key: index }))}
-      </Zone>
-    );
-  });
+  registerPlugin('buttons', ({ children = [] }) => (
+    <Zone name="buttons">
+      {[...children, <button key={children.length}>{label}</button>]}
+    </Zone>
+  ));
 }
 
 it('accumulates children from separate plugins', () => {

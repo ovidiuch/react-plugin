@@ -32,7 +32,6 @@ export class Zone extends Component {
             return children;
           }
 
-          // TODO: Create global data store and pass it to all plugins
           return (
             <Provider value={next()}>
               {isValidElementType(plugin) && typeof plugin !== 'string'

@@ -1,3 +1,6 @@
+// TODO: Method for enabling/disabling plugins (How to identify?)
+// TODO: Method for subscribing to plugin list
+
 export function registerPlugin(zoneName, element) {
   const zones = getZones();
 
