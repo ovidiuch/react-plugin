@@ -1,2 +1,2 @@
-export { registerPlugin } from './store';
+export { registerPlugin, enablePlugin, disablePlugin } from './store';
 export { Slot } from './Slot';

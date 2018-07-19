@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 import { Slot } from '../';
 import { __reset } from '../store';
-import { registerPlug } from './_helpers';
+import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
@@ -50,7 +50,3 @@ Array [
 ]
 `);
 });
-
-function Root() {
-  return <Slot name="root" />;
-}

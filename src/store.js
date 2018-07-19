@@ -1,12 +1,34 @@
-// TODO: Method for enabling/disabling plugins
 // TODO: Method for subscribing to plugin list
 
-// TODO: Add pluginId
-// TODO: Add autoEnable arg
 export function registerPlugin(pluginDef) {
   const { plugins, enabledPlugins } = getGlobalStore();
-  plugins.push(pluginDef);
-  enabledPlugins.push(pluginDef.name);
+  const plugin = {
+    ...pluginDef,
+    id: generatePluginId()
+  };
+
+  plugins.push(plugin);
+  // TODO: Add `enabled` bool arg
+  enabledPlugins.push(plugin.id);
+
+  return plugin;
+}
+
+export function enablePlugin(pluginId) {
+  const { enabledPlugins } = getGlobalStore();
+  const index = enabledPlugins.indexOf(pluginId);
+  if (index === -1) {
+    enabledPlugins.push(pluginId);
+  }
+}
+
+export function disablePlugin(pluginId) {
+  const { enabledPlugins } = getGlobalStore();
+  const index = enabledPlugins.indexOf(pluginId);
+
+  if (index !== -1) {
+    enabledPlugins.splice(index, 1);
+  }
 }
 
 export function getEnabledPlugsForSlot(slotName) {
@@ -26,12 +48,16 @@ export function getEnabledPlugsForSlot(slotName) {
 function getEnabledPlugins() {
   const { plugins, enabledPlugins } = getGlobalStore();
 
-  return plugins.filter(plugin => enabledPlugins.indexOf(plugin.name) !== -1);
+  return plugins.filter(plugin => enabledPlugins.indexOf(plugin.id) !== -1);
 }
 
 // Exported for testing cleanup purposes
 export function __reset() {
-  global.__REACT_PLUGIN = { plugins: [], enabledPlugins: [] };
+  global.__REACT_PLUGIN = {
+    plugins: [],
+    enabledPlugins: [],
+    lastPluginId: 0
+  };
 }
 
 // Plugins are shared between multiple code bundles in the same page, which is
@@ -42,4 +68,10 @@ function getGlobalStore() {
   }
 
   return global.__REACT_PLUGIN;
+}
+
+function generatePluginId() {
+  const store = getGlobalStore();
+
+  return ++store.lastPluginId;
 }
