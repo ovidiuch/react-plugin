@@ -1,22 +1,18 @@
-import React, { cloneElement } from 'react';
+import React from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, Zone } from '../';
+import { Slot } from '../';
 import { __reset } from '../store';
+import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
 function registerButton(label) {
   // This is an example of a high-level plugin register function
-  registerPlugin('buttons', ({ children }) => {
-    const nextButton = <button>{label}</button>;
-    const buttons = children ? [...children, nextButton] : [nextButton];
-
-    return (
-      <Zone name="buttons">
-        {buttons.map((button, index) => cloneElement(button, { key: index }))}
-      </Zone>
-    );
-  });
+  registerPlug('buttons', ({ children = [] }) => (
+    <Slot name="buttons">
+      {[...children, <button key={children.length}>{label}</button>]}
+    </Slot>
+  ));
 }
 
 it('accumulates children from separate plugins', () => {
@@ -45,7 +41,7 @@ it('accumulates children from separate plugins', () => {
 function Buttons() {
   return (
     <div className="buttons">
-      <Zone name="buttons" />
+      <Slot name="buttons" />
     </div>
   );
 }

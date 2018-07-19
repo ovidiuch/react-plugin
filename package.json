@@ -6,13 +6,15 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
+    "lint": "eslint 'src/**/*.js'",
     "test:watch": "jest --watch",
-    "test": "jest --coverage",
+    "test": "yarn lint && jest --coverage",
     "build": "babel src --out-dir dist --ignore '**/__tests__/**'",
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
     "@skidding/linked-list": "^1.0.1",
+    "prop-types": "^15.6.2",
     "react-is": "^16.4.1"
   },
   "devDependencies": {
@@ -22,7 +24,13 @@
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^8.2.6",
     "babel-jest": "^23.4.0",
+    "eslint": "^5.1.0",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jest": "^21.18.0",
+    "eslint-plugin-react": "^7.10.0",
     "jest": "^23.4.1",
     "prettier": "^1.13.7",
     "react": "^16.4.1",
