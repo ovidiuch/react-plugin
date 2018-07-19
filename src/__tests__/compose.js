@@ -1,6 +1,6 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, Slot } from '../';
+import { register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -8,7 +8,7 @@ afterEach(__reset);
 it('composes with plugins previously applied on same slot', () => {
   // The first plugins opens up the possibility for a future plugin to override
   // it or to compose with it. The latter is happening in this case.
-  registerPlugin(
+  register(
     'root',
     <Slot name="root">
       <span>I was here first</span>
@@ -16,7 +16,7 @@ it('composes with plugins previously applied on same slot', () => {
   );
 
   // The second plugins continues to allow next plugins to override or compose.
-  registerPlugin('root', ({ children }) => (
+  register('root', ({ children }) => (
     <Slot name="root">
       <>
         {children}
@@ -25,7 +25,7 @@ it('composes with plugins previously applied on same slot', () => {
     </Slot>
   ));
 
-  registerPlugin('root', ({ children }) => (
+  register('root', ({ children }) => (
     <Slot name="root">
       <>
         {children}

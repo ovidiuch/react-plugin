@@ -1,13 +1,13 @@
 import React, { cloneElement } from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, Slot } from '../';
+import { register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
 
 function registerButton(label) {
   // This is an example of a high-level plugin register function
-  registerPlugin('buttons', ({ children = [] }) => (
+  register('buttons', ({ children = [] }) => (
     <Slot name="buttons">
       {[...children, <button key={children.length}>{label}</button>]}
     </Slot>

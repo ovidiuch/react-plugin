@@ -1,6 +1,6 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, Slot } from '../';
+import { register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -62,7 +62,7 @@ it('composes plugins registered outside-in', () => {
 });
 
 function registerPreviewIframe() {
-  registerPlugin(
+  register(
     'root',
     <Slot name="root">
       <Preview />
@@ -71,7 +71,7 @@ function registerPreviewIframe() {
 }
 
 function registerNav() {
-  registerPlugin('root', ({ children }) => (
+  register('root', ({ children }) => (
     <div>
       <Nav />
       <Slot name="root">{children}</Slot>

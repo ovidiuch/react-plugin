@@ -1,7 +1,7 @@
 // TODO: Method for enabling/disabling plugins (How to identify?)
 // TODO: Method for subscribing to plugin list
 
-export function registerPlugin(slotName, element) {
+export function register(slotName, element) {
   const slots = getSlots();
 
   if (!slots[slotName]) {
