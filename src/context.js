@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 
-const zoneContexts = {};
+const slotContexts = {};
 
-export function getZoneContext(zoneName) {
-  if (!zoneContexts[zoneName]) {
-    zoneContexts[zoneName] = createContext(undefined);
+export function getSlotContext(slotName) {
+  if (!slotContexts[slotName]) {
+    slotContexts[slotName] = createContext(undefined);
   }
 
-  return zoneContexts[zoneName];
+  return slotContexts[slotName];
 }

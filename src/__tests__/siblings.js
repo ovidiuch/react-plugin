@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, Zone } from '../';
+import { registerPlugin, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -8,9 +8,9 @@ afterEach(__reset);
 function registerButton(label) {
   // This is an example of a high-level plugin register function
   registerPlugin('buttons', ({ children = [] }) => (
-    <Zone name="buttons">
+    <Slot name="buttons">
       {[...children, <button key={children.length}>{label}</button>]}
-    </Zone>
+    </Slot>
   ));
 }
 
@@ -40,7 +40,7 @@ it('accumulates children from separate plugins', () => {
 function Buttons() {
   return (
     <div className="buttons">
-      <Zone name="buttons" />
+      <Slot name="buttons" />
     </div>
   );
 }

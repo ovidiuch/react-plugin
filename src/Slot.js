@@ -1,31 +1,31 @@
 import React, { Component, createElement, createContext } from 'react';
 import { isValidElementType } from 'react-is';
 import createLinkedList from '@skidding/linked-list';
-import { getPluginsForZone } from './store';
-import { getZoneContext } from './context';
+import { getPluginsForSlot } from './store';
+import { getSlotContext } from './context';
 
-export class Zone extends Component {
+export class Slot extends Component {
   render() {
     const { name, children } = this.props;
-    const { Provider, Consumer } = getZoneContext(name);
+    const { Provider, Consumer } = getSlotContext(name);
 
-    const plugins = getPluginsForZone(name);
+    const plugins = getPluginsForSlot(name);
     if (!plugins) {
-      // No plugins are registered for this zone in this render-cycle. Plugins
-      // for this zone may be registered later.
+      // No plugins are registered for this slot in this render-cycle. Plugins
+      // for this slot may be registered later.
       return null;
     }
 
     // Children are either
     // - passed to the next plugin or,
-    // - if this is the last plugin for this zone, rendered directly.
+    // - if this is the last plugin for this slot, rendered directly.
     return (
       <Consumer>
         {({ value: plugin, next } = getFirstLinkedPlugin(plugins)) => {
           if (!plugin) {
             if (!children) {
-              // All registered plugins for this zone have been rendered (for
-              // now). More plugins for this zone can be registered later.
+              // All registered plugins for this slot have been rendered (for
+              // now). More plugins for this slot can be registered later.
               return null;
             }
 
