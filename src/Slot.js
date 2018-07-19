@@ -1,13 +1,12 @@
 import { string, node } from 'prop-types';
-import React, { Component, createElement } from 'react';
+import React, { Component, createElement, createContext } from 'react';
 import { isValidElementType } from 'react-is';
 import createLinkedList from '@skidding/linked-list';
 import { getEnabledPlugsForSlot } from './store';
-import { getSlotContext } from './context';
 
 export class Slot extends Component {
   static propTypes = {
-    name: string,
+    name: string.isRequired,
     children: node
   };
 
@@ -49,6 +48,16 @@ export class Slot extends Component {
       </Consumer>
     );
   }
+}
+
+const slotContexts = {};
+
+function getSlotContext(slotName) {
+  if (!slotContexts[slotName]) {
+    slotContexts[slotName] = createContext(undefined);
+  }
+
+  return slotContexts[slotName];
 }
 
 function getFirstLinkedPlug(plugs) {
