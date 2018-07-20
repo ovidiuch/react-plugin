@@ -1,12 +1,11 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Slot } from '../';
+import { register, Plugin, Plug, Slot } from '../';
 import { __reset } from '../store';
-import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('composes plugins registered inside-out', () => {
+it('composes plugs registered inside-out', () => {
   registerPreviewIframe();
 
   // Assert checkpoint
@@ -33,7 +32,7 @@ it('composes plugins registered inside-out', () => {
 `);
 });
 
-it('composes plugins registered outside-in', () => {
+it('composes plugs registered outside-in', () => {
   registerNav();
   const wrapper = create(<Root />);
 
@@ -63,21 +62,38 @@ it('composes plugins registered outside-in', () => {
 });
 
 function registerPreviewIframe() {
-  registerPlug(
-    'root',
-    <Slot name="root">
-      <Preview />
-    </Slot>
+  register(
+    <Plugin name="test">
+      <Plug
+        slot="root"
+        render={
+          <Slot name="root">
+            <Preview />
+          </Slot>
+        }
+      />
+    </Plugin>
   );
 }
 
 function registerNav() {
-  registerPlug('root', ({ children }) => (
-    <div>
-      <Nav />
-      <Slot name="root">{children}</Slot>
-    </div>
-  ));
+  register(
+    <Plugin name="test">
+      <Plug
+        slot="root"
+        render={({ children }) => (
+          <div>
+            <Nav />
+            <Slot name="root">{children}</Slot>
+          </div>
+        )}
+      />
+    </Plugin>
+  );
+}
+
+function Root() {
+  return <Slot name="root" />;
 }
 
 function Nav() {

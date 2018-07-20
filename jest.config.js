@@ -1,3 +1,1 @@
-module.exports = {
-  testPathIgnorePatterns: ['/_helpers']
-};
+module.exports = {};
