@@ -2,7 +2,6 @@ import { func } from 'prop-types';
 import { Component } from 'react';
 import { getPlugins, enablePlugin, disablePlugin } from './store';
 
-// TODO: Test
 export class PluginsConsumer extends Component {
   state = {
     plugins: getPlugins()
