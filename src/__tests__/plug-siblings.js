@@ -1,8 +1,7 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Slot } from '../';
+import { Slot, registerPlugin } from '../';
 import { __reset } from '../store';
-import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
@@ -44,4 +43,10 @@ function Buttons() {
       <Slot name="buttons" />
     </div>
   );
+}
+
+export function registerPlug(slot, render) {
+  registerPlugin({
+    plugs: [{ slot, render }]
+  });
 }

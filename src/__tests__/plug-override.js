@@ -1,8 +1,7 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Slot } from '../';
+import { Slot, registerPlugin } from '../';
 import { __reset } from '../store';
-import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
@@ -18,4 +17,10 @@ it('overrides plug previously applied on same slot', () => {
 
 function Root() {
   return <Slot name="root" />;
+}
+
+export function registerPlug(slot, render) {
+  registerPlugin({
+    plugs: [{ slot, render }]
+  });
 }

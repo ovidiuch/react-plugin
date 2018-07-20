@@ -16,6 +16,13 @@
       "env": {
         "node": true
       }
+    },
+    {
+      "files": ["**/__tests__/**"],
+      "rules": {
+        "react/display-name": "off",
+        "react/prop-types": "off"
+      }
     }
   ]
 }
