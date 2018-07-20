@@ -1,8 +1,9 @@
+import { isElement } from 'react-is';
 import arrayFindIndex from 'array-find-index';
 
-export function registerPlugin(pluginDef) {
+export function register(pluginDef) {
   const plugin = {
-    ...pluginDef,
+    ...parsePluginDef(pluginDef),
     id: generatePluginId()
   };
 
@@ -53,6 +54,37 @@ function getGlobalStore() {
   }
 
   return global.__REACT_PLUGIN;
+}
+
+function parsePluginDef(pluginDef) {
+  if (!isElement(pluginDef)) {
+    throw new Error('Plugin must be JSX element');
+  }
+
+  const { name, children } = pluginDef.props;
+  const normalizedChildren = Array.isArray(children)
+    ? children
+    : children
+      ? [children]
+      : [];
+
+  normalizedChildren.forEach(child => {
+    if (!isElement(child)) {
+      throw new Error('Plug must be JSX element');
+    }
+  });
+
+  return {
+    name,
+    plugs: normalizedChildren.map(child => {
+      const { slot, render } = child.props;
+
+      return {
+        slot,
+        render
+      };
+    })
+  };
 }
 
 function addPlugin(plugin) {

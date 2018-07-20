@@ -1,17 +1,24 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Slot, registerPlugin } from '../';
+import { register, Plugin, Plug, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
 
 function registerButton(label) {
-  // This is an example of a high-level plug register function
-  registerPlug('buttons', ({ children = [] }) => (
-    <Slot name="buttons">
-      {[...children, <button key={children.length}>{label}</button>]}
-    </Slot>
-  ));
+  // This is an example of a high-level register function
+  register(
+    <Plugin name="test">
+      <Plug
+        slot="buttons"
+        render={({ children = [] }) => (
+          <Slot name="buttons">
+            {[...children, <button key={children.length}>{label}</button>]}
+          </Slot>
+        )}
+      />
+    </Plugin>
+  );
 }
 
 it('accumulates children from separate plugs', () => {
@@ -43,10 +50,4 @@ function Buttons() {
       <Slot name="buttons" />
     </div>
   );
-}
-
-export function registerPlug(slot, render) {
-  registerPlugin({
-    plugs: [{ slot, render }]
-  });
 }

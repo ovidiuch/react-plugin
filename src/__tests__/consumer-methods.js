@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, PluginsConsumer } from '../';
+import { register, Plugin, PluginsConsumer } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
 
 it('updates plugins from consumer methods', () => {
-  registerPlugin({ name: 'Snoop Dogg' });
-  registerPlugin({ name: 'Wiz Khalifa' });
+  register(<Plugin name="Snoop Dogg" />);
+  register(<Plugin name="Wiz Khalifa" />);
 
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(`

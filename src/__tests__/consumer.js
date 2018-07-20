@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, disablePlugin, PluginsConsumer } from '../';
+import { register, disablePlugin, Plugin, PluginsConsumer } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
 
 it('calls the consumer render fn with plugin list', () => {
-  registerPlugin({ name: 'Graham Chapman' });
-  registerPlugin({ name: 'John Cleese' });
-  registerPlugin({ name: 'Terry Gilliam' });
-  registerPlugin({ name: 'Eric Idle' });
-  registerPlugin({ name: 'Terry Jones' });
-  registerPlugin({ name: 'Michael Palin' });
+  register(<Plugin name="Graham Chapman" />);
+  register(<Plugin name="John Cleese" />);
+  register(<Plugin name="Terry Gilliam" />);
+  register(<Plugin name="Eric Idle" />);
+  register(<Plugin name="Terry Jones" />);
+  register(<Plugin name="Michael Palin" />);
 
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(
@@ -20,12 +20,12 @@ it('calls the consumer render fn with plugin list', () => {
 });
 
 it('calls the consumer render fn with enabled plugin list', () => {
-  registerPlugin({ name: 'Graham Chapman' });
-  registerPlugin({ name: 'John Cleese' });
-  registerPlugin({ name: 'Terry Gilliam' });
-  registerPlugin({ name: 'Eric Idle' });
-  disablePlugin(registerPlugin({ name: 'Terry Jones' }).id);
-  disablePlugin(registerPlugin({ name: 'Michael Palin' }).id);
+  register(<Plugin name="Graham Chapman" />);
+  register(<Plugin name="John Cleese" />);
+  register(<Plugin name="Terry Gilliam" />);
+  register(<Plugin name="Eric Idle" />);
+  disablePlugin(register(<Plugin name="Terry Jones" />).id);
+  disablePlugin(register(<Plugin name="Michael Palin" />).id);
 
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(

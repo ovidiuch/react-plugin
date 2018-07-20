@@ -1,6 +1,6 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Slot, registerPlugin } from '../';
+import { register, Plugin, Plug, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -62,21 +62,34 @@ it('composes plugs registered outside-in', () => {
 });
 
 function registerPreviewIframe() {
-  registerPlug(
-    'root',
-    <Slot name="root">
-      <Preview />
-    </Slot>
+  register(
+    <Plugin name="test">
+      <Plug
+        slot="root"
+        render={
+          <Slot name="root">
+            <Preview />
+          </Slot>
+        }
+      />
+    </Plugin>
   );
 }
 
 function registerNav() {
-  registerPlug('root', ({ children }) => (
-    <div>
-      <Nav />
-      <Slot name="root">{children}</Slot>
-    </div>
-  ));
+  register(
+    <Plugin name="test">
+      <Plug
+        slot="root"
+        render={({ children }) => (
+          <div>
+            <Nav />
+            <Slot name="root">{children}</Slot>
+          </div>
+        )}
+      />
+    </Plugin>
+  );
 }
 
 function Root() {
@@ -89,10 +102,4 @@ function Nav() {
 
 function Preview() {
   return <iframe src="_loader.html" />;
-}
-
-export function registerPlug(slot, render) {
-  registerPlugin({
-    plugs: [{ slot, render }]
-  });
 }
