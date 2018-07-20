@@ -1,8 +1,7 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, disablePlugin, enablePlugin } from '../';
+import { Slot, registerPlugin, disablePlugin, enablePlugin } from '../';
 import { __reset } from '../store';
-import { Root } from './_helpers';
 
 afterEach(__reset);
 
@@ -22,3 +21,7 @@ it('only renders enabled plugin', () => {
   wrapper.update(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I am root"`);
 });
+
+function Root() {
+  return <Slot name="root" />;
+}

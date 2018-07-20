@@ -1,10 +1,6 @@
-import React from 'react';
-import { registerPlugin, Slot } from '..';
+import { registerPlugin } from '..';
 
-export function Root() {
-  return <Slot name="root" />;
-}
-
+// TODO: Remove this
 export function registerPlug(slot, render) {
   registerPlugin({
     plugs: [{ slot, render }]

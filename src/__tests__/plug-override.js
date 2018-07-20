@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 import { Slot } from '../';
 import { __reset } from '../store';
-import { registerPlug, Root } from './_helpers';
+import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
@@ -15,3 +15,7 @@ it('overrides plug previously applied on same slot', () => {
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I was here second"`);
 });
+
+function Root() {
+  return <Slot name="root" />;
+}

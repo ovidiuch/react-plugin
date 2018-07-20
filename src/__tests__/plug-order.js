@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 import { Slot } from '../';
 import { __reset } from '../store';
-import { registerPlug, Root } from './_helpers';
+import { registerPlug } from './_helpers';
 
 afterEach(__reset);
 
@@ -78,6 +78,10 @@ function registerNav() {
       <Slot name="root">{children}</Slot>
     </div>
   ));
+}
+
+function Root() {
+  return <Slot name="root" />;
 }
 
 function Nav() {
