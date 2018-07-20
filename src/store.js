@@ -1,3 +1,5 @@
+import arrayFindIndex from 'array-find-index';
+
 export function registerPlugin(pluginDef) {
   const plugin = {
     ...pluginDef,
@@ -11,32 +13,20 @@ export function registerPlugin(pluginDef) {
 }
 
 export function enablePlugin(pluginId) {
-  const store = getGlobalStore();
-  const { enabledPlugins } = store;
-  const index = enabledPlugins.indexOf(pluginId);
-
-  if (index === -1) {
-    store.enabledPlugins = [...enabledPlugins, pluginId];
-  }
+  updatePlugin(pluginId, { enabled: true });
 }
 
 export function disablePlugin(pluginId) {
-  const store = getGlobalStore();
-  const { enabledPlugins } = store;
-  const index = enabledPlugins.indexOf(pluginId);
+  updatePlugin(pluginId, { enabled: false });
+}
 
-  if (index !== -1) {
-    store.enabledPlugins = [
-      ...enabledPlugins.slice(0, index),
-      ...enabledPlugins.slice(index + 1)
-    ];
-  }
+export function getPlugins() {
+  return getGlobalStore().plugins;
 }
 
 export function getEnabledPlugsForSlot(slotName) {
-  const enabledPlugins = getPlugins().filter(plugin => plugin.enabled);
-
-  return enabledPlugins
+  return getPlugins()
+    .filter(plugin => plugin.enabled)
     .reduce(
       (acc, { plugs }) => [
         ...acc,
@@ -47,20 +37,10 @@ export function getEnabledPlugsForSlot(slotName) {
     .map(plug => plug.render);
 }
 
-export function getPlugins() {
-  const { plugins, enabledPlugins } = getGlobalStore();
-
-  return plugins.map(plugin => ({
-    ...plugin,
-    enabled: enabledPlugins.indexOf(plugin.id) !== -1
-  }));
-}
-
 // Exported for testing cleanup purposes
 export function __reset() {
   global.__REACT_PLUGIN = {
     plugins: [],
-    enabledPlugins: [],
     lastPluginId: 0
   };
 }
@@ -79,6 +59,25 @@ function addPlugin(plugin) {
   const store = getGlobalStore();
 
   store.plugins = [...store.plugins, plugin];
+}
+
+function updatePlugin(pluginId, props) {
+  const store = getGlobalStore();
+  const { plugins } = store;
+  const index = arrayFindIndex(plugins, plugin => plugin.id === pluginId);
+
+  if (index !== -1) {
+    const plugin = {
+      ...plugins[index],
+      ...props
+    };
+
+    store.plugins = [
+      ...plugins.slice(0, index),
+      plugin,
+      ...plugins.slice(index + 1)
+    ];
+  }
 }
 
 function generatePluginId() {

@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin",
   "license": "MIT",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@skidding/linked-list": "^1.0.1",
+    "array-find-index": "^1.0.2",
     "prop-types": "^15.6.2",
     "react-is": "^16.4.1"
   },
