@@ -6,8 +6,8 @@ import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('composes with plugins previously applied on same slot', () => {
-  // The first plugins opens up the possibility for a future plugin to override
+it('composes with plugs previously applied on same slot', () => {
+  // The first plug opens up the possibility for a future plug to override
   // it or to compose with it. The latter is happening in this case.
   registerPlug(
     'root',
@@ -16,7 +16,7 @@ it('composes with plugins previously applied on same slot', () => {
     </Slot>
   );
 
-  // The second plugins continues to allow next plugins to override or compose.
+  // The second plugs continues to allow next plugs to override or compose.
   registerPlug('root', ({ children }) => (
     <Slot name="root">
       <>

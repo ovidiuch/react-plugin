@@ -5,7 +5,7 @@ import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('takes up slot from plugins applied next', () => {
+it('uses up slot completely', () => {
   // The first plugins removes up the possibility for a future plugin to
   // override it or to compose with it.
   registerPlug('root', 'I was here first');

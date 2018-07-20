@@ -6,7 +6,7 @@ import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('composes plugins registered inside-out', () => {
+it('composes plugs registered inside-out', () => {
   registerPreviewIframe();
 
   // Assert checkpoint
@@ -33,7 +33,7 @@ it('composes plugins registered inside-out', () => {
 `);
 });
 
-it('composes plugins registered outside-in', () => {
+it('composes plugs registered outside-in', () => {
   registerNav();
   const wrapper = create(<Root />);
 

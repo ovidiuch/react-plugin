@@ -6,8 +6,8 @@ import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('overrides plugin previously applied on same slot', () => {
-  // The first plugins opens up the possibility for a future plugin to override
+it('overrides plug previously applied on same slot', () => {
+  // The first plugs opens up the possibility for a future plug to override
   // it or to compose with it. The former is happening in this case.
   registerPlug('root', <Slot name="root">I was here first</Slot>);
   registerPlug('root', 'I was here second');

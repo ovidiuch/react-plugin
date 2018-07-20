@@ -6,8 +6,8 @@ import { registerPlug, Root } from './_helpers';
 
 afterEach(__reset);
 
-it('wraps any future plugins applied on same slot', () => {
-  // The first plugins opens up the possibility for a future plugin to override
+it('wraps any future plugs applied on same slot', () => {
+  // The first plug opens up the possibility for a future plugin to override
   // it or to compose with it. The latter is happening in this case.
   registerPlug(
     'root',
