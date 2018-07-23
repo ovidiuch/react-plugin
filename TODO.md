@@ -1,0 +1,2 @@
+- [ ] Global listener that notifies subscribers about newly added plugins.
+- [ ] API for plugin options
