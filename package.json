@@ -1,10 +1,13 @@
 {
   "name": "react-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin",
   "license": "MIT",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint 'src/**/*.js'",
     "test:watch": "jest --watch",
