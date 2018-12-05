@@ -2,6 +2,7 @@
   "name": "react-plugin",
   "version": "1.0.0-alpha.0",
   "description": "API for composable 3rd party React plugins",
+  "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
   "license": "MIT",
   "main": "./dist/index.js",
