@@ -1,43 +1,39 @@
 {
   "name": "react-plugin",
-  "version": "0.1.1",
+  "version": "1.0.0-alpha.0",
   "description": "API for composable 3rd party React plugins",
-  "repository": "https://github.com/skidding/react-plugin",
+  "repository": "https://github.com/skidding/react-plugin.git",
+  "author": "Ovidiu Cherecheș <skidding@gmail.com>",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "lint": "eslint 'src/**/*.js'",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "test": "yarn lint && jest --coverage",
-    "build": "babel src --out-dir dist --ignore '**/__tests__/**'",
-    "build:watch": "yarn build --watch"
+    "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@skidding/linked-list": "^1.0.1",
+    "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
-    "prop-types": "^15.6.2",
-    "react-is": "^16.4.1"
+    "react-is": "^16.6.3",
+    "ui-plugin": "^1.0.0-alpha.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.54",
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
-    "@babel/preset-react": "^7.0.0-beta.54",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.6",
-    "babel-jest": "^23.4.0",
-    "eslint": "^5.1.0",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jest": "^21.18.0",
-    "eslint-plugin-react": "^7.10.0",
-    "jest": "^23.4.1",
-    "prettier": "^1.13.7",
-    "react": "^16.4.1",
-    "react-test-renderer": "^16.4.1"
+    "@types/jest": "^23.3.10",
+    "@types/react": "^16.7.13",
+    "@types/react-is": "^16.5.0",
+    "@types/react-test-renderer": "^16.0.3",
+    "jest": "^23.6.0",
+    "prettier": "^1.15.3",
+    "react": "^16.6.3",
+    "react-test-renderer": "^16.6.3",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.1"
   }
 }

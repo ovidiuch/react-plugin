@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, PluginsConsumer } from '../';
+import { Plugin, PluginsConsumer, register } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -66,7 +66,7 @@ Array [
 `);
 });
 
-export class Root extends Component {
+export class Root extends React.Component<{}> {
   render() {
     return (
       <PluginsConsumer>

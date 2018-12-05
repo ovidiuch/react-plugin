@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -19,13 +19,13 @@ it('wraps any future plugs applied on same slot', () => {
           </>
         }
       />
-    </Plugin>
+    </Plugin>,
   );
 
   register(
     <Plugin name="test">
       <Plug slot="root" render={<span>I was here second</span>} />
-    </Plugin>
+    </Plugin>,
   );
 
   const wrapper = create(<Root />);

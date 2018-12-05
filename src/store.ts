@@ -1,10 +1,36 @@
+// @ts-ignore
+import * as arrayFindIndex from 'array-find-index';
+import * as React from 'react';
 import { isElement } from 'react-is';
-import arrayFindIndex from 'array-find-index';
 
-export function register(pluginDef) {
+export type PluginId = number;
+
+export type NodeOrComponent = React.ReactNode | React.Component;
+
+interface IPlug {
+  slot: string;
+  render: NodeOrComponent;
+}
+
+export interface IPlugin {
+  id: PluginId;
+  name: string;
+  enabled: boolean;
+  plugs: IPlug[];
+}
+
+export type IPlugDef = React.ReactElement<IPlug>;
+
+export type IPluginDef = React.ReactElement<{
+  name: string;
+  children?: IPlugDef | IPlugDef[];
+}>;
+
+export function register(pluginDef: IPluginDef) {
   const plugin = {
     ...parsePluginDef(pluginDef),
-    id: generatePluginId()
+    id: generatePluginId(),
+    enabled: true,
   };
 
   addPlugin(plugin);
@@ -13,11 +39,11 @@ export function register(pluginDef) {
   return plugin;
 }
 
-export function enablePlugin(pluginId) {
+export function enablePlugin(pluginId: PluginId) {
   updatePlugin(pluginId, { enabled: true });
 }
 
-export function disablePlugin(pluginId) {
+export function disablePlugin(pluginId: PluginId) {
   updatePlugin(pluginId, { enabled: false });
 }
 
@@ -25,24 +51,31 @@ export function getPlugins() {
   return getGlobalStore().plugins;
 }
 
-export function getEnabledPlugsForSlot(slotName) {
+export function getEnabledPlugsForSlot(slotName: string): NodeOrComponent[] {
   return getPlugins()
     .filter(plugin => plugin.enabled)
     .reduce(
-      (acc, { plugs }) => [
+      (acc: IPlug[], { plugs }) => [
         ...acc,
-        ...plugs.filter(plug => plug.slot === slotName)
+        ...plugs.filter(plug => plug.slot === slotName),
       ],
-      []
+      [],
     )
     .map(plug => plug.render);
 }
+
+declare var global: {
+  __REACT_PLUGIN: {
+    plugins: IPlugin[];
+    lastPluginId: PluginId;
+  };
+};
 
 // Exported for testing cleanup purposes
 export function __reset() {
   global.__REACT_PLUGIN = {
     plugins: [],
-    lastPluginId: 0
+    lastPluginId: 0,
   };
 }
 
@@ -56,7 +89,7 @@ function getGlobalStore() {
   return global.__REACT_PLUGIN;
 }
 
-function parsePluginDef(pluginDef) {
+function parsePluginDef(pluginDef: IPluginDef) {
   if (!isElement(pluginDef)) {
     throw new Error('Plugin must be JSX element');
   }
@@ -81,33 +114,36 @@ function parsePluginDef(pluginDef) {
 
       return {
         slot,
-        render
+        render,
       };
-    })
+    }),
   };
 }
 
-function addPlugin(plugin) {
+function addPlugin(plugin: IPlugin) {
   const store = getGlobalStore();
 
   store.plugins = [...store.plugins, plugin];
 }
 
-function updatePlugin(pluginId, props) {
+function updatePlugin(pluginId: PluginId, props: object) {
   const store = getGlobalStore();
   const { plugins } = store;
-  const index = arrayFindIndex(plugins, plugin => plugin.id === pluginId);
+  const index = arrayFindIndex(
+    plugins,
+    (plugin: IPlugin) => plugin.id === pluginId,
+  );
 
   if (index !== -1) {
     const plugin = {
       ...plugins[index],
-      ...props
+      ...props,
     };
 
     store.plugins = [
       ...plugins.slice(0, index),
       plugin,
-      ...plugins.slice(index + 1)
+      ...plugins.slice(index + 1),
     ];
   }
 }
