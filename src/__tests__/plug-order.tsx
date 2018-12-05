@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -72,7 +72,7 @@ function registerPreviewIframe() {
           </Slot>
         }
       />
-    </Plugin>
+    </Plugin>,
   );
 }
 
@@ -81,14 +81,14 @@ function registerNav() {
     <Plugin name="test">
       <Plug
         slot="root"
-        render={({ children }) => (
+        render={({ children }: { children?: React.ReactNode }) => (
           <div>
             <Nav />
             <Slot name="root">{children}</Slot>
           </div>
         )}
       />
-    </Plugin>
+    </Plugin>,
   );
 }
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -11,14 +11,14 @@ it('takes slot away from other plugins', () => {
   register(
     <Plugin name="test">
       <Plug slot="root" render="I was here first" />
-    </Plugin>
+    </Plugin>,
   );
 
   // When this plugin is applied `root` slot doesn't exist anymore
   register(
     <Plugin name="test">
       <Plug slot="root" render="I was here second" />
-    </Plugin>
+    </Plugin>,
   );
 
   const wrapper = create(<Root />);

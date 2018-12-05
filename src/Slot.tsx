@@ -1,15 +1,14 @@
-import { string, node } from 'prop-types';
-import React, { Component, createElement, createContext } from 'react';
-import { isValidElementType } from 'react-is';
 import createLinkedList from '@skidding/linked-list';
-import { getEnabledPlugsForSlot } from './store';
+import * as React from 'react';
+import { isValidElementType } from 'react-is';
+import { getEnabledPlugsForSlot, NodeOrComponent } from './store';
 
-export class Slot extends Component {
-  static propTypes = {
-    name: string.isRequired,
-    children: node
-  };
+interface IProps {
+  name: string;
+  children?: React.ReactNode;
+}
 
+export class Slot extends React.Component<IProps> {
   render() {
     const { name, children } = this.props;
     const { Provider, Consumer } = getSlotContext(name);
@@ -40,7 +39,7 @@ export class Slot extends Component {
           return (
             <Provider value={next()}>
               {isValidElementType(plug) && typeof plug !== 'string'
-                ? createElement(plug, { children })
+                ? React.createElement(plug, { children })
                 : plug}
             </Provider>
           );
@@ -50,17 +49,19 @@ export class Slot extends Component {
   }
 }
 
-const slotContexts = {};
+const slotContexts: {
+  [slotName: string]: React.Context<any>;
+} = {};
 
-function getSlotContext(slotName) {
+function getSlotContext(slotName: string) {
   if (!slotContexts[slotName]) {
-    slotContexts[slotName] = createContext(undefined);
+    slotContexts[slotName] = React.createContext(undefined);
   }
 
   return slotContexts[slotName];
 }
 
-function getFirstLinkedPlug(plugs) {
+function getFirstLinkedPlug(plugs: NodeOrComponent[]) {
   // Plugs are traversed in the order they're applied. But this doesn't mean
   // top-down from a component hierarchy point of view. The traversal of the
   // plugs can go up and down the component hierachy repeatedly, based on the

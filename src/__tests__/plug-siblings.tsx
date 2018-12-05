@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
 
-function registerButton(label) {
+function registerButton(label: string) {
   // This is an example of a high-level register function
   register(
     <Plugin name="test">
@@ -17,7 +17,7 @@ function registerButton(label) {
           </Slot>
         )}
       />
-    </Plugin>
+    </Plugin>,
   );
 }
 

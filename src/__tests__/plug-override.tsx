@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -11,12 +11,12 @@ it('overrides plug previously applied on same slot', () => {
   register(
     <Plugin name="test">
       <Plug slot="root" render={<Slot name="root">I was here first</Slot>} />
-    </Plugin>
+    </Plugin>,
   );
   register(
     <Plugin name="test">
       <Plug slot="root" render="I was here second" />
-    </Plugin>
+    </Plugin>,
   );
 
   const wrapper = create(<Root />);

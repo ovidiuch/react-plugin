@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, disablePlugin, Plugin, PluginsConsumer } from '../';
+import { disablePlugin, Plugin, PluginsConsumer, register } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -15,7 +15,7 @@ it('calls the consumer render fn with plugin list', () => {
 
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(
-    `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones, Michael Palin"`
+    `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones, Michael Palin"`,
   );
 });
 
@@ -29,11 +29,11 @@ it('calls the consumer render fn with enabled plugin list', () => {
 
   const wrapper = create(<Root />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(
-    `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`
+    `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`,
   );
 });
 
-export class Root extends Component {
+export class Root extends React.Component<{}> {
   render() {
     return (
       <PluginsConsumer>

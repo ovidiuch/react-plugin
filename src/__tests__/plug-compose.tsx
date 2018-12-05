@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { register, Plugin, Plug, Slot } from '../';
+import { Plug, Plugin, register, Slot } from '../';
 import { __reset } from '../store';
 
 afterEach(__reset);
@@ -18,7 +18,7 @@ it('composes with plugs previously applied on same slot', () => {
           </Slot>
         }
       />
-    </Plugin>
+    </Plugin>,
   );
 
   // The second and third plugs continue to allow next plugs to override or
@@ -27,7 +27,7 @@ it('composes with plugs previously applied on same slot', () => {
     <Plugin name="test">
       <Plug
         slot="root"
-        render={({ children }) => (
+        render={({ children }: { children?: React.ReactNode }) => (
           <Slot name="root">
             <>
               {children}
@@ -36,14 +36,14 @@ it('composes with plugs previously applied on same slot', () => {
           </Slot>
         )}
       />
-    </Plugin>
+    </Plugin>,
   );
 
   register(
     <Plugin name="test">
       <Plug
         slot="root"
-        render={({ children }) => (
+        render={({ children }: { children?: React.ReactNode }) => (
           <Slot name="root">
             <>
               {children}
@@ -52,7 +52,7 @@ it('composes with plugs previously applied on same slot', () => {
           </Slot>
         )}
       />
-    </Plugin>
+    </Plugin>,
   );
 
   const wrapper = create(<Root />);
