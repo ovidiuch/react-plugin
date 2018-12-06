@@ -44,3 +44,22 @@ it('calls getProps with plugin context', () => {
 </span>
 `);
 });
+
+it('calls getProps with slot props', () => {
+  const { plug } = registerPlugin({ name: 'test' });
+  plug({
+    slotName: 'root',
+    render: ({ age }: { age: number }) => <span>{age}y old</span>,
+    getProps: (context, slotProps) => ({ age: slotProps.age }),
+  });
+
+  mountPlugins();
+
+  const wrapper = create(<Slot name="root" props={{ age: 29 }} />);
+  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+<span>
+  29
+  y old
+</span>
+`);
+});

@@ -11,7 +11,7 @@ export type GetProps<
   ComponentProps extends object
 > = (
   context: IPluginContext<PluginConfig, PluginState>,
-  slotProps: object,
+  slotProps: { [key: string]: any },
 ) => ComponentProps;
 
 export interface IPlug<

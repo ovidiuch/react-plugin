@@ -1,6 +1,6 @@
 import { resetPlugins as resetUiPlugins } from 'ui-plugin';
 import { getGlobalStore } from './global';
-import { ISlotPlug } from './shared';
+import { IPlug } from './shared';
 
 export function resetPlugins() {
   resetUiPlugins();
@@ -15,7 +15,7 @@ export function getPlugs(slotName: string) {
 
 export function addPlug(
   slotName: string,
-  { pluginName, render, getProps }: ISlotPlug<any, any, any>,
+  { pluginName, render, getProps }: IPlug<any, any, any>,
 ) {
   const { slots } = getGlobalStore();
 
