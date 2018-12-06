@@ -9,6 +9,7 @@ interface IProps {
   children?: React.ReactNode;
 }
 
+// TODO: What happens if Slot is rendered before mounting plugins?
 export class Slot extends React.Component<IProps> {
   render() {
     const { name, children } = this.props;
