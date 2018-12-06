@@ -1,7 +1,7 @@
-import { ISlots } from './shared';
+import { IPlugs } from './shared';
 
 interface IReactGlobalStore {
-  slots: ISlots;
+  plugs: IPlugs;
 }
 
 declare var global: {
@@ -12,7 +12,7 @@ declare var global: {
 export function getGlobalStore() {
   if (!global.ReactPlugin) {
     global.ReactPlugin = {
-      slots: {},
+      plugs: {},
     };
   }
 

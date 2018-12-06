@@ -4,26 +4,26 @@ import { IPlug } from './shared';
 
 export function resetPlugins() {
   resetUiPlugins();
-  getGlobalStore().slots = {};
+  getGlobalStore().plugs = {};
 }
 
 export function getPlugs(slotName: string) {
-  const { slots } = getGlobalStore();
+  const { plugs } = getGlobalStore();
 
-  return slots[slotName];
+  return plugs[slotName];
 }
 
 export function addPlug(
   slotName: string,
   { pluginName, render, getProps }: IPlug<any, any, any>,
 ) {
-  const { slots } = getGlobalStore();
+  const { plugs } = getGlobalStore();
 
-  if (!slots[slotName]) {
-    slots[slotName] = [];
+  if (!plugs[slotName]) {
+    plugs[slotName] = [];
   }
 
-  slots[slotName].push({
+  plugs[slotName].push({
     pluginName,
     render,
     getProps,
