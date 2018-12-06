@@ -1,5 +1,5 @@
 declare module '@skidding/linked-list' {
-  type LinkedItem<Item> = {
+  export type LinkedItem<Item> = {
     value: null | Item;
     next: () => LinkedItem<Item>;
   };

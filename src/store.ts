@@ -5,7 +5,7 @@ import { isElement } from 'react-is';
 
 export type PluginId = number;
 
-export type NodeOrComponent = React.ReactNode | React.Component;
+export type NodeOrComponent = React.ReactNode | React.ComponentType;
 
 interface IPlug {
   slot: string;
