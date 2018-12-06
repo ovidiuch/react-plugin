@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { mountPlugins, registerPlugin, resetPlugins, Slot } from '..';
+import { registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
@@ -10,7 +10,7 @@ it('composes with plugs previously applied on same slot', () => {
   const p1 = registerPlugin({ name: 'test1' });
   p1.plug({
     slotName: 'root',
-    component: () => (
+    render: () => (
       <Slot name="root">
         <span>I was here first</span>
       </Slot>
@@ -22,7 +22,7 @@ it('composes with plugs previously applied on same slot', () => {
   const p2 = registerPlugin({ name: 'test2' });
   p2.plug({
     slotName: 'root',
-    component: ({ children }) => (
+    render: ({ children }) => (
       <Slot name="root">
         <>
           {children}
@@ -35,7 +35,7 @@ it('composes with plugs previously applied on same slot', () => {
   const p3 = registerPlugin({ name: 'test3' });
   p3.plug({
     slotName: 'root',
-    component: ({ children }) => (
+    render: ({ children }) => (
       <Slot name="root">
         <>
           {children}
@@ -45,9 +45,7 @@ it('composes with plugs previously applied on same slot', () => {
     ),
   });
 
-  const { rootElement } = mountPlugins();
-
-  const wrapper = create(rootElement);
+  const wrapper = create(<Slot name="root" />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(`
 Array [
   <span>

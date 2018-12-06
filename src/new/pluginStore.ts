@@ -13,7 +13,7 @@ export function getPlugs(slotName: string) {
   return slots[slotName];
 }
 
-export function addPlug({ slotName, component, getProps }: ISlotPlug) {
+export function addPlug({ slotName, render, getProps }: ISlotPlug) {
   const { slots } = getGlobalStore();
 
   if (!slots[slotName]) {
@@ -22,7 +22,7 @@ export function addPlug({ slotName, component, getProps }: ISlotPlug) {
 
   slots[slotName].push({
     slotName,
-    component,
+    render,
     getProps,
   });
 }

@@ -1,7 +1,8 @@
 import createLinkedList, { LinkedItem } from '@skidding/linked-list';
 import * as React from 'react';
+import { isValidElementType } from 'react-is';
 import { getPlugs } from './pluginStore';
-import { ISlotPlug } from './shared';
+import { ISlotPlug, Renderable } from './shared';
 
 interface IProps {
   name: string;
@@ -37,7 +38,7 @@ export class Slot extends React.Component<IProps> {
 
           return (
             <Provider value={next()}>
-              {React.createElement(value.component, { children })}
+              {getElementFromRenderable(value.render, children)}
             </Provider>
           );
         }}
@@ -68,4 +69,13 @@ function getFirstLinkedPlug(plugs: ISlotPlug[]) {
   // plugs can go up and down the component hierachy repeatedly, based on the
   // type of each plug and how they end up composing together.
   return createLinkedList(plugs);
+}
+
+function getElementFromRenderable(
+  render: Renderable<any>,
+  children: React.ReactNode,
+) {
+  return isValidElementType(render) && typeof render !== 'string'
+    ? React.createElement(render, { children })
+    : render;
 }

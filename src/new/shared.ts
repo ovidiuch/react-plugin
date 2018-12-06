@@ -1,8 +1,12 @@
-import { IPluginContext, IPluginMountOpts } from 'ui-plugin';
+import { IPluginContext } from 'ui-plugin';
 
-export interface ISlotPlug {
+export type Renderable<ComponentProps> =
+  | React.ComponentType<ComponentProps>
+  | React.ReactNode;
+
+export interface ISlotPlug<ComponentProps extends object = any> {
   slotName: string;
-  component: React.ComponentType<any>;
+  render: Renderable<ComponentProps>;
   getProps?: GetPropsHandler<any, any, any>;
 }
 
@@ -18,7 +22,3 @@ export type GetPropsHandler<
   context: IPluginContext<PluginConfig, PluginState>,
   slotProps: object,
 ) => ComponentProps;
-
-export interface IReactPluginMountOpts extends IPluginMountOpts {
-  rootSlotName?: string;
-}

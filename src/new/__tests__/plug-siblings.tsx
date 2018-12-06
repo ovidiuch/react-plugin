@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { mountPlugins, registerPlugin, resetPlugins, Slot } from '../';
+import { registerPlugin, resetPlugins, Slot } from '../';
 
 afterEach(resetPlugins);
 
@@ -10,7 +10,7 @@ function registerButton({ name, label }: { name: string; label: string }) {
 
   plug({
     slotName: 'buttons',
-    component: ({
+    render: ({
       children = [],
     }: {
       children: Array<React.ReactElement<'button'>>;
@@ -27,9 +27,7 @@ it('accumulates children from separate plugs', () => {
   registerButton({ name: 'about', label: 'About' });
   registerButton({ name: 'contact', label: 'Contact' });
 
-  const { rootElement } = mountPlugins({ rootSlotName: 'buttons' });
-
-  const wrapper = create(rootElement);
+  const wrapper = create(<Slot name="buttons" />);
   expect(wrapper.toJSON()).toMatchInlineSnapshot(`
 Array [
   <button>
