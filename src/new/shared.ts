@@ -2,19 +2,10 @@ import { IPluginContext } from 'ui-plugin';
 
 export type Renderable<ComponentProps> =
   | React.ComponentType<ComponentProps>
-  | React.ReactNode;
+  | React.ReactElement<any>
+  | string;
 
-export interface ISlotPlug<ComponentProps extends object = any> {
-  slotName: string;
-  render: Renderable<ComponentProps>;
-  getProps?: GetPropsHandler<any, any, any>;
-}
-
-export interface ISlots {
-  [slotName: string]: ISlotPlug[];
-}
-
-export type GetPropsHandler<
+export type GetProps<
   PluginConfig extends object,
   PluginState,
   ComponentProps extends object
@@ -22,3 +13,17 @@ export type GetPropsHandler<
   context: IPluginContext<PluginConfig, PluginState>,
   slotProps: object,
 ) => ComponentProps;
+
+export interface IPlug<
+  PluginConfig extends object,
+  PluginState,
+  ComponentProps extends object
+> {
+  pluginName: string;
+  render: Renderable<ComponentProps>;
+  getProps?: GetProps<PluginConfig, PluginState, ComponentProps>;
+}
+
+export interface IPlugs {
+  [slotName: string]: Array<IPlug<any, any, any>>;
+}

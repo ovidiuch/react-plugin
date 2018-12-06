@@ -20,7 +20,7 @@
     "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
     "react-is": "^16.6.3",
-    "ui-plugin": "^1.0.0-alpha.0"
+    "ui-plugin": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",

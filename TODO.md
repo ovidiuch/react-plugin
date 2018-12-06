@@ -1,3 +1,4 @@
 - [x] Use TypeScript
-- [ ] Use ui-plugin
-- [ ] `slotProps`
+- [x] Use ui-plugin
+  - [x] Map plugs per plugin
+- [ ] Add support for slot props

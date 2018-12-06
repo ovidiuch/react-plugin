@@ -13,7 +13,10 @@ export function getPlugs(slotName: string) {
   return slots[slotName];
 }
 
-export function addPlug({ slotName, render, getProps }: ISlotPlug) {
+export function addPlug(
+  slotName: string,
+  { pluginName, render, getProps }: ISlotPlug<any, any, any>,
+) {
   const { slots } = getGlobalStore();
 
   if (!slots[slotName]) {
@@ -21,7 +24,7 @@ export function addPlug({ slotName, render, getProps }: ISlotPlug) {
   }
 
   slots[slotName].push({
-    slotName,
+    pluginName,
     render,
     getProps,
   });
