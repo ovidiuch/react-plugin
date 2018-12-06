@@ -6,18 +6,18 @@ export type Renderable<ComponentProps> =
   | string;
 
 export type GetProps<
-  PluginConfig extends object,
-  PluginState,
-  ComponentProps extends object
+  PluginConfig extends object = any,
+  PluginState = any,
+  ComponentProps extends object = any
 > = (
   context: IPluginContext<PluginConfig, PluginState>,
   slotProps: { [key: string]: any },
 ) => ComponentProps;
 
 export interface IPlug<
-  PluginConfig extends object,
-  PluginState,
-  ComponentProps extends object
+  PluginConfig extends object = any,
+  PluginState = any,
+  ComponentProps extends object = any
 > {
   pluginName: string;
   render: Renderable<ComponentProps>;
@@ -25,5 +25,5 @@ export interface IPlug<
 }
 
 export interface IPlugs {
-  [slotName: string]: Array<IPlug<any, any, any>>;
+  [slotName: string]: IPlug[];
 }

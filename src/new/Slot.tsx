@@ -59,7 +59,7 @@ export class Slot extends React.Component<IProps> {
   }
 }
 
-type SlotContextValue = undefined | LinkedItem<IPlug<any, any, any>>;
+type SlotContextValue = undefined | LinkedItem<IPlug>;
 
 interface ISlotContexts {
   [slotName: string]: React.Context<SlotContextValue>;
@@ -75,7 +75,7 @@ function getSlotContext(slotName: string) {
   return slotContexts[slotName];
 }
 
-function getFirstLinkedPlug(plugs: Array<IPlug<any, any, any>>) {
+function getFirstLinkedPlug(plugs: IPlug[]) {
   // Plugs are traversed in the order they're applied. But this doesn't mean
   // top-down from a component hierarchy point of view. The traversal of the
   // plugs can go up and down the component hierachy repeatedly, based on the

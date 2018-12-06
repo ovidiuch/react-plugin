@@ -15,7 +15,7 @@ export function getPlugs(slotName: string) {
 
 export function addPlug(
   slotName: string,
-  { pluginName, render, getProps }: IPlug<any, any, any>,
+  { pluginName, render, getProps }: IPlug,
 ) {
   const { plugs } = getGlobalStore();
 
