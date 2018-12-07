@@ -1,3 +1,7 @@
 - [x] Use TypeScript
-- [ ] Use ui-plugin
-- [ ] `slotProps`
+- [x] Use ui-plugin
+  - [x] Map plugs per plugin
+- [x] Add support for slot props
+- [x] s/wrapper/renderer
+- [x] Only render plugs of enabled plugins
+- [ ] Handle "dispatch" props in getProps (avoid re-rendering because anonymous function gets created on every getProps call)
