@@ -10,7 +10,7 @@ it('decorates any future plugs applied on same slot', () => {
   const p1 = registerPlugin({ name: 'test1' });
   p1.plug({
     slotName: 'root',
-    render: () => (
+    render: (
       <>
         <span>I was here first</span>
         <Slot name="root" />
