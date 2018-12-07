@@ -5,7 +5,7 @@ import {
   getPluginContext,
   removeStateHandler,
 } from 'ui-plugin';
-import { GetProps } from './shared';
+import { GetProps } from '../shared';
 
 interface IProps {
   pluginName: string;

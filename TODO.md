@@ -3,3 +3,5 @@
   - [x] Map plugs per plugin
 - [x] Add support for slot props
 - [x] s/wrapper/renderer
+- [ ] Filter out plugs of disabled plugins
+  - [ ] Test: Disable plugin at run-time

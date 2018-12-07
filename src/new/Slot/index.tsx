@@ -1,9 +1,10 @@
-import createLinkedList, { LinkedItem } from '@skidding/linked-list';
+import createLinkedList from '@skidding/linked-list';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
+import { getPlugs } from '../pluginStore';
+import { IPlug } from '../shared';
+import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
-import { getPlugs } from './pluginStore';
-import { IPlug } from './shared';
 
 interface IProps {
   name: string;
@@ -74,22 +75,6 @@ function getPlugNode(
   }
 
   return React.createElement(render, slotProps, children);
-}
-
-type SlotContextValue = undefined | LinkedItem<IPlug>;
-
-interface ISlotContexts {
-  [slotName: string]: React.Context<SlotContextValue>;
-}
-
-const slotContexts: ISlotContexts = {};
-
-function getSlotContext(slotName: string) {
-  if (!slotContexts[slotName]) {
-    slotContexts[slotName] = React.createContext<SlotContextValue>(undefined);
-  }
-
-  return slotContexts[slotName];
 }
 
 function getFirstLinkedPlug(plugs: IPlug[]) {
