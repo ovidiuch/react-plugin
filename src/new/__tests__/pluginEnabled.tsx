@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { loadPlugins, registerPlugin, resetPlugins, Slot } from '..';
+import {
+  enablePlugin,
+  loadPlugins,
+  registerPlugin,
+  resetPlugins,
+  Slot,
+} from '..';
 
 afterEach(resetPlugins);
 
@@ -23,4 +29,18 @@ it('ignores plug of disabled plugin', () => {
   expect(() => {
     renderer.root.findByType(HelloWorld);
   }).toThrow();
+});
+
+it('renders plug after enabling plugin', () => {
+  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  plug({
+    slotName: 'root',
+    render: HelloWorld,
+  });
+
+  loadPlugins();
+  enablePlugin('test', true);
+
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.root.findByType(HelloWorld)).toBeTruthy();
 });
