@@ -2,7 +2,7 @@ import { IPluginDef, registerPlugin as registerUiPlugin } from 'ui-plugin';
 import { addPlug } from './pluginStore';
 import { GetProps, Renderable } from './shared';
 
-export { mountPlugins } from 'ui-plugin';
+export { loadPlugins } from 'ui-plugin';
 export { resetPlugins } from './pluginStore';
 export { Slot } from './Slot';
 

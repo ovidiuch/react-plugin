@@ -1,7 +1,7 @@
 import createLinkedList, { LinkedItem } from '@skidding/linked-list';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
-import { getPluginContext } from 'ui-plugin';
+import { PlugConnect } from './PlugConnect';
 import { getPlugs } from './pluginStore';
 import { IPlug } from './shared';
 
@@ -38,25 +38,42 @@ export class Slot extends React.Component<IProps> {
             return children;
           }
 
-          const { pluginName, render, getProps } = plug;
-
           return (
             <Provider value={next()}>
-              {isValidElementType(render) && typeof render !== 'string'
-                ? React.createElement(
-                    render,
-                    typeof getProps === 'function'
-                      ? getProps(getPluginContext(pluginName), props)
-                      : props,
-                    children,
-                  )
-                : render}
+              {getPlugNode(plug, props, children)}
             </Provider>
           );
         }}
       </Consumer>
     );
   }
+}
+
+function getPlugNode(
+  plug: IPlug,
+  slotProps: object,
+  children?: React.ReactNode,
+) {
+  const { pluginName, render, getProps } = plug;
+
+  if (typeof render === 'string' || !isValidElementType(render)) {
+    return render;
+  }
+
+  if (typeof getProps === 'function') {
+    return (
+      <PlugConnect
+        pluginName={pluginName}
+        component={render}
+        slotProps={slotProps}
+        getProps={getProps}
+      >
+        {children}
+      </PlugConnect>
+    );
+  }
+
+  return React.createElement(render, slotProps, children);
 }
 
 type SlotContextValue = undefined | LinkedItem<IPlug>;

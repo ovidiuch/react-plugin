@@ -19,12 +19,14 @@
   "dependencies": {
     "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
+    "lodash": "^4.17.11",
     "react-is": "^16.6.3",
-    "ui-plugin": "^1.0.0-alpha.1"
+    "ui-plugin": "^1.0.0-alpha.2"
   },
   "devDependencies": {
     "@skidding/async-retry": "^1.0.2",
     "@types/jest": "^23.3.10",
+    "@types/lodash": "^4.14.118",
     "@types/react": "^16.7.13",
     "@types/react-is": "^16.5.0",
     "@types/react-test-renderer": "^16.0.3",
