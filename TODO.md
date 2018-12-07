@@ -4,4 +4,3 @@
 - [x] Add support for slot props
 - [x] s/wrapper/renderer
 - [x] Only render plugs of enabled plugins
-  - [ ] Test: Disable plugin at run-time
