@@ -28,8 +28,8 @@ it('wraps any future plugs applied on same slot', () => {
     </Plugin>,
   );
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <span>
     I was here first

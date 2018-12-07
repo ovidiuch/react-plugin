@@ -8,8 +8,8 @@ it('composes plugs registered inside-out', () => {
   registerPreviewIframe();
 
   // Assert checkpoint
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <iframe
   src="_loader.html"
 />
@@ -18,8 +18,8 @@ it('composes plugs registered inside-out', () => {
   registerNav();
 
   // Assert final composition
-  wrapper.update(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  renderer.update(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <div>
   <div
     className="nav"
@@ -33,10 +33,10 @@ it('composes plugs registered inside-out', () => {
 
 it('composes plugs registered outside-in', () => {
   registerNav();
-  const wrapper = create(<Slot name="root" />);
+  const renderer = create(<Slot name="root" />);
 
   // Assert checkpoint
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <div>
   <div
     className="nav"
@@ -47,8 +47,8 @@ it('composes plugs registered outside-in', () => {
   registerPreviewIframe();
 
   // Assert final composition
-  wrapper.update(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  renderer.update(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <div>
   <div
     className="nav"

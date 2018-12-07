@@ -19,6 +19,6 @@ it('overrides plug previously applied on same slot', () => {
     render: 'I was here second',
   });
 
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I was here second"`);
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here second"`);
 });

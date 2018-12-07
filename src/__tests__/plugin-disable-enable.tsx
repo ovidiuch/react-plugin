@@ -12,16 +12,16 @@ it('only renders enabled plugin', () => {
     </Plugin>,
   );
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I am root"`);
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I am root"`);
 
   disablePlugin(pluginId);
-  wrapper.update(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`null`);
+  renderer.update(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`null`);
 
   enablePlugin(pluginId);
-  wrapper.update(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I am root"`);
+  renderer.update(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I am root"`);
 });
 
 function Root() {

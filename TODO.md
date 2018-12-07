@@ -2,3 +2,4 @@
 - [x] Use ui-plugin
   - [x] Map plugs per plugin
 - [x] Add support for slot props
+- [x] s/wrapper/renderer

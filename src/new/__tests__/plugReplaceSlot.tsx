@@ -20,6 +20,6 @@ it('takes slot away from other (subsequently registered) plugins', () => {
     render: 'I was here second',
   });
 
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I was here first"`);
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here first"`);
 });

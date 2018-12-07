@@ -9,8 +9,8 @@ it('updates plugins from consumer methods', () => {
   register(<Plugin name="Snoop Dogg" />);
   register(<Plugin name="Wiz Khalifa" />);
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
     onClick={[Function]}
@@ -26,12 +26,12 @@ Array [
 `);
 
   // Disable both
-  const [snoop, wiz] = wrapper.root.findAllByType('p');
+  const [snoop, wiz] = renderer.root.findAllByType('p');
   snoop.props.onClick();
   wiz.props.onClick();
 
-  wrapper.update(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  renderer.update(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
     onClick={[Function]}
@@ -49,8 +49,8 @@ Array [
   // Bring back Wiz
   wiz.props.onClick();
 
-  wrapper.update(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  renderer.update(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
     onClick={[Function]}

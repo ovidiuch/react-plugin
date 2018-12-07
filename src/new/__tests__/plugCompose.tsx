@@ -45,8 +45,8 @@ it('composes with plugs previously applied on same slot', () => {
     ),
   });
 
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <span>
     I was here first

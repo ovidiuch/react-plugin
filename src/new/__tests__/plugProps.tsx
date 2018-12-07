@@ -1,26 +1,28 @@
+import retry from '@skidding/async-retry';
 import * as React from 'react';
-import { create } from 'react-test-renderer';
-import { mountPlugins, registerPlugin, resetPlugins, Slot } from '..';
+import { create, ReactTestRenderer } from 'react-test-renderer';
+import { loadPlugins, registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
+
+function AgeComponent({ age }: { age: number }) {
+  // TS isn't happy with function components returning strings
+  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20544
+  return <>{`${age}y old`}</>;
+}
 
 it('receives props returned by getProps', () => {
   const { plug } = registerPlugin({ name: 'test' });
   plug({
     slotName: 'root',
-    render: ({ name }: { name: string }) => <span>Hello {name}</span>,
-    getProps: () => ({ name: 'Ellen' }),
+    render: AgeComponent,
+    getProps: () => ({ age: 29 }),
   });
 
-  mountPlugins();
+  loadPlugins();
 
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-<span>
-  Hello 
-  Ellen
-</span>
-`);
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
 it('calls getProps with plugin context', () => {
@@ -30,36 +32,57 @@ it('calls getProps with plugin context', () => {
   });
   plug({
     slotName: 'root',
-    render: ({ age }: { age: number }) => <span>{age}y old</span>,
+    render: AgeComponent,
     getProps: ({ getState }) => ({ age: getState().age }),
   });
 
-  mountPlugins();
+  loadPlugins();
 
-  const wrapper = create(<Slot name="root" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-<span>
-  29
-  y old
-</span>
-`);
+  const renderer = create(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
 it('calls getProps with slot props', () => {
   const { plug } = registerPlugin({ name: 'test' });
   plug({
     slotName: 'root',
-    render: ({ age }: { age: number }) => <span>{age}y old</span>,
+    render: AgeComponent,
     getProps: (context, slotProps) => ({ age: slotProps.age }),
   });
 
-  mountPlugins();
+  loadPlugins();
 
-  const wrapper = create(<Slot name="root" props={{ age: 29 }} />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-<span>
-  29
-  y old
-</span>
-`);
+  const renderer = create(<Slot name="root" props={{ age: 29 }} />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
+
+it('updates plug on plugin state change', async () => {
+  const { init, plug } = registerPlugin({
+    name: 'test',
+    initialState: { age: 29 },
+  });
+
+  init(({ setState }) => {
+    setTimeout(() => {
+      setState({ age: 30 });
+    });
+  });
+
+  plug({
+    slotName: 'root',
+    render: AgeComponent,
+    getProps: ({ getState }) => ({ age: getState().age }),
+  });
+
+  loadPlugins();
+
+  const renderer = create(<Slot name="root" />);
+  await retry(() => {
+    // expect().toMatchInlineSnapshot can't be placed inside async retry()
+    expect(getAgeProp(renderer)).toEqual(30);
+  });
+});
+
+function getAgeProp(renderer: ReactTestRenderer) {
+  return renderer.root.findByType(AgeComponent).props.age;
+}

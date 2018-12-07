@@ -13,8 +13,8 @@ it('calls the consumer render fn with plugin list', () => {
   register(<Plugin name="Terry Jones" />);
   register(<Plugin name="Michael Palin" />);
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones, Michael Palin"`,
   );
 });
@@ -27,8 +27,8 @@ it('calls the consumer render fn with enabled plugin list', () => {
   disablePlugin(register(<Plugin name="Terry Jones" />).id);
   disablePlugin(register(<Plugin name="Michael Palin" />).id);
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`,
   );
 });

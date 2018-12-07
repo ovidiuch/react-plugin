@@ -21,8 +21,8 @@ it('takes slot away from other plugins', () => {
     </Plugin>,
   );
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I was here first"`);
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here first"`);
 });
 
 function Root() {

@@ -19,8 +19,8 @@ it('overrides plug previously applied on same slot', () => {
     </Plugin>,
   );
 
-  const wrapper = create(<Root />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`"I was here second"`);
+  const renderer = create(<Root />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here second"`);
 });
 
 function Root() {

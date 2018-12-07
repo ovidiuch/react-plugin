@@ -27,8 +27,8 @@ it('accumulates children from separate plugs', () => {
   registerButton({ name: 'about', label: 'About' });
   registerButton({ name: 'contact', label: 'Contact' });
 
-  const wrapper = create(<Slot name="buttons" />);
-  expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+  const renderer = create(<Slot name="buttons" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <button>
     Home
