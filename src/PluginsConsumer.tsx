@@ -1,55 +1,39 @@
 import * as React from 'react';
-import {
-  disablePlugin,
-  enablePlugin,
-  getPlugins,
-  IPlugin,
-  PluginId,
-} from './store';
+import { enablePlugin, getPlugins, IPlugin, reloadPlugins } from 'ui-plugin';
 
 interface IProps {
   children: (
-    args: {
-      plugins: Array<IPlugin & { enable: () => void; disable: () => void }>;
-    },
+    plugins: Array<{
+      name: string;
+      plugin: IPlugin;
+      enable: () => void;
+      disable: () => void;
+    }>,
   ) => React.ReactNode;
 }
 
-interface IState {
-  plugins: IPlugin[];
-}
-
-export class PluginsConsumer extends React.Component<IProps, IState> {
-  state = {
-    plugins: getPlugins(),
+export class PluginsConsumer extends React.Component<IProps> {
+  createEnableHandler = (pluginName: string) => () => {
+    enablePlugin(pluginName, true);
+    reloadPlugins();
   };
 
-  createEnableHandler = (pluginId: PluginId) => () => {
-    enablePlugin(pluginId);
-    this.updatePlugins();
-  };
-
-  createDisableHandler = (pluginId: PluginId) => () => {
-    disablePlugin(pluginId);
-    this.updatePlugins();
+  createDisableHandler = (pluginName: string) => () => {
+    enablePlugin(pluginName, false);
+    reloadPlugins();
   };
 
   render() {
-    const { children } = this.props;
-    const { plugins } = this.state;
+    const plugins = getPlugins();
+    const pluginNames = Object.keys(plugins);
 
-    return children({
-      plugins: plugins.map(plugin => ({
-        ...plugin,
-        enable: this.createEnableHandler(plugin.id),
-        disable: this.createDisableHandler(plugin.id),
+    return this.props.children(
+      pluginNames.map(pluginName => ({
+        name: pluginName,
+        plugin: plugins[pluginName],
+        enable: this.createEnableHandler(pluginName),
+        disable: this.createDisableHandler(pluginName),
       })),
-    });
-  }
-
-  updatePlugins() {
-    this.setState({
-      plugins: getPlugins(),
-    });
+    );
   }
 }
