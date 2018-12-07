@@ -43,6 +43,7 @@ export class PlugConnect extends React.Component<IProps, object> {
 
     // NOTE: This can be optimized. We can avoid running plug.getProps when
     // relevant state hasn't changed.
+    // TODO: What about annonymous "dispatch" function props?
     if (!isEqual(newProps, this.state)) {
       this.setState(newProps);
     }
