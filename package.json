@@ -21,7 +21,7 @@
     "array-find-index": "^1.0.2",
     "lodash": "^4.17.11",
     "react-is": "^16.6.3",
-    "ui-plugin": "^1.0.0-alpha.2"
+    "ui-plugin": "^1.0.0-alpha.3"
   },
   "devDependencies": {
     "@skidding/async-retry": "^1.0.2",
