@@ -5,5 +5,5 @@
 - [x] s/wrapper/renderer
 - [x] Only render plugs of enabled plugins
 - [x] Support children in plugs
-- [ ] Publish Flow types
+- [x] Publish Flow types
 - [ ] Handle "dispatch" props in getProps (avoid re-rendering because anonymous function gets created on every getProps call)
