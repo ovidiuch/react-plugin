@@ -2,7 +2,7 @@ import { IPluginDef, registerPlugin as registerUiPlugin } from 'ui-plugin';
 import { addPlug } from './pluginStore';
 import { IRenderableWithProps } from './shared';
 
-export interface IPlugDef<
+interface IPlugDef<
   PluginConfig extends object,
   PluginState,
   ComponentProps extends object
