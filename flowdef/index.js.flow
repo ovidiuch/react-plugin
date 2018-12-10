@@ -1,0 +1,54 @@
+// @flow
+// tslint:disable
+
+import type { IPluginContext, IPluginDef, IPluginApi } from 'ui-plugin';
+
+type Renderable<ComponentProps> =
+  | React$ComponentType<ComponentProps>
+  | React$Element<any>
+  | string;
+
+type IRenderableWithProps<PluginConfig: {}, PluginState, ComponentProps: {}> = {
+  render: Renderable<$Shape<ComponentProps & { children: React$Node }>>,
+  getProps?: GetProps<PluginConfig, PluginState, ComponentProps>,
+};
+
+type GetProps<
+  PluginConfig: {} = any,
+  PluginState = any,
+  ComponentProps: {} = any,
+> = (
+  context: IPluginContext<PluginConfig, PluginState>,
+  slotProps: { [key: string]: any },
+) => ComponentProps;
+
+type IPlugDef<
+  PluginConfig: {},
+  PluginState,
+  ComponentProps: {},
+> = IRenderableWithProps<PluginConfig, PluginState, ComponentProps> & {
+  slotName: string,
+};
+
+type IReactPluginApi<PluginConfig: {}, PluginState> = IPluginApi<
+  PluginConfig,
+  PluginState,
+> & {
+  plug: <ComponentProps: {}>(
+    plugDef: IPlugDef<PluginConfig, PluginState, ComponentProps>,
+  ) => void,
+};
+
+export type { IPluginContext } from 'ui-plugin';
+
+declare export function registerPlugin<PluginConfig: {}, PluginState>(
+  pluginDef: IPluginDef<PluginConfig, PluginState>,
+): IReactPluginApi<PluginConfig, PluginState>;
+
+declare export var Slot: React$ComponentType<{
+  name: string,
+  children?: React$Node,
+  props?: {},
+}>;
+
+declare export { resetPlugins, loadPlugins } from 'ui-plugin';
