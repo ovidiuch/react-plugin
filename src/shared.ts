@@ -5,6 +5,15 @@ export type Renderable<ComponentProps> =
   | React.ReactElement<any>
   | string;
 
+export interface IRenderableWithProps<
+  PluginConfig extends object,
+  PluginState,
+  ComponentProps extends object
+> {
+  render: Renderable<ComponentProps & { children: React.ReactNode }>;
+  getProps?: GetProps<PluginConfig, PluginState, ComponentProps>;
+}
+
 export type GetProps<
   PluginConfig extends object = any,
   PluginState = any,
@@ -18,10 +27,8 @@ export interface IPlug<
   PluginConfig extends object = any,
   PluginState = any,
   ComponentProps extends object = any
-> {
+> extends IRenderableWithProps<PluginConfig, PluginState, ComponentProps> {
   pluginName: string;
-  render: Renderable<ComponentProps>;
-  getProps?: GetProps<PluginConfig, PluginState, ComponentProps>;
 }
 
 export interface IPlugs {

@@ -1,6 +1,14 @@
 import { IPluginDef, registerPlugin as registerUiPlugin } from 'ui-plugin';
 import { addPlug } from './pluginStore';
-import { GetProps, Renderable } from './shared';
+import { IRenderableWithProps } from './shared';
+
+export interface IPlugDef<
+  PluginConfig extends object,
+  PluginState,
+  ComponentProps extends object
+> extends IRenderableWithProps<PluginConfig, PluginState, ComponentProps> {
+  slotName: string;
+}
 
 export function registerPlugin<PluginConfig extends object, PluginState>(
   pluginDef: IPluginDef<PluginConfig, PluginState>,
@@ -11,11 +19,7 @@ export function registerPlugin<PluginConfig extends object, PluginState>(
     slotName,
     render,
     getProps,
-  }: {
-    slotName: string;
-    render: Renderable<ComponentProps>;
-    getProps?: GetProps<PluginConfig, PluginState, ComponentProps>;
-  }) {
+  }: IPlugDef<PluginConfig, PluginState, ComponentProps>) {
     addPlug(slotName, { pluginName: pluginDef.name, render, getProps });
   }
 
