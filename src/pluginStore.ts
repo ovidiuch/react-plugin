@@ -9,8 +9,12 @@ export function resetPlugins() {
 
 export function getPlugs(slotName: string) {
   const { plugs } = getGlobalStore();
-
   const plugins = getPlugins();
+
+  if (!plugs[slotName]) {
+    return [];
+  }
+
   const enabledPluginNames = Object.keys(plugins).filter(
     pluginName => plugins[pluginName].enabled,
   );
@@ -20,19 +24,12 @@ export function getPlugs(slotName: string) {
   );
 }
 
-export function addPlug(
-  slotName: string,
-  { pluginName, render, getProps }: IPlug,
-) {
+export function addPlug(slotName: string, plug: IPlug) {
   const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {
     plugs[slotName] = [];
   }
 
-  plugs[slotName].push({
-    pluginName,
-    render,
-    getProps,
-  });
+  plugs[slotName].push(plug);
 }
