@@ -1,6 +1,6 @@
 import { getPlugins, resetPlugins as resetUiPlugins } from 'ui-plugin';
+import { IPlug } from '../shared';
 import { getGlobalStore } from './global';
-import { IPlug } from './shared';
 
 export function resetPlugins() {
   resetUiPlugins();
