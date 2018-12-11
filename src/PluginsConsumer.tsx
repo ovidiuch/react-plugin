@@ -3,23 +3,14 @@ import { enablePlugin, getPlugins, IPlugin, reloadPlugins } from 'ui-plugin';
 
 interface IProps {
   children: (
-    plugins: Array<{
-      name: string;
-      plugin: IPlugin;
-      enable: () => void;
-      disable: () => void;
-    }>,
+    plugins: IPlugin[],
+    enable: (pluginName: string, enabled: boolean) => void,
   ) => React.ReactNode;
 }
 
 export class PluginsConsumer extends React.Component<IProps> {
-  createEnableHandler = (pluginName: string) => () => {
-    enablePlugin(pluginName, true);
-    reloadPlugins();
-  };
-
-  createDisableHandler = (pluginName: string) => () => {
-    enablePlugin(pluginName, false);
+  handleEnable = (pluginName: string, enabled: boolean) => {
+    enablePlugin(pluginName, enabled);
     reloadPlugins();
   };
 
@@ -28,12 +19,8 @@ export class PluginsConsumer extends React.Component<IProps> {
     const pluginNames = Object.keys(plugins);
 
     return this.props.children(
-      pluginNames.map(pluginName => ({
-        name: pluginName,
-        plugin: plugins[pluginName],
-        enable: this.createEnableHandler(pluginName),
-        disable: this.createDisableHandler(pluginName),
-      })),
+      pluginNames.map(pluginName => plugins[pluginName]),
+      this.handleEnable,
     );
   }
 }

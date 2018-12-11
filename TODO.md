@@ -6,4 +6,5 @@
 - [x] Only render plugs of enabled plugins
 - [x] Support children in plugs
 - [x] Publish Flow types
+- [ ] Export types for PluginsConsumer
 - [ ] Handle "dispatch" props in getProps (avoid re-rendering because anonymous function gets created on every getProps call)
