@@ -37,7 +37,7 @@ function EnabledPluginNames() {
     <PluginsConsumer>
       {plugins =>
         plugins
-          .filter(({ plugin }) => plugin.enabled)
+          .filter(({ enabled }) => enabled)
           .map(({ name }) => name)
           .join(', ')
       }
