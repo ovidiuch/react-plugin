@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { PluginsConsumer, registerPlugin, resetPlugins } from '..';
+import { loadPlugins, PluginsConsumer, registerPlugin, resetPlugins } from '..';
 
 afterEach(resetPlugins);
 
 it('updates plugins from consumer methods', () => {
   registerPlugin({ name: 'Snoop Dogg' });
   registerPlugin({ name: 'Wiz Khalifa' });
+  loadPlugins();
 
   const renderer = create(<PluginList />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
@@ -29,7 +30,6 @@ Array [
   snoop.props.onClick();
   wiz.props.onClick();
 
-  renderer.update(<PluginList />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
