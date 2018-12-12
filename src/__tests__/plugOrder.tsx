@@ -6,19 +6,9 @@ afterEach(resetPlugins);
 
 it('composes plugs registered inside-out', () => {
   registerPreviewIframe();
-
-  // Assert checkpoint
-  const renderer = create(<Slot name="root" />);
-  expect(renderer.toJSON()).toMatchInlineSnapshot(`
-<iframe
-  src="_loader.html"
-/>
-`);
-
   registerNav();
 
-  // Assert final composition
-  renderer.update(<Slot name="root" />);
+  const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <div>
   <div
@@ -33,21 +23,9 @@ it('composes plugs registered inside-out', () => {
 
 it('composes plugs registered outside-in', () => {
   registerNav();
-  const renderer = create(<Slot name="root" />);
-
-  // Assert checkpoint
-  expect(renderer.toJSON()).toMatchInlineSnapshot(`
-<div>
-  <div
-    className="nav"
-  />
-</div>
-`);
-
   registerPreviewIframe();
 
-  // Assert final composition
-  renderer.update(<Slot name="root" />);
+  const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 <div>
   <div

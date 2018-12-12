@@ -1,10 +1,6 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import {
-  addStateHandler,
-  getPluginContext,
-  removeStateHandler,
-} from 'ui-plugin';
+import { getPluginContext, onStateChange } from 'ui-plugin';
 import { GetProps } from '../shared';
 
 interface IProps {
@@ -15,27 +11,33 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-export class PlugConnect extends React.Component<IProps, object> {
-  state = this.getPlugProps();
+interface IState {
+  plugProps: object;
+}
+
+export class PlugConnect extends React.Component<IProps, IState> {
+  state = {
+    plugProps: this.getPlugProps(),
+  };
+
+  removeStateChangeHandler: null | (() => unknown) = null;
 
   render() {
     const { component, children } = this.props;
+    const { plugProps } = this.state;
 
-    return React.createElement(component, this.state, children);
+    return React.createElement(component, plugProps, children);
   }
 
   componentDidMount() {
-    addStateHandler({
-      pluginName: this.props.pluginName,
-      handler: this.handleStateChange,
-    });
+    this.removeStateChangeHandler = onStateChange(this.handleStateChange);
   }
 
   componentWillUnmount() {
-    removeStateHandler({
-      pluginName: this.props.pluginName,
-      handler: this.handleStateChange,
-    });
+    if (this.removeStateChangeHandler) {
+      this.removeStateChangeHandler();
+      this.removeStateChangeHandler = null;
+    }
   }
 
   handleStateChange = () => {
@@ -44,8 +46,8 @@ export class PlugConnect extends React.Component<IProps, object> {
     // NOTE: This can be optimized. We can avoid running plug.getProps when
     // relevant state hasn't changed.
     // TODO: What about annonymous "dispatch" function props?
-    if (!isEqual(newProps, this.state)) {
-      this.setState(newProps);
+    if (!isEqual(newProps, this.state.plugProps)) {
+      this.setState({ plugProps: newProps });
     }
   };
 
