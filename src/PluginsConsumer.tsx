@@ -1,5 +1,6 @@
+import { isEqual } from 'lodash';
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin } from 'ui-plugin';
+import { enablePlugin, getPlugins, IPlugin, onPluginChange } from 'ui-plugin';
 
 interface IProps {
   children: (
@@ -8,18 +9,51 @@ interface IProps {
   ) => React.ReactNode;
 }
 
-export class PluginsConsumer extends React.Component<IProps> {
+interface IState {
+  plugins: IPlugin[];
+}
+
+export class PluginsConsumer extends React.Component<IProps, IState> {
+  state = {
+    plugins: getPluginList(),
+  };
+
+  removePluginChangeHandler: null | (() => unknown) = null;
+
+  render() {
+    const { children } = this.props;
+    const { plugins } = this.state;
+
+    return children(plugins, this.handleEnable);
+  }
+
+  componentDidMount() {
+    this.removePluginChangeHandler = onPluginChange(this.handlePluginChange);
+  }
+
+  componentWillUnmount() {
+    if (this.removePluginChangeHandler) {
+      this.removePluginChangeHandler();
+      this.removePluginChangeHandler = null;
+    }
+  }
+
+  handlePluginChange = () => {
+    const newPlugins = getPluginList();
+
+    if (!isEqual(newPlugins, this.state.plugins)) {
+      this.setState({ plugins: newPlugins });
+    }
+  };
+
   handleEnable = (pluginName: string, enabled: boolean) => {
     enablePlugin(pluginName, enabled);
   };
+}
 
-  render() {
-    const plugins = getPlugins();
-    const pluginNames = Object.keys(plugins);
+function getPluginList() {
+  const plugins = getPlugins();
+  const pluginNames = Object.keys(plugins);
 
-    return this.props.children(
-      pluginNames.map(pluginName => plugins[pluginName]),
-      this.handleEnable,
-    );
-  }
+  return pluginNames.map(pluginName => plugins[pluginName]);
 }
