@@ -61,10 +61,6 @@ export class Slot extends React.Component<IProps, IState> {
     );
   }
 
-  shouldComponentUpdate(nextProps: IProps, nextState: IState) {
-    return !isEqual(nextState.plugs, this.state.plugs);
-  }
-
   componentDidMount() {
     this.removePluginChangeHandler = onPluginChange(this.handlePluginChange);
   }
@@ -77,7 +73,11 @@ export class Slot extends React.Component<IProps, IState> {
   }
 
   handlePluginChange = () => {
-    this.setState({ plugs: getPlugs(this.props.name) });
+    const newPlugs = getPlugs(this.props.name);
+
+    if (!isEqual(newPlugs, this.state.plugs)) {
+      this.setState({ plugs: newPlugs });
+    }
   };
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin, reloadPlugins } from 'ui-plugin';
+import { enablePlugin, getPlugins, IPlugin } from 'ui-plugin';
 
 interface IProps {
   children: (
@@ -11,7 +11,6 @@ interface IProps {
 export class PluginsConsumer extends React.Component<IProps> {
   handleEnable = (pluginName: string, enabled: boolean) => {
     enablePlugin(pluginName, enabled);
-    reloadPlugins();
   };
 
   render() {
