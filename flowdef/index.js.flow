@@ -1,7 +1,12 @@
 // @flow
 // tslint:disable
 
-import type { IPluginContext, IPluginDef, IPluginApi } from 'ui-plugin';
+import type {
+  IPlugin,
+  IPluginContext,
+  IPluginDef,
+  IPluginApi,
+} from 'ui-plugin';
 
 type Renderable<ComponentProps> =
   | React$ComponentType<ComponentProps>
@@ -49,6 +54,13 @@ declare export var Slot: React$ComponentType<{
   name: string,
   children?: React$Node,
   props?: {},
+}>;
+
+declare export var PluginsConsumer: React$ComponentType<{
+  children: (
+    plugins: IPlugin[],
+    enable: (pluginName: string, enabled: boolean) => void,
+  ) => React$Node,
 }>;
 
 declare export { resetPlugins, loadPlugins } from 'ui-plugin';
