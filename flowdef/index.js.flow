@@ -46,6 +46,8 @@ type IReactPluginApi<PluginConfig: {}, PluginState> = IPluginApi<
 
 export type { IPluginContext } from 'ui-plugin';
 
+declare export function resetPlugins(): void;
+
 declare export function registerPlugin<PluginConfig: {}, PluginState>(
   pluginDef: IPluginDef<PluginConfig, PluginState>,
 ): IReactPluginApi<PluginConfig, PluginState>;
@@ -63,4 +65,9 @@ declare export var PluginsConsumer: React$ComponentType<{
   ) => React$Node,
 }>;
 
-declare export { resetPlugins, loadPlugins } from 'ui-plugin';
+declare export {
+  enablePlugin,
+  getPluginContext,
+  loadPlugins,
+  onStateChange,
+} from 'ui-plugin';
