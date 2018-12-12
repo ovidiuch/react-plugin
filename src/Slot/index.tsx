@@ -1,6 +1,8 @@
 import createLinkedList from '@skidding/linked-list';
+import { isEqual } from 'lodash';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
+import { onPluginChange } from 'ui-plugin';
 import { getPlugs } from '../pluginStore';
 import { IPlug } from '../shared';
 import { getSlotContext } from './contexts';
@@ -12,12 +14,22 @@ interface IProps {
   props?: object;
 }
 
-export class Slot extends React.Component<IProps> {
+interface IState {
+  plugs: IPlug[];
+}
+
+export class Slot extends React.Component<IProps, IState> {
+  state = {
+    plugs: getPlugs(this.props.name),
+  };
+
+  removePluginChangeHandler: null | (() => unknown) = null;
+
   render() {
     const { name, children, props = {} } = this.props;
+    const { plugs } = this.state;
     const { Provider, Consumer } = getSlotContext(name);
 
-    const plugs = getPlugs(name);
     if (!plugs) {
       // No plugs are registered for this slot in this render-cycle. Plugs
       // for this slot may be registered later.
@@ -48,6 +60,25 @@ export class Slot extends React.Component<IProps> {
       </Consumer>
     );
   }
+
+  shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+    return !isEqual(nextState.plugs, this.state.plugs);
+  }
+
+  componentDidMount() {
+    this.removePluginChangeHandler = onPluginChange(this.handlePluginChange);
+  }
+
+  componentWillUnmount() {
+    if (this.removePluginChangeHandler) {
+      this.removePluginChangeHandler();
+      this.removePluginChangeHandler = null;
+    }
+  }
+
+  handlePluginChange = () => {
+    this.setState({ plugs: getPlugs(this.props.name) });
+  };
 }
 
 function getPlugNode(
