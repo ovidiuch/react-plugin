@@ -1,7 +1,6 @@
 import retry from '@skidding/async-retry';
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { reloadPlugins } from 'ui-plugin';
 import {
   enablePlugin,
   loadPlugins,
@@ -54,14 +53,11 @@ it('renders plug after enabling plugin at run time', async () => {
     render: HelloWorld,
   });
 
-  const renderer = create(<div />);
-  loadPlugins({}, () => {
-    renderer.update(<Slot name="root" />);
-  });
+  loadPlugins();
+  const renderer = create(<Slot name="root" />);
 
   setTimeout(() => {
     enablePlugin('test', true);
-    reloadPlugins();
   });
 
   await retry(() => expect(renderer.root.findByType(HelloWorld)).toBeTruthy());
