@@ -20,10 +20,6 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
 
   removePluginChangeHandler: null | (() => unknown) = null;
 
-  handleEnable = (pluginName: string, enabled: boolean) => {
-    enablePlugin(pluginName, enabled);
-  };
-
   render() {
     const { children } = this.props;
     const { plugins } = this.state;
@@ -48,6 +44,10 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     if (!isEqual(newPlugins, this.state.plugins)) {
       this.setState({ plugins: newPlugins });
     }
+  };
+
+  handleEnable = (pluginName: string, enabled: boolean) => {
+    enablePlugin(pluginName, enabled);
   };
 }
 
