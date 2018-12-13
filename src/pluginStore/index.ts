@@ -1,4 +1,8 @@
-import { getPlugins, resetPlugins as resetUiPlugins } from 'ui-plugin';
+import {
+  getLoadedScope,
+  getPlugins,
+  resetPlugins as resetUiPlugins,
+} from 'ui-plugin';
 import { IPlug } from '../shared';
 import { getGlobalStore } from './global';
 
@@ -25,6 +29,12 @@ export function getPlugs(slotName: string) {
 }
 
 export function registerPlug(slotName: string, plug: IPlug) {
+  const loadedScope = getLoadedScope();
+
+  if (loadedScope && loadedScope.plugins[plug.pluginName]) {
+    throw new Error('Registered plug after plugin loaded');
+  }
+
   const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {
