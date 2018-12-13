@@ -24,7 +24,7 @@ export function getPlugs(slotName: string) {
   );
 }
 
-export function addPlug(slotName: string, plug: IPlug) {
+export function registerPlug(slotName: string, plug: IPlug) {
   const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {

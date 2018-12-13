@@ -5,7 +5,7 @@ import type {
   IPlugin,
   IPluginContext,
   IPluginDef,
-  IPluginApi,
+  IPluginApi as IVanillaPluginApi,
 } from 'ui-plugin';
 
 type Renderable<ComponentProps> =
@@ -35,7 +35,7 @@ type IPlugDef<
   slotName: string,
 };
 
-type IReactPluginApi<PluginConfig: {}, PluginState> = IPluginApi<
+type IPluginApi<PluginConfig: {}, PluginState> = IVanillaPluginApi<
   PluginConfig,
   PluginState,
 > & {
@@ -44,13 +44,17 @@ type IReactPluginApi<PluginConfig: {}, PluginState> = IPluginApi<
   ) => void,
 };
 
-export type { IPluginContext } from 'ui-plugin';
+export type { IPlugin, IPluginContext } from 'ui-plugin';
 
 declare export function resetPlugins(): void;
 
+declare export function getPluginApi<PluginConfig: {}, PluginState>(
+  pluginName: string,
+): IPluginApi<PluginConfig, PluginState>;
+
 declare export function registerPlugin<PluginConfig: {}, PluginState>(
   pluginDef: IPluginDef<PluginConfig, PluginState>,
-): IReactPluginApi<PluginConfig, PluginState>;
+): IPluginApi<PluginConfig, PluginState>;
 
 declare export var Slot: React$ComponentType<{
   name: string,

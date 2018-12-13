@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
@@ -21,7 +21,7 @@
     "array-find-index": "^1.0.2",
     "lodash": "^4.17.11",
     "react-is": "^16.6.3",
-    "ui-plugin": "^1.0.0-alpha.8"
+    "ui-plugin": "^1.0.0-alpha.11"
   },
   "devDependencies": {
     "@skidding/async-retry": "^1.0.2",
