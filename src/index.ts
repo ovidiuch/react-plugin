@@ -1,6 +1,7 @@
 export {
   enablePlugin,
   getPluginContext,
+  getPlugins,
   IPlugin,
   IPluginContext,
   loadPlugins,

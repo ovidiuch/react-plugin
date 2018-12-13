@@ -71,6 +71,7 @@ declare export var PluginsConsumer: React$ComponentType<{
 
 declare export {
   enablePlugin,
+  getPlugins,
   getPluginContext,
   loadPlugins,
   onStateChange,
