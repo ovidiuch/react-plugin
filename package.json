@@ -27,7 +27,7 @@
     "@skidding/async-retry": "^1.0.2",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.119",
-    "@types/react": "^16.7.17",
+    "@types/react": "^16.7.13",
     "@types/react-is": "^16.5.0",
     "@types/react-test-renderer": "^16.0.3",
     "jest": "^23.6.0",
