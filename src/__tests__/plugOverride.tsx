@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { loadPlugins } from 'ui-plugin';
 import { registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -18,6 +19,8 @@ it('overrides plug previously applied on same slot', () => {
     slotName: 'root',
     render: 'I was here second',
   });
+
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here second"`);

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { loadPlugins } from 'ui-plugin';
 import { registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -23,6 +24,8 @@ it('decorates any future plugs applied on same slot', () => {
     slotName: 'root',
     render: <span>I was here second</span>,
   });
+
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`

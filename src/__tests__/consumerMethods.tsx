@@ -69,8 +69,8 @@ function PluginList() {
   return (
     <PluginsConsumer>
       {(plugins, enable) =>
-        plugins.map(({ name, enabled }) => (
-          <p key={name} onClick={() => enable(name, !enabled)}>
+        plugins.map(({ id, name, enabled }) => (
+          <p key={id} onClick={() => enable(id, !enabled)}>
             {`${enabled ? '[x]' : '[ ]'} ${name}`}
           </p>
         ))

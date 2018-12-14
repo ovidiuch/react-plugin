@@ -1,11 +1,17 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin, onPluginChange } from 'ui-plugin';
+import {
+  enablePlugin,
+  getPlugins,
+  IPlugin,
+  onPluginChange,
+  PluginId,
+} from 'ui-plugin';
 
 interface IProps {
   children: (
     plugins: IPlugin[],
-    enable: (pluginName: string, enabled: boolean) => void,
+    enable: (pluginId: PluginId, enabled: boolean) => void,
   ) => React.ReactNode;
 }
 
@@ -46,14 +52,14 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     }
   };
 
-  handleEnable = (pluginName: string, enabled: boolean) => {
-    enablePlugin(pluginName, enabled);
+  handleEnable = (pluginId: PluginId, enabled: boolean) => {
+    enablePlugin(pluginId, enabled);
   };
 }
 
 function getPluginList() {
   const plugins = getPlugins();
-  const pluginNames = Object.keys(plugins);
+  const pluginIds = Object.keys(plugins);
 
-  return pluginNames.map(pluginName => plugins[pluginName]);
+  return pluginIds.map(pluginId => plugins[Number(pluginId)]);
 }
