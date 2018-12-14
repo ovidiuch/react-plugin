@@ -62,7 +62,7 @@ it('calls the consumer render fn with enabled plugin list', () => {
 function EnabledPluginNames() {
   return (
     <PluginsConsumer>
-      {plugins =>
+      {({ plugins }) =>
         plugins
           .filter(({ enabled }) => enabled)
           .map(({ name }) => name)

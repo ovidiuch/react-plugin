@@ -2,6 +2,7 @@
 // tslint:disable
 
 import type {
+  PluginId,
   IPlugin,
   IPluginContext,
   IPluginDef,
@@ -49,7 +50,7 @@ export type { IPlugin, IPluginContext } from 'ui-plugin';
 declare export function resetPlugins(): void;
 
 declare export function getPluginApi<PluginConfig: {}, PluginState>(
-  pluginName: string,
+  pluginId: PluginId,
 ): IPluginApi<PluginConfig, PluginState>;
 
 declare export function registerPlugin<PluginConfig: {}, PluginState>(
@@ -63,10 +64,11 @@ declare export var Slot: React$ComponentType<{
 }>;
 
 declare export var PluginsConsumer: React$ComponentType<{
-  children: (
+  children: (props: {
     plugins: IPlugin[],
-    enable: (pluginName: string, enabled: boolean) => void,
-  ) => React$Node,
+    enable: (pluginId: PluginId, enabled: boolean) => void,
+    isShadowed: (pluginId: PluginId) => boolean,
+  }) => React$Node,
 }>;
 
 declare export {

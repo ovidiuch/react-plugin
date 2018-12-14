@@ -10,8 +10,11 @@ import {
 
 interface IProps {
   children: (
-    plugins: IPlugin[],
-    enable: (pluginId: PluginId, enabled: boolean) => void,
+    props: {
+      plugins: IPlugin[];
+      enable: (pluginId: PluginId, enabled: boolean) => void;
+      isShadowed: (pluginId: PluginId) => boolean;
+    },
   ) => React.ReactNode;
 }
 
@@ -30,7 +33,11 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     const { children } = this.props;
     const { plugins } = this.state;
 
-    return children(plugins, this.handleEnable);
+    return children({
+      plugins,
+      enable: this.handleEnable,
+      isShadowed: this.handleIsShadowed,
+    });
   }
 
   componentDidMount() {
@@ -54,6 +61,15 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
 
   handleEnable = (pluginId: PluginId, enabled: boolean) => {
     enablePlugin(pluginId, enabled);
+  };
+
+  handleIsShadowed = (pluginId: PluginId) => {
+    const { plugins } = this.state;
+    const plugin = getPlugins()[pluginId];
+
+    return plugins
+      .slice(plugins.indexOf(plugin) + 1)
+      .some(p => p.name === plugin.name && p.enabled);
   };
 }
 
