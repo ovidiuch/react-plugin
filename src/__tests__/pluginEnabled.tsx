@@ -33,21 +33,21 @@ it('ignores plug of disabled plugin', () => {
 });
 
 it('renders plug after enabling plugin', () => {
-  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  const { pluginId, plug } = registerPlugin({ name: 'test', enabled: false });
   plug({
     slotName: 'root',
     render: HelloWorld,
   });
 
   loadPlugins();
-  enablePlugin('test', true);
+  enablePlugin(pluginId, true);
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.root.findByType(HelloWorld)).toBeTruthy();
 });
 
 it('renders plug after enabling plugin at run time', async () => {
-  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  const { pluginId, plug } = registerPlugin({ name: 'test', enabled: false });
   plug({
     slotName: 'root',
     render: HelloWorld,
@@ -57,7 +57,7 @@ it('renders plug after enabling plugin at run time', async () => {
   const renderer = create(<Slot name="root" />);
 
   setTimeout(() => {
-    enablePlugin('test', true);
+    enablePlugin(pluginId, true);
   });
 
   await retry(() => expect(renderer.root.findByType(HelloWorld)).toBeTruthy());

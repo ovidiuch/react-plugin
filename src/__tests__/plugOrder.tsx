@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { loadPlugins } from 'ui-plugin';
 import { registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -7,6 +8,7 @@ afterEach(resetPlugins);
 it('composes plugs registered inside-out', () => {
   registerPreviewIframe();
   registerNav();
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
@@ -24,6 +26,7 @@ it('composes plugs registered inside-out', () => {
 it('composes plugs registered outside-in', () => {
   registerNav();
   registerPreviewIframe();
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`

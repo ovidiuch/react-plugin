@@ -45,14 +45,14 @@ it('calls the consumer render fn with enabled plugin list', () => {
   registerPlugin({ name: 'John Cleese' });
   registerPlugin({ name: 'Terry Gilliam' });
   registerPlugin({ name: 'Eric Idle' });
-  registerPlugin({ name: 'Terry Jones' });
-  registerPlugin({ name: 'Michael Palin' });
+  const terry = registerPlugin({ name: 'Terry Jones' });
+  const michael = registerPlugin({ name: 'Michael Palin' });
 
   const renderer = create(<EnabledPluginNames />);
   loadPlugins();
 
-  enablePlugin('Terry Jones', false);
-  enablePlugin('Michael Palin', false);
+  enablePlugin(terry.pluginId, false);
+  enablePlugin(michael.pluginId, false);
 
   expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`,
@@ -62,7 +62,7 @@ it('calls the consumer render fn with enabled plugin list', () => {
 function EnabledPluginNames() {
   return (
     <PluginsConsumer>
-      {plugins =>
+      {({ plugins }) =>
         plugins
           .filter(({ enabled }) => enabled)
           .map(({ name }) => name)

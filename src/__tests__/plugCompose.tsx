@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { loadPlugins } from 'ui-plugin';
 import { registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -44,6 +45,8 @@ it('composes with plugs previously applied on same slot', () => {
       </Slot>
     ),
   });
+
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`

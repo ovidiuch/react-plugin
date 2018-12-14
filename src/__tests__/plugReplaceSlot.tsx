@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { registerPlugin, resetPlugins, Slot } from '..';
+import { loadPlugins, registerPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
@@ -19,6 +19,8 @@ it('takes slot away from other (subsequently registered) plugins', () => {
     slotName: 'root',
     render: 'I was here second',
   });
+
+  loadPlugins();
 
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"I was here first"`);

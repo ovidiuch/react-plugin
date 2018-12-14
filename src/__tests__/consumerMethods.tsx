@@ -48,7 +48,6 @@ Array [
   // Bring back Wiz
   wiz.props.onClick();
 
-  renderer.update(<PluginList />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
@@ -65,13 +64,92 @@ Array [
 `);
 });
 
+it('marks plugins as shadowed', () => {
+  registerPlugin({ name: 'Snoop Dogg' });
+  registerPlugin({ name: 'Wiz Khalifa' });
+  registerPlugin({ name: 'Snoop Dogg', enabled: false });
+
+  loadPlugins();
+  const renderer = create(<PluginList />);
+
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
+Array [
+  <p
+    onClick={[Function]}
+  >
+    [x] Snoop Dogg
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [x] Wiz Khalifa
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [ ] Snoop Dogg
+  </p>,
+]
+`);
+
+  // Enable 2nd Snoop
+  const [, , snoop2] = renderer.root.findAllByType('p');
+  snoop2.props.onClick();
+
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
+Array [
+  <p
+    onClick={[Function]}
+  >
+    [x] Snoop Dogg (shadowed)
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [x] Wiz Khalifa
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [x] Snoop Dogg
+  </p>,
+]
+`);
+
+  // Disable 1st Snoop (still shadowed)
+  const [snoop1] = renderer.root.findAllByType('p');
+  snoop1.props.onClick();
+
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`
+Array [
+  <p
+    onClick={[Function]}
+  >
+    [ ] Snoop Dogg (shadowed)
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [x] Wiz Khalifa
+  </p>,
+  <p
+    onClick={[Function]}
+  >
+    [x] Snoop Dogg
+  </p>,
+]
+`);
+});
+
 function PluginList() {
   return (
     <PluginsConsumer>
-      {(plugins, enable) =>
-        plugins.map(({ name, enabled }) => (
-          <p key={name} onClick={() => enable(name, !enabled)}>
-            {`${enabled ? '[x]' : '[ ]'} ${name}`}
+      {({ plugins, enable, isShadowed }) =>
+        plugins.map(({ id, name, enabled }) => (
+          <p key={id} onClick={() => enable(id, !enabled)}>
+            {`${enabled ? '[x]' : '[ ]'} ${name}${
+              isShadowed(id) ? ' (shadowed)' : ''
+            }`}
           </p>
         ))
       }

@@ -1,11 +1,20 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin, onPluginChange } from 'ui-plugin';
+import {
+  enablePlugin,
+  getPlugins,
+  IPlugin,
+  onPluginChange,
+  PluginId,
+} from 'ui-plugin';
 
 interface IProps {
   children: (
-    plugins: IPlugin[],
-    enable: (pluginName: string, enabled: boolean) => void,
+    props: {
+      plugins: IPlugin[];
+      enable: (pluginId: PluginId, enabled: boolean) => void;
+      isShadowed: (pluginId: PluginId) => boolean;
+    },
   ) => React.ReactNode;
 }
 
@@ -24,7 +33,11 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     const { children } = this.props;
     const { plugins } = this.state;
 
-    return children(plugins, this.handleEnable);
+    return children({
+      plugins,
+      enable: this.handleEnable,
+      isShadowed: this.handleIsShadowed,
+    });
   }
 
   componentDidMount() {
@@ -46,14 +59,23 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     }
   };
 
-  handleEnable = (pluginName: string, enabled: boolean) => {
-    enablePlugin(pluginName, enabled);
+  handleEnable = (pluginId: PluginId, enabled: boolean) => {
+    enablePlugin(pluginId, enabled);
+  };
+
+  handleIsShadowed = (pluginId: PluginId) => {
+    const { plugins } = this.state;
+    const plugin = getPlugins()[pluginId];
+
+    return plugins
+      .slice(plugins.indexOf(plugin) + 1)
+      .some(p => p.name === plugin.name && p.enabled);
   };
 }
 
 function getPluginList() {
   const plugins = getPlugins();
-  const pluginNames = Object.keys(plugins);
+  const pluginIds = Object.keys(plugins);
 
-  return pluginNames.map(pluginName => plugins[pluginName]);
+  return pluginIds.map(pluginId => plugins[Number(pluginId)]);
 }

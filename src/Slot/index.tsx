@@ -2,8 +2,8 @@ import createLinkedList from '@skidding/linked-list';
 import { isEqual } from 'lodash';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
-import { onPluginChange } from 'ui-plugin';
-import { getPlugs } from '../pluginStore';
+import { getPlugins, onPluginChange } from 'ui-plugin';
+import { getLoadedPlugsForSlot } from '../pluginStore';
 import { IPlug } from '../shared';
 import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
@@ -20,7 +20,7 @@ interface IState {
 
 export class Slot extends React.Component<IProps, IState> {
   state = {
-    plugs: getPlugs(this.props.name),
+    plugs: getLoadedPlugsForSlot(this.props.name),
   };
 
   removePluginChangeHandler: null | (() => unknown) = null;
@@ -73,7 +73,7 @@ export class Slot extends React.Component<IProps, IState> {
   }
 
   handlePluginChange = () => {
-    const newPlugs = getPlugs(this.props.name);
+    const newPlugs = getLoadedPlugsForSlot(this.props.name);
 
     if (!isEqual(newPlugs, this.state.plugs)) {
       this.setState({ plugs: newPlugs });
@@ -86,7 +86,8 @@ function getPlugNode(
   slotProps: object,
   children?: React.ReactNode,
 ) {
-  const { pluginName, render, getProps } = plug;
+  const { pluginId, render, getProps } = plug;
+  const plugin = getPlugins()[pluginId];
 
   if (typeof render === 'string' || !isValidElementType(render)) {
     return render;
@@ -95,7 +96,7 @@ function getPlugNode(
   if (typeof getProps === 'function') {
     return (
       <PlugConnect
-        pluginName={pluginName}
+        pluginName={plugin.name}
         component={render}
         slotProps={slotProps}
         getProps={getProps}

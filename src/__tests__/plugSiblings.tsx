@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
+import { loadPlugins } from 'ui-plugin';
 import { registerPlugin, resetPlugins, Slot } from '../';
 
 afterEach(resetPlugins);
@@ -26,6 +27,8 @@ it('accumulates children from separate plugs', () => {
   registerButton({ name: 'home', label: 'Home' });
   registerButton({ name: 'about', label: 'About' });
   registerButton({ name: 'contact', label: 'Contact' });
+
+  loadPlugins();
 
   const renderer = create(<Slot name="buttons" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
