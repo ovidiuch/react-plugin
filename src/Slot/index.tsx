@@ -96,7 +96,7 @@ function getPlugNode(
   if (typeof getProps === 'function') {
     return (
       <PlugConnect
-        pluginName={plugin.name}
+        plugin={plugin}
         component={render}
         slotProps={slotProps}
         getProps={getProps}

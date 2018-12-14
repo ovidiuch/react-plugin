@@ -1,10 +1,15 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { getPluginContext, onStateChange } from 'ui-plugin';
+import {
+  getPluginContext,
+  IPlugin,
+  isPluginLoaded,
+  onStateChange,
+} from 'ui-plugin';
 import { GetProps } from '../shared';
 
 interface IProps {
-  pluginName: string;
+  plugin: IPlugin;
   component: React.ComponentType;
   slotProps: object;
   getProps: GetProps;
@@ -41,6 +46,16 @@ export class PlugConnect extends React.Component<IProps, IState> {
   }
 
   handleStateChange = () => {
+    // This check covers a scenario that can't be tested easily. It occurs when
+    // the React renderer is async and Slot's componentWillUnmount is called
+    // asynchronously, which is not the case with react-test-renderer. When
+    // rendering is async, it takes a while for the Slot components to process
+    // plugin changes, so PlugConnect components might receive state changes
+    // for plugins that are no longer enabled.
+    if (!isPluginLoaded(this.props.plugin)) {
+      return;
+    }
+
     const newProps = this.getPlugProps();
 
     // NOTE: This can be optimized. We can avoid running plug.getProps when
@@ -52,8 +67,8 @@ export class PlugConnect extends React.Component<IProps, IState> {
   };
 
   getPlugProps() {
-    const { pluginName, slotProps, getProps } = this.props;
+    const { plugin, slotProps, getProps } = this.props;
 
-    return getProps(getPluginContext(pluginName), slotProps);
+    return getProps(getPluginContext(plugin.name), slotProps);
   }
 }

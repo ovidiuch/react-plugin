@@ -1,6 +1,7 @@
 import {
   getLoadedScope,
   getPlugins,
+  isPluginLoaded,
   PluginId,
   resetPlugins as resetUiPlugins,
 } from 'ui-plugin';
@@ -14,20 +15,14 @@ export function resetPlugins() {
 
 export function getLoadedPlugsForSlot(slotName: string) {
   const { plugs } = getGlobalStore();
-  const loadedScope = getLoadedScope();
 
-  if (!loadedScope || !plugs[slotName]) {
+  if (!plugs[slotName]) {
     return [];
   }
 
-  return plugs[slotName].filter(plug => {
-    const { name } = getPluginById(plug.pluginId);
-
-    return (
-      loadedScope.plugins[name] &&
-      loadedScope.plugins[name].id === plug.pluginId
-    );
-  });
+  return plugs[slotName].filter(plug =>
+    isPluginLoaded(getPluginById(plug.pluginId)),
+  );
 }
 
 export function registerPlug(slotName: string, plug: IPlug) {

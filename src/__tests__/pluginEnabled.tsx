@@ -46,7 +46,7 @@ it('renders plug after enabling plugin', () => {
   expect(renderer.root.findByType(HelloWorld)).toBeTruthy();
 });
 
-it('renders plug after enabling plugin at run time', async () => {
+it('renders plug after enabling loaded plugin', async () => {
   const { pluginId, plug } = registerPlugin({ name: 'test', enabled: false });
   plug({
     slotName: 'root',
