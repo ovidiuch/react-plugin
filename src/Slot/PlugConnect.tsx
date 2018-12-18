@@ -21,6 +21,16 @@ interface IState {
 }
 
 export class PlugConnect extends React.Component<IProps, IState> {
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    const plugProps = getPlugProps(props);
+
+    if (isEqual(plugProps, state.plugProps)) {
+      return null;
+    }
+
+    return { plugProps };
+  }
+
   state = {
     plugProps: this.getPlugProps(),
   };
@@ -60,15 +70,18 @@ export class PlugConnect extends React.Component<IProps, IState> {
 
     // NOTE: This can be optimized. We can avoid running plug.getProps when
     // relevant state hasn't changed.
-    // TODO: What about annonymous "dispatch" function props?
+    // TODO: How to avoid comparing annonymous dispatch-like functions that get
+    // created on every getProps call?
     if (!isEqual(newProps, this.state.plugProps)) {
       this.setState({ plugProps: newProps });
     }
   };
 
   getPlugProps() {
-    const { plugin, slotProps, getProps } = this.props;
-
-    return getProps(getPluginContext(plugin.name), slotProps);
+    return getPlugProps(this.props);
   }
+}
+
+function getPlugProps({ plugin, slotProps, getProps }: IProps) {
+  return getProps(getPluginContext(plugin.name), slotProps);
 }
