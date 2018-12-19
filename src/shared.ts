@@ -14,7 +14,7 @@ export interface IRenderableWithProps<
   PluginState,
   ComponentProps extends object
 > {
-  render: Renderable<ComponentProps & { children: React.ReactNode }>;
+  render: Renderable<ComponentProps & { children?: React.ReactNode }>;
   getProps?: GetProps<PluginConfig, PluginState, ComponentProps>;
 }
 
