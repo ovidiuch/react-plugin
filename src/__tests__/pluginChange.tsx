@@ -7,7 +7,9 @@ import { registerPlugin, resetPlugins, Slot } from '..';
 afterEach(resetPlugins);
 
 function HelloMessage({ name }: { name: string }) {
-  return <>{`Hello ${name}!`}</>;
+  // TS isn't happy with function components returning strings
+  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20544
+  return <>Hello ${name}!</>;
 }
 
 function register(name: string) {
@@ -19,7 +21,7 @@ function register(name: string) {
   });
 }
 
-it('updates plug props', async () => {
+it('updates plug props on plugin change', async () => {
   register('Sara');
 
   loadPlugins();
