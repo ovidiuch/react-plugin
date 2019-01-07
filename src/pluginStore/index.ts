@@ -2,14 +2,19 @@ import {
   getLoadedScope,
   getPlugins,
   isPluginLoaded,
-  PluginId,
   resetPlugins as resetUiPlugins,
+  unregisterPlugins as unregisterUiPlugins,
 } from 'ui-plugin';
 import { IPlug } from '../shared';
 import { getGlobalStore } from './global';
 
 export function resetPlugins() {
   resetUiPlugins();
+  getGlobalStore().plugs = {};
+}
+
+export function unregisterPlugins() {
+  unregisterUiPlugins();
   getGlobalStore().plugs = {};
 }
 
@@ -20,20 +25,14 @@ export function getLoadedPlugsForSlot(slotName: string) {
     return [];
   }
 
-  return plugs[slotName].filter(plug =>
-    isPluginLoaded(getPluginById(plug.pluginId)),
-  );
+  return plugs[slotName].filter(plug => isPluginLoaded(plug.pluginName));
 }
 
 export function registerPlug(slotName: string, plug: IPlug) {
   const loadedScope = getLoadedScope();
-  const { name: pluginName } = getPluginById(plug.pluginId);
+  const { name: pluginName } = getPlugin(plug.pluginName);
 
-  if (
-    loadedScope &&
-    loadedScope.plugins[pluginName] &&
-    loadedScope.plugins[pluginName].id === plug.pluginId
-  ) {
+  if (loadedScope && loadedScope.plugins[pluginName]) {
     throw new Error('Registered plug after plugin loaded');
   }
 
@@ -46,6 +45,6 @@ export function registerPlug(slotName: string, plug: IPlug) {
   plugs[slotName].push(plug);
 }
 
-function getPluginById(pluginId: PluginId) {
-  return getPlugins()[pluginId];
+function getPlugin(pluginName: string) {
+  return getPlugins()[pluginName];
 }

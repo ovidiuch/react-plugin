@@ -12,26 +12,30 @@ function HelloMessage({ name }: { name: string }) {
   return <>Hello ${name}!</>;
 }
 
-function register(name: string) {
-  const { plug } = registerPlugin({ name: 'test', initialState: 'Sara' });
+it('updates plug props on state change', async () => {
+  const { plug, init } = registerPlugin({
+    name: 'test',
+    initialState: 'Sarah',
+  });
+
   plug({
     slotName: 'root',
     render: HelloMessage,
-    getProps: () => ({ name }),
+    getProps: ({ getState }) => ({ name: getState() }),
   });
-}
 
-it('updates plug props on plugin change', async () => {
-  register('Sara');
+  init(({ setState }) => {
+    setTimeout(() => {
+      setState('Sarah D.');
+    });
+  });
 
   loadPlugins();
   const renderer = create(<Slot name="root" />);
 
-  register('Sarah');
-
   await retry(() =>
     // expect().toMatchInlineSnapshot can't be placed inside async retry()
-    expect(getRendereredName(renderer)).toEqual('Sarah'),
+    expect(getRendereredName(renderer)).toEqual('Sarah D.'),
   );
 });
 

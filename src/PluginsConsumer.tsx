@@ -1,19 +1,12 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import {
-  enablePlugin,
-  getPlugins,
-  IPlugin,
-  onPluginChange,
-  PluginId,
-} from 'ui-plugin';
+import { enablePlugin, getPlugins, IPlugin, onPluginChange } from 'ui-plugin';
 
 interface IProps {
   children: (
     props: {
       plugins: IPlugin[];
-      enable: (pluginId: PluginId, enabled: boolean) => void;
-      isShadowed: (pluginId: PluginId) => boolean;
+      enable: (pluginName: string, enabled: boolean) => void;
     },
   ) => React.ReactNode;
 }
@@ -24,7 +17,7 @@ interface IState {
 
 export class PluginsConsumer extends React.Component<IProps, IState> {
   state = {
-    plugins: getPluginList(),
+    plugins: getPluginArray(),
   };
 
   removePluginChangeHandler: null | (() => unknown) = null;
@@ -36,7 +29,6 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
     return children({
       plugins,
       enable: this.handleEnable,
-      isShadowed: this.handleIsShadowed,
     });
   }
 
@@ -52,30 +44,20 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
   }
 
   handlePluginChange = () => {
-    const newPlugins = getPluginList();
+    const newPlugins = getPluginArray();
 
     if (!isEqual(newPlugins, this.state.plugins)) {
       this.setState({ plugins: newPlugins });
     }
   };
 
-  handleEnable = (pluginId: PluginId, enabled: boolean) => {
-    enablePlugin(pluginId, enabled);
-  };
-
-  handleIsShadowed = (pluginId: PluginId) => {
-    const { plugins } = this.state;
-    const plugin = getPlugins()[pluginId];
-
-    return plugins
-      .slice(plugins.indexOf(plugin) + 1)
-      .some(p => p.name === plugin.name && p.enabled);
+  handleEnable = (pluginName: string, enabled: boolean) => {
+    enablePlugin(pluginName, enabled);
   };
 }
 
-function getPluginList() {
-  const plugins = getPlugins();
-  const pluginIds = Object.keys(plugins);
+function getPluginArray() {
+  const allPlugins = getPlugins();
 
-  return pluginIds.map(pluginId => plugins[Number(pluginId)]);
+  return Object.keys(allPlugins).map(pluginName => allPlugins[pluginName]);
 }
