@@ -2,7 +2,7 @@ import createLinkedList from '@skidding/linked-list';
 import { isEqual } from 'lodash';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
-import { getPlugins, onPluginChange } from 'ui-plugin';
+import { onPluginChange } from 'ui-plugin';
 import { getLoadedPlugsForSlot } from '../pluginStore';
 import { IPlug } from '../shared';
 import { getSlotContext } from './contexts';
@@ -87,7 +87,6 @@ function getPlugNode(
   children?: React.ReactNode,
 ) {
   const { pluginName, render, getProps } = plug;
-  const plugin = getPlugins()[pluginName];
 
   if (typeof render === 'string' || !isValidElementType(render)) {
     return render;
@@ -96,7 +95,7 @@ function getPlugNode(
   if (typeof getProps === 'function') {
     return (
       <PlugConnect
-        plugin={plugin}
+        pluginName={pluginName}
         component={render}
         slotProps={slotProps}
         getProps={getProps}

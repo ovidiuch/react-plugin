@@ -1,15 +1,10 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import {
-  getPluginContext,
-  IPlugin,
-  isPluginLoaded,
-  onStateChange,
-} from 'ui-plugin';
+import { getPluginContext, isPluginLoaded, onStateChange } from 'ui-plugin';
 import { GetProps } from '../shared';
 
 interface IProps {
-  plugin: IPlugin;
+  pluginName: string;
   component: React.ComponentType;
   slotProps: object;
   getProps: GetProps;
@@ -62,7 +57,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
     // rendering is async, it takes a while for the Slot components to process
     // plugin changes, so PlugConnect components might receive state changes
     // for plugins that are no longer enabled.
-    if (!isPluginLoaded(this.props.plugin.name)) {
+    if (!isPluginLoaded(this.props.pluginName)) {
       return;
     }
 
@@ -82,6 +77,6 @@ export class PlugConnect extends React.Component<IProps, IState> {
   }
 }
 
-function getPlugProps({ plugin, slotProps, getProps }: IProps) {
-  return getProps(getPluginContext(plugin.name), slotProps);
+function getPlugProps({ pluginName, slotProps, getProps }: IProps) {
+  return getProps(getPluginContext(pluginName), slotProps);
 }
