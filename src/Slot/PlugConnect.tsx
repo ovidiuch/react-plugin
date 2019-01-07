@@ -19,7 +19,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
   static getDerivedStateFromProps(props: IProps, state: IState) {
     const plugProps = getPlugProps(props);
 
-    if (isEqual(plugProps, state.plugProps)) {
+    if (plugPropsEqual(plugProps, state.plugProps)) {
       return null;
     }
 
@@ -67,7 +67,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
     // relevant state hasn't changed.
     // TODO: How to avoid comparing annonymous dispatch-like functions that get
     // created on every getProps call?
-    if (!isEqual(newProps, this.state.plugProps)) {
+    if (!plugPropsEqual(newProps, this.state.plugProps)) {
       this.setState({ plugProps: newProps });
     }
   };
@@ -79,4 +79,9 @@ export class PlugConnect extends React.Component<IProps, IState> {
 
 function getPlugProps({ pluginName, slotProps, getProps }: IProps) {
   return getProps(getPluginContext(pluginName), slotProps);
+}
+
+function plugPropsEqual(plugProps1: object, plugProps2: object) {
+  // IDEA: Assume functions with same name are equal
+  return isEqual(plugProps1, plugProps2);
 }
