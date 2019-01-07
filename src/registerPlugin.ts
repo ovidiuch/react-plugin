@@ -6,5 +6,5 @@ export function registerPlugin<PluginConfig extends object, PluginState>(
 ) {
   const plugin = createPlugin(pluginDef);
 
-  return getPluginApi<PluginConfig, PluginState>(plugin.id);
+  return getPluginApi<PluginConfig, PluginState>(plugin.name);
 }

@@ -62,7 +62,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
     // rendering is async, it takes a while for the Slot components to process
     // plugin changes, so PlugConnect components might receive state changes
     // for plugins that are no longer enabled.
-    if (!isPluginLoaded(this.props.plugin)) {
+    if (!isPluginLoaded(this.props.plugin.name)) {
       return;
     }
 

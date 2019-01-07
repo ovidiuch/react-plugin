@@ -86,8 +86,8 @@ function getPlugNode(
   slotProps: object,
   children?: React.ReactNode,
 ) {
-  const { pluginId, render, getProps } = plug;
-  const plugin = getPlugins()[pluginId];
+  const { pluginName, render, getProps } = plug;
+  const plugin = getPlugins()[pluginName];
 
   if (typeof render === 'string' || !isValidElementType(render)) {
     return render;

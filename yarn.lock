@@ -3227,10 +3227,10 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-ui-plugin@^1.0.0-alpha.20:
-  version "1.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.20.tgz#c4f37518d94155c522c581db74ca2fc007dfdbbe"
-  integrity sha512-fed1QtPMhpG0jmOPUQuquei1yOK3+118GQzzmRbX2wM5uLmWl9Pp8hhk3U96YBzCUrSS/7VKx7jjQ9w5y8QgGw==
+ui-plugin@^1.0.0-alpha.21:
+  version "1.0.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-1.0.0-alpha.21.tgz#addc35c8635317cbc19ce9c4ce3a9819b4430f9a"
+  integrity sha512-aPzl6J9Mg174OQh+909rgOXso6FTmXSeQGvPnLDXon1vdW1z5rimWTCiwIhVyO0+cAaVVNgezWqfcWP1lYzffw==
   dependencies:
     lodash "^4.17.11"
 

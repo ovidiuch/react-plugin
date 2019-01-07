@@ -1,8 +1,4 @@
-import {
-  IPluginApi as IVanillaPluginApi,
-  IPluginContext,
-  PluginId,
-} from 'ui-plugin';
+import { IPluginApi as IVanillaPluginApi, IPluginContext } from 'ui-plugin';
 
 export type Renderable<ComponentProps> =
   | React.ComponentType<ComponentProps>
@@ -47,7 +43,7 @@ export interface IPlug<
   PluginState = any,
   ComponentProps extends object = any
 > extends IRenderableWithProps<PluginConfig, PluginState, ComponentProps> {
-  pluginId: PluginId;
+  pluginName: string;
 }
 
 export interface IPlugs {
