@@ -1,22 +1,16 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import {
-  enablePlugin,
-  loadPlugins,
-  PluginsConsumer,
-  registerPlugin,
-  resetPlugins,
-} from '..';
+import { enablePlugin, loadPlugins, PluginsConsumer, createPlugin, resetPlugins } from '..';
 
 afterEach(resetPlugins);
 
 it('calls the consumer render fn with plugin list', () => {
-  registerPlugin({ name: 'Graham Chapman' });
-  registerPlugin({ name: 'John Cleese' });
-  registerPlugin({ name: 'Terry Gilliam' });
-  registerPlugin({ name: 'Eric Idle' });
-  registerPlugin({ name: 'Terry Jones' });
-  registerPlugin({ name: 'Michael Palin' });
+  createPlugin({ name: 'Graham Chapman' }).register();
+  createPlugin({ name: 'John Cleese' }).register();
+  createPlugin({ name: 'Terry Gilliam' }).register();
+  createPlugin({ name: 'Eric Idle' }).register();
+  createPlugin({ name: 'Terry Jones' }).register();
+  createPlugin({ name: 'Michael Palin' }).register();
   loadPlugins();
 
   const renderer = create(<EnabledPluginNames />);
@@ -26,12 +20,14 @@ it('calls the consumer render fn with plugin list', () => {
 });
 
 it('calls the consumer render fn with enabled plugin list', () => {
-  registerPlugin({ name: 'Graham Chapman' });
-  registerPlugin({ name: 'John Cleese' });
-  registerPlugin({ name: 'Terry Gilliam' });
-  registerPlugin({ name: 'Eric Idle' });
-  registerPlugin({ name: 'Terry Jones', enabled: false });
-  registerPlugin({ name: 'Michael Palin', enabled: false });
+  createPlugin({ name: 'Graham Chapman' }).register();
+  createPlugin({ name: 'John Cleese' }).register();
+  createPlugin({ name: 'Terry Gilliam' }).register();
+  createPlugin({ name: 'Eric Idle' }).register();
+  createPlugin({ name: 'Terry Jones' }).register();
+  createPlugin({ name: 'Michael Palin' }).register();
+  enablePlugin('Terry Jones', false);
+  enablePlugin('Michael Palin', false);
   loadPlugins();
 
   const renderer = create(<EnabledPluginNames />);
@@ -41,12 +37,12 @@ it('calls the consumer render fn with enabled plugin list', () => {
 });
 
 it('calls the consumer render fn with enabled plugin list', () => {
-  registerPlugin({ name: 'Graham Chapman' });
-  registerPlugin({ name: 'John Cleese' });
-  registerPlugin({ name: 'Terry Gilliam' });
-  registerPlugin({ name: 'Eric Idle' });
-  registerPlugin({ name: 'Terry Jones' });
-  registerPlugin({ name: 'Michael Palin' });
+  createPlugin({ name: 'Graham Chapman' }).register();
+  createPlugin({ name: 'John Cleese' }).register();
+  createPlugin({ name: 'Terry Gilliam' }).register();
+  createPlugin({ name: 'Eric Idle' }).register();
+  createPlugin({ name: 'Terry Jones' }).register();
+  createPlugin({ name: 'Michael Palin' }).register();
 
   const renderer = create(<EnabledPluginNames />);
   loadPlugins();

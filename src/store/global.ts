@@ -1,4 +1,4 @@
-import { IPlugs } from '../shared';
+import { IPlugs } from '../types';
 
 interface IReactPluginStore {
   plugs: IPlugs;

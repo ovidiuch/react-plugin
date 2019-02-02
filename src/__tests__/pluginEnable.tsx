@@ -4,7 +4,7 @@ import { create } from 'react-test-renderer';
 import {
   enablePlugin,
   loadPlugins,
-  registerPlugin,
+  createPlugin,
   resetPlugins,
   Slot,
 } from '..';
@@ -18,11 +18,13 @@ function HelloWorld() {
 }
 
 it('ignores plug of disabled plugin', () => {
-  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  const { plug, register } = createPlugin({ name: 'test' });
   plug({
     slotName: 'root',
     render: HelloWorld,
   });
+  register();
+  enablePlugin('test', false);
 
   loadPlugins();
 
@@ -33,11 +35,13 @@ it('ignores plug of disabled plugin', () => {
 });
 
 it('renders plug after enabling plugin', () => {
-  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  const { plug, register } = createPlugin({ name: 'test' });
   plug({
     slotName: 'root',
     render: HelloWorld,
   });
+  register();
+  enablePlugin('test', false);
 
   loadPlugins();
   enablePlugin('test', true);
@@ -47,11 +51,13 @@ it('renders plug after enabling plugin', () => {
 });
 
 it('renders plug after enabling loaded plugin', async () => {
-  const { plug } = registerPlugin({ name: 'test', enabled: false });
+  const { plug, register } = createPlugin({ name: 'test' });
   plug({
     slotName: 'root',
     render: HelloWorld,
   });
+  register();
+  enablePlugin('test', false);
 
   loadPlugins();
   const renderer = create(<Slot name="root" />);

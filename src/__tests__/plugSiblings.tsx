@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { registerPlugin, resetPlugins, Slot } from '../';
+import { createPlugin, resetPlugins, Slot } from '../';
 
 afterEach(resetPlugins);
 
 // This is an example of a high-level register function
 function registerButton({ name, label }: { name: string; label: string }) {
-  const { plug } = registerPlugin({ name });
-
+  const { plug, register } = createPlugin({ name });
   plug({
     slotName: 'buttons',
     render: ({
@@ -21,6 +20,7 @@ function registerButton({ name, label }: { name: string; label: string }) {
       </Slot>
     ),
   });
+  register();
 }
 
 it('accumulates children from separate plugs', () => {

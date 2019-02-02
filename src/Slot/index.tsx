@@ -2,9 +2,9 @@ import createLinkedList from '@skidding/linked-list';
 import { isEqual } from 'lodash';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
-import { onPluginChange } from 'ui-plugin';
-import { getLoadedPlugsForSlot } from '../pluginStore';
-import { IPlug } from '../shared';
+import { onPluginLoad } from 'ui-plugin';
+import { IPlug } from '../types';
+import { getEnabledPlugsForSlot } from '../store';
 import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
 
@@ -20,10 +20,10 @@ interface IState {
 
 export class Slot extends React.Component<IProps, IState> {
   state = {
-    plugs: getLoadedPlugsForSlot(this.props.name),
+    plugs: getEnabledPlugsForSlot(this.props.name),
   };
 
-  removePluginChangeHandler: null | (() => unknown) = null;
+  removePluginLoadHandler: null | (() => unknown) = null;
 
   render() {
     const { name, children, props = {} } = this.props;
@@ -51,29 +51,25 @@ export class Slot extends React.Component<IProps, IState> {
             return children;
           }
 
-          return (
-            <Provider value={next()}>
-              {getPlugNode(plug, props, children)}
-            </Provider>
-          );
+          return <Provider value={next()}>{getPlugNode(plug, props, children)}</Provider>;
         }}
       </Consumer>
     );
   }
 
   componentDidMount() {
-    this.removePluginChangeHandler = onPluginChange(this.handlePluginChange);
+    this.removePluginLoadHandler = onPluginLoad(this.handlePluginLoad);
   }
 
   componentWillUnmount() {
-    if (this.removePluginChangeHandler) {
-      this.removePluginChangeHandler();
-      this.removePluginChangeHandler = null;
+    if (this.removePluginLoadHandler) {
+      this.removePluginLoadHandler();
+      this.removePluginLoadHandler = null;
     }
   }
 
-  handlePluginChange = () => {
-    const newPlugs = getLoadedPlugsForSlot(this.props.name);
+  handlePluginLoad = () => {
+    const newPlugs = getEnabledPlugsForSlot(this.props.name);
 
     if (!isEqual(newPlugs, this.state.plugs)) {
       this.setState({ plugs: newPlugs });
@@ -81,11 +77,7 @@ export class Slot extends React.Component<IProps, IState> {
   };
 }
 
-function getPlugNode(
-  plug: IPlug,
-  slotProps: object,
-  children?: React.ReactNode,
-) {
+function getPlugNode(plug: IPlug, slotProps: object, children?: React.ReactNode) {
   const { pluginName, render, getProps } = plug;
 
   if (typeof render === 'string' || !isValidElementType(render)) {

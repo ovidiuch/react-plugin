@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { getPluginContext, isPluginLoaded, onStateChange } from 'ui-plugin';
-import { GetProps } from '../shared';
+import { getPlugin, getPluginContext, onStateChange } from 'ui-plugin';
+import { GetProps } from '../types';
 
 interface IProps {
   pluginName: string;
@@ -57,7 +57,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
     // rendering is async, it takes a while for the Slot components to process
     // plugin changes, so PlugConnect components might receive state changes
     // for plugins that are no longer enabled.
-    if (!isPluginLoaded(this.props.pluginName)) {
+    if (!getPlugin(this.props.pluginName).enabled) {
       return;
     }
 

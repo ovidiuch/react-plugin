@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { loadPlugins, PluginsConsumer, registerPlugin, resetPlugins } from '..';
+import { loadPlugins, PluginsConsumer, createPlugin, resetPlugins } from '..';
 
 afterEach(resetPlugins);
 
 it('updates plugins from consumer methods', () => {
-  registerPlugin({ name: 'Snoop Dogg' });
-  registerPlugin({ name: 'Wiz Khalifa' });
+  createPlugin({ name: 'Snoop Dogg' }).register();
+  createPlugin({ name: 'Wiz Khalifa' }).register();
   loadPlugins();
 
   const renderer = create(<PluginList />);
