@@ -14,7 +14,7 @@
     "lint": "tslint --project tsconfig.json",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json && cp flowdef/index.js.flow dist"
+    "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json"
   },
   "dependencies": {
     "@skidding/linked-list": "^1.0.2",
