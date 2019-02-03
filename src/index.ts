@@ -1,9 +1,11 @@
 export {
+  IPluginSpec,
+  IPlugin,
+  IPluginContext,
+  EventHandlers,
   enablePlugin,
   getPluginContext,
   getPlugins,
-  IPlugin,
-  IPluginContext,
   loadPlugins,
   onStateChange,
 } from 'ui-plugin';
