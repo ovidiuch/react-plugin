@@ -22,13 +22,12 @@ it('updates plug props on state change', async () => {
     name: 'test',
     initialState: 'Sarah',
   });
-  register();
-
   plug({
     slotName: 'root',
     render: HelloMessage,
     getProps: ({ getState }) => ({ name: getState() }),
   });
+  register();
 
   onLoad(({ setState }) => {
     setTimeout(() => {

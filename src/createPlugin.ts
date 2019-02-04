@@ -15,15 +15,23 @@ export function createPlugin<PluginSpec extends IPluginSpec>(
   args: PluginCreateArgs<PluginSpec>,
 ): IPluginCreateApi<PluginSpec> {
   const plugin = createUiPlugin<PluginSpec>(args);
+  const plugs: Array<IPlugArgs<PluginSpec, any>> = [];
 
   return {
     ...plugin,
 
-    plug: ({ slotName, render, getProps }) => {
-      registerPlug(slotName, {
-        pluginName: args.name,
-        render,
-        getProps,
+    plug: plugArgs => {
+      plugs.push(plugArgs);
+    },
+
+    register: () => {
+      plugin.register();
+      plugs.forEach(({ slotName, render, getProps }) => {
+        registerPlug(slotName, {
+          pluginName: args.name,
+          render,
+          getProps,
+        });
       });
     },
   };
