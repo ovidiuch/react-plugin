@@ -9,7 +9,7 @@ export interface IRenderableWithProps<
   PluginSpec extends IPluginSpec,
   ComponentProps extends object
 > {
-  render: Renderable<ComponentProps & { children: React.ReactNode }>;
+  render: Renderable<ComponentProps & { children?: React.ReactNode }>;
   getProps?: GetProps<PluginSpec, ComponentProps>;
 }
 
