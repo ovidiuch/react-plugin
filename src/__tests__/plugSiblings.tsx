@@ -10,11 +10,7 @@ function registerButton({ name, label }: { name: string; label: string }) {
   const { plug, register } = createPlugin({ name });
   plug({
     slotName: 'buttons',
-    render: ({
-      children = [],
-    }: {
-      children: Array<React.ReactElement<'button'>>;
-    }) => (
+    render: ({ children = [] }: { children: Array<React.ReactElement<'button'>> }) => (
       <Slot name="buttons">
         {[...children, <button key={children.length}>{label}</button>]}
       </Slot>

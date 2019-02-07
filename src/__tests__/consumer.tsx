@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
-import { enablePlugin, loadPlugins, PluginsConsumer, createPlugin, resetPlugins } from '..';
+import {
+  enablePlugin,
+  loadPlugins,
+  PluginsConsumer,
+  createPlugin,
+  resetPlugins,
+} from '..';
 
 afterEach(resetPlugins);
 
