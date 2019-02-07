@@ -1,15 +1,15 @@
 import * as UiPlugin from 'ui-plugin';
-import { Plug } from '../types';
-import { getGlobalStore } from './global';
+import { Plug, Plugs } from './types';
+
+let plugs: Plugs = {};
 
 export function resetPlugins() {
   UiPlugin.resetPlugins();
-  getGlobalStore().plugs = {};
+  plugs = {};
 }
 
 export function getEnabledPlugsForSlot(slotName: string) {
   const plugins = UiPlugin.getPlugins();
-  const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {
     return [];
@@ -19,8 +19,6 @@ export function getEnabledPlugsForSlot(slotName: string) {
 }
 
 export function registerPlug(slotName: string, plug: Plug) {
-  const { plugs } = getGlobalStore();
-
   if (!plugs[slotName]) {
     plugs[slotName] = [];
   }
