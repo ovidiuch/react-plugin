@@ -1,7 +1,7 @@
 export {
-  IPluginSpec,
-  IPlugin,
-  IPluginContext,
+  PluginSpec,
+  Plugin,
+  PluginContext,
   MethodHandlers,
   EventHandlers,
   enablePlugin,
@@ -10,7 +10,7 @@ export {
   loadPlugins,
   onStateChange,
 } from 'ui-plugin';
-export { IPlug, IPlugArgs } from './types';
+export { Plug, PlugArgs } from './types';
 export { createPlugin } from './createPlugin';
 export { resetPlugins } from './store';
 export { Slot } from './Slot';

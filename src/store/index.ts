@@ -1,14 +1,14 @@
-import { getPlugins, resetPlugins as resetUiPlugins } from 'ui-plugin';
-import { IPlug } from '../types';
+import * as UiPlugin from 'ui-plugin';
+import { Plug } from '../types';
 import { getGlobalStore } from './global';
 
 export function resetPlugins() {
-  resetUiPlugins();
+  UiPlugin.resetPlugins();
   getGlobalStore().plugs = {};
 }
 
 export function getEnabledPlugsForSlot(slotName: string) {
-  const plugins = getPlugins();
+  const plugins = UiPlugin.getPlugins();
   const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {
@@ -18,7 +18,7 @@ export function getEnabledPlugsForSlot(slotName: string) {
   return plugs[slotName].filter(plug => plugins[plug.pluginName].enabled);
 }
 
-export function registerPlug(slotName: string, plug: IPlug) {
+export function registerPlug(slotName: string, plug: Plug) {
   const { plugs } = getGlobalStore();
 
   if (!plugs[slotName]) {

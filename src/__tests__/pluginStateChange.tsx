@@ -12,13 +12,13 @@ function HelloMessage({ name }: { name: string }) {
   return <>Hello ${name}!</>;
 }
 
-interface ITest {
+interface Test {
   name: 'test';
   state: string;
 }
 
 it('updates plug props on state change', async () => {
-  const { plug, onLoad, register } = createPlugin<ITest>({
+  const { plug, onLoad, register } = createPlugin<Test>({
     name: 'test',
     initialState: 'Sarah',
   });

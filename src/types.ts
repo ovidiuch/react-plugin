@@ -1,33 +1,32 @@
-import { IPluginSpec, IPluginContext } from 'ui-plugin';
+import { PluginSpec, PluginContext } from 'ui-plugin';
 
-export type Renderable<ComponentProps> =
-  | React.ComponentType<ComponentProps>
+export type Renderable<Props> =
+  | React.ComponentType<Props>
   | React.ReactElement<any>
   | string;
 
-export interface IRenderableWithProps<
-  PluginSpec extends IPluginSpec,
-  ComponentProps extends object
-> {
-  render: Renderable<ComponentProps & { children?: React.ReactNode }>;
-  getProps?: GetProps<PluginSpec, ComponentProps>;
-}
+type RenderableWithProps<Spec extends PluginSpec, Props extends object> = {
+  render: Renderable<Props & { children?: React.ReactNode }>;
+  getProps?: GetProps<Spec, Props>;
+};
 
-export type GetProps<PluginSpec extends IPluginSpec = any, ComponentProps extends object = any> = (
-  context: IPluginContext<PluginSpec>,
+export type GetProps<Spec extends PluginSpec = any, Props extends object = any> = (
+  context: PluginContext<Spec>,
   slotProps: { [key: string]: any },
-) => ComponentProps;
+) => Props;
 
-export interface IPlugArgs<PluginSpec extends IPluginSpec, ComponentProps extends object>
-  extends IRenderableWithProps<PluginSpec, ComponentProps> {
+export type PlugArgs<
+  Spec extends PluginSpec,
+  Props extends object
+> = RenderableWithProps<Spec, Props> & {
   slotName: string;
-}
+};
 
-export interface IPlug<PluginSpec extends IPluginSpec = any, ComponentProps extends object = any>
-  extends IRenderableWithProps<PluginSpec, ComponentProps> {
-  pluginName: PluginSpec['name'];
-}
+export type Plug<
+  Spec extends PluginSpec = any,
+  Props extends object = any
+> = RenderableWithProps<Spec, Props> & {
+  pluginName: Spec['name'];
+};
 
-export interface IPlugs {
-  [slotName: string]: IPlug[];
-}
+export type Plugs = { [slotName: string]: Plug[] };

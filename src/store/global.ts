@@ -1,11 +1,9 @@
-import { IPlugs } from '../types';
+import { Plugs } from '../types';
 
-interface IReactPluginStore {
-  plugs: IPlugs;
-}
+type ReactPluginStore = { plugs: Plugs };
 
 declare var global: {
-  ReactPluginStore: undefined | IReactPluginStore;
+  ReactPluginStore: undefined | ReactPluginStore;
 };
 
 // Plugins are shared between multiple code bundles that run in the same page

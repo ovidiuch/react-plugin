@@ -3,22 +3,22 @@ import { isEqual } from 'lodash';
 import * as React from 'react';
 import { isValidElementType } from 'react-is';
 import { onPluginLoad } from 'ui-plugin';
-import { IPlug } from '../types';
+import { Plug } from '../types';
 import { getEnabledPlugsForSlot } from '../store';
 import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
 
-interface IProps {
+type Props = {
   name: string;
   children?: React.ReactNode;
   props?: object;
-}
+};
 
-interface IState {
-  plugs: IPlug[];
-}
+type State = {
+  plugs: Plug[];
+};
 
-export class Slot extends React.Component<IProps, IState> {
+export class Slot extends React.Component<Props, State> {
   state = {
     plugs: getEnabledPlugsForSlot(this.props.name),
   };
@@ -51,7 +51,9 @@ export class Slot extends React.Component<IProps, IState> {
             return children;
           }
 
-          return <Provider value={next()}>{getPlugNode(plug, props, children)}</Provider>;
+          return (
+            <Provider value={next()}>{getPlugNode(plug, props, children)}</Provider>
+          );
         }}
       </Consumer>
     );
@@ -77,7 +79,7 @@ export class Slot extends React.Component<IProps, IState> {
   };
 }
 
-function getPlugNode(plug: IPlug, slotProps: object, children?: React.ReactNode) {
+function getPlugNode(plug: Plug, slotProps: object, children?: React.ReactNode) {
   const { pluginName, render, getProps } = plug;
 
   if (typeof render === 'string' || !isValidElementType(render)) {
@@ -100,7 +102,7 @@ function getPlugNode(plug: IPlug, slotProps: object, children?: React.ReactNode)
   return React.createElement(render, slotProps, children);
 }
 
-function getFirstLinkedPlug(plugs: IPlug[]) {
+function getFirstLinkedPlug(plugs: Plug[]) {
   // Plugs are traversed in the order they're applied. But this doesn't mean
   // top-down from a component hierarchy point of view. The traversal of the
   // plugs can go up and down the component hierachy repeatedly, based on the

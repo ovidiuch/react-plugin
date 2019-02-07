@@ -1,21 +1,23 @@
 import {
-  createPlugin as createUiPlugin,
-  IPluginSpec,
+  createPlugin as createUPlugin,
+  PluginSpec,
   PluginCreateArgs,
-  IPluginCreateApi as IUiPluginCreateApi,
+  PluginCreateApi,
 } from 'ui-plugin';
-import { IPlugArgs } from './types';
+import { PlugArgs } from './types';
 import { registerPlug } from './store';
 
-interface IPluginCreateApi<PluginSpec extends IPluginSpec> extends IUiPluginCreateApi<PluginSpec> {
-  plug: <ComponentProps extends object>(plugArgs: IPlugArgs<PluginSpec, ComponentProps>) => void;
+interface ReactPluginCreateApi<Spec extends PluginSpec> extends PluginCreateApi<Spec> {
+  plug: <ComponentProps extends object>(
+    plugArgs: PlugArgs<Spec, ComponentProps>,
+  ) => void;
 }
 
-export function createPlugin<PluginSpec extends IPluginSpec>(
-  args: PluginCreateArgs<PluginSpec>,
-): IPluginCreateApi<PluginSpec> {
-  const plugin = createUiPlugin<PluginSpec>(args);
-  const plugs: Array<IPlugArgs<PluginSpec, any>> = [];
+export function createPlugin<Spec extends PluginSpec>(
+  args: PluginCreateArgs<Spec>,
+): ReactPluginCreateApi<Spec> {
+  const plugin = createUPlugin<Spec>(args);
+  const plugs: Array<PlugArgs<Spec, any>> = [];
 
   return {
     ...plugin,

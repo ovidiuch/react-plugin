@@ -11,13 +11,13 @@ function AgeComponent({ age }: { age: number }) {
   return <>{`${age}y old`}</>;
 }
 
-interface ITest {
+interface Test {
   name: 'test';
   state: { age: number };
 }
 
 it('receives props returned by getProps', () => {
-  const { plug, register } = createPlugin<ITest>({
+  const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
   });
@@ -35,7 +35,7 @@ it('receives props returned by getProps', () => {
 });
 
 it('calls getProps with plugin context', () => {
-  const { plug, register } = createPlugin<ITest>({
+  const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 29 },
   });
@@ -53,7 +53,7 @@ it('calls getProps with plugin context', () => {
 });
 
 it('calls getProps with slot props', () => {
-  const { plug, register } = createPlugin<ITest>({
+  const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
   });
@@ -71,7 +71,7 @@ it('calls getProps with slot props', () => {
 });
 
 it('updates plug on plugin state change', async () => {
-  const { onLoad, plug, register } = createPlugin<ITest>({
+  const { onLoad, plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 29 },
   });

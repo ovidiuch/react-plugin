@@ -1,21 +1,21 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin, onPluginLoad } from 'ui-plugin';
+import { enablePlugin, getPlugins, Plugin, onPluginLoad } from 'ui-plugin';
 
-interface IProps {
+type Props = {
   children: (
     props: {
-      plugins: IPlugin[];
+      plugins: Plugin[];
       enable: (pluginName: string, enabled: boolean) => void;
     },
   ) => React.ReactNode;
-}
+};
 
-interface IState {
-  plugins: IPlugin[];
-}
+type State = {
+  plugins: Plugin[];
+};
 
-export class PluginsConsumer extends React.Component<IProps, IState> {
+export class PluginsConsumer extends React.Component<Props, State> {
   state = {
     plugins: getPluginArray(),
   };
