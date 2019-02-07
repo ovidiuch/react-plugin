@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { registerPlugin, resetPlugins, Slot } from '..';
+import { createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
 it('decorates any future plugs applied on same slot', () => {
   // The first plug opens up the possibility for a future plugin to override
   // it or to compose with it. The latter is happening in this case.
-  const p1 = registerPlugin({ name: 'test1' });
+  const p1 = createPlugin({ name: 'test1' });
   p1.plug({
     slotName: 'root',
     render: (
@@ -18,12 +18,14 @@ it('decorates any future plugs applied on same slot', () => {
       </>
     ),
   });
+  p1.register();
 
-  const p2 = registerPlugin({ name: 'test2' });
+  const p2 = createPlugin({ name: 'test2' });
   p2.plug({
     slotName: 'root',
     render: <span>I was here second</span>,
   });
+  p2.register();
 
   loadPlugins();
 

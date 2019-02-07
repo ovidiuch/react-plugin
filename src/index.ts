@@ -1,14 +1,17 @@
 export {
+  PluginSpec,
+  Plugin,
+  PluginContext,
+  MethodHandlers,
+  EventHandlers,
   enablePlugin,
   getPluginContext,
   getPlugins,
-  IPlugin,
-  IPluginContext,
   loadPlugins,
   onStateChange,
 } from 'ui-plugin';
-export { getPluginApi } from './getPluginApi';
-export { PluginsConsumer } from './PluginsConsumer';
-export { resetPlugins, unregisterPlugins } from './pluginStore';
-export { registerPlugin } from './registerPlugin';
+export { Plug, PlugArgs } from './types';
+export { createPlugin } from './createPlugin';
+export { resetPlugins } from './store';
 export { Slot } from './Slot';
+export { PluginsConsumer } from './PluginsConsumer';

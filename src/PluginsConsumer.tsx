@@ -1,26 +1,26 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { enablePlugin, getPlugins, IPlugin, onPluginChange } from 'ui-plugin';
+import { enablePlugin, getPlugins, Plugin, onPluginLoad } from 'ui-plugin';
 
-interface IProps {
+type Props = {
   children: (
     props: {
-      plugins: IPlugin[];
+      plugins: Plugin[];
       enable: (pluginName: string, enabled: boolean) => void;
     },
   ) => React.ReactNode;
-}
+};
 
-interface IState {
-  plugins: IPlugin[];
-}
+type State = {
+  plugins: Plugin[];
+};
 
-export class PluginsConsumer extends React.Component<IProps, IState> {
+export class PluginsConsumer extends React.Component<Props, State> {
   state = {
     plugins: getPluginArray(),
   };
 
-  removePluginChangeHandler: null | (() => unknown) = null;
+  removePluginLoadHandler: null | (() => unknown) = null;
 
   render() {
     const { children } = this.props;
@@ -33,17 +33,17 @@ export class PluginsConsumer extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    this.removePluginChangeHandler = onPluginChange(this.handlePluginChange);
+    this.removePluginLoadHandler = onPluginLoad(this.handlePluginLoad);
   }
 
   componentWillUnmount() {
-    if (this.removePluginChangeHandler) {
-      this.removePluginChangeHandler();
-      this.removePluginChangeHandler = null;
+    if (this.removePluginLoadHandler) {
+      this.removePluginLoadHandler();
+      this.removePluginLoadHandler = null;
     }
   }
 
-  handlePluginChange = () => {
+  handlePluginLoad = () => {
     const newPlugins = getPluginArray();
 
     if (!isEqual(newPlugins, this.state.plugins)) {

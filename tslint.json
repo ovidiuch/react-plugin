@@ -6,7 +6,10 @@
     "quotemark": [true, "single", "jsx-double"],
     "object-literal-sort-keys": false,
     "arrow-parens": [true, "ban-single-arg-parens"],
-    "member-access": false
+    "member-access": false,
+    "ordered-imports": false,
+    "interface-over-type-literal": false,
+    "interface-name": false
   },
   "jsRules": {}
 }

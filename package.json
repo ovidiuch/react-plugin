@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "1.0.0-alpha.17",
+  "version": "2.0.0-alpha.1",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
@@ -14,14 +14,14 @@
     "lint": "tslint --project tsconfig.json",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json && cp flowdef/index.js.flow dist"
+    "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json"
   },
   "dependencies": {
     "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
     "lodash": "^4.17.11",
     "react-is": "^16.6.3",
-    "ui-plugin": "^1.0.0-alpha.24"
+    "ui-plugin": "^2.0.0-alpha.1"
   },
   "devDependencies": {
     "@skidding/async-retry": "^1.0.2",

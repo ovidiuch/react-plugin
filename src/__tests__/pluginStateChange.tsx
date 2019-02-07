@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import * as React from 'react';
 import { create, ReactTestRenderer } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { registerPlugin, resetPlugins, Slot } from '..';
+import { createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
@@ -12,19 +12,24 @@ function HelloMessage({ name }: { name: string }) {
   return <>Hello ${name}!</>;
 }
 
+interface Test {
+  name: 'test';
+  state: string;
+}
+
 it('updates plug props on state change', async () => {
-  const { plug, init } = registerPlugin({
+  const { plug, onLoad, register } = createPlugin<Test>({
     name: 'test',
     initialState: 'Sarah',
   });
-
   plug({
     slotName: 'root',
     render: HelloMessage,
     getProps: ({ getState }) => ({ name: getState() }),
   });
+  register();
 
-  init(({ setState }) => {
+  onLoad(({ setState }) => {
     setTimeout(() => {
       setState('Sarah D.');
     });

@@ -1,22 +1,22 @@
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { getPluginContext, isPluginLoaded, onStateChange } from 'ui-plugin';
-import { GetProps } from '../shared';
+import { getPlugin, getPluginContext, onStateChange } from 'ui-plugin';
+import { GetProps } from '../types';
 
-interface IProps {
+type Props = {
   pluginName: string;
   component: React.ComponentType;
   slotProps: object;
   getProps: GetProps;
   children?: React.ReactNode;
-}
+};
 
-interface IState {
+type State = {
   plugProps: object;
-}
+};
 
-export class PlugConnect extends React.Component<IProps, IState> {
-  static getDerivedStateFromProps(props: IProps, state: IState) {
+export class PlugConnect extends React.Component<Props, State> {
+  static getDerivedStateFromProps(props: Props, state: State) {
     const plugProps = getPlugProps(props);
 
     if (plugPropsEqual(plugProps, state.plugProps)) {
@@ -57,7 +57,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
     // rendering is async, it takes a while for the Slot components to process
     // plugin changes, so PlugConnect components might receive state changes
     // for plugins that are no longer enabled.
-    if (!isPluginLoaded(this.props.pluginName)) {
+    if (!getPlugin(this.props.pluginName).enabled) {
       return;
     }
 
@@ -77,7 +77,7 @@ export class PlugConnect extends React.Component<IProps, IState> {
   }
 }
 
-function getPlugProps({ pluginName, slotProps, getProps }: IProps) {
+function getPlugProps({ pluginName, slotProps, getProps }: Props) {
   return getProps(getPluginContext(pluginName), slotProps);
 }
 

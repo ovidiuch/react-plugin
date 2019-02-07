@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { create } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { registerPlugin, resetPlugins, Slot } from '..';
+import { createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
@@ -42,8 +42,7 @@ it('composes plugs registered outside-in', () => {
 });
 
 function registerPreviewIframe() {
-  const { plug } = registerPlugin({ name: 'preview' });
-
+  const { plug, register } = createPlugin({ name: 'preview' });
   plug({
     slotName: 'root',
     render: (
@@ -52,11 +51,11 @@ function registerPreviewIframe() {
       </Slot>
     ),
   });
+  register();
 }
 
 function registerNav() {
-  const { plug } = registerPlugin({ name: 'nav' });
-
+  const { plug, register } = createPlugin({ name: 'nav' });
   plug({
     slotName: 'root',
     render: ({ children }: { children?: React.ReactNode }) => (
@@ -66,6 +65,7 @@ function registerNav() {
       </div>
     ),
   });
+  register();
 }
 
 function Nav() {
