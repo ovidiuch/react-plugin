@@ -10,7 +10,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "outDir": "dist",
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

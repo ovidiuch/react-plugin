@@ -10,7 +10,7 @@ it('takes slot away from other (subsequently registered) plugins', () => {
   const p1 = createPlugin({ name: 'test1' });
   p1.plug({
     slotName: 'root',
-    render: 'I was here first',
+    render: () => <>I was here first</>,
   });
   p1.register();
 
@@ -18,7 +18,7 @@ it('takes slot away from other (subsequently registered) plugins', () => {
   const p2 = createPlugin({ name: 'test2' });
   p2.plug({
     slotName: 'root',
-    render: 'I was here second',
+    render: () => <>I was here second</>,
   });
   p2.register();
 

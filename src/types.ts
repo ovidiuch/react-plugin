@@ -1,12 +1,7 @@
 import { PluginSpec, PluginContext } from 'ui-plugin';
 
-export type Renderable<Props> =
-  | React.ComponentType<Props>
-  | React.ReactElement<any>
-  | string;
-
 type RenderableWithProps<Spec extends PluginSpec, Props extends object> = {
-  render: Renderable<Props & { children?: React.ReactNode }>;
+  render: React.ComponentType<Props & { children?: React.ReactNode }>;
   getProps?: GetProps<Spec, Props>;
 };
 

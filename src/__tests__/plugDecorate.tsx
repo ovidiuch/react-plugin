@@ -11,7 +11,7 @@ it('decorates any future plugs applied on same slot', () => {
   const p1 = createPlugin({ name: 'test1' });
   p1.plug({
     slotName: 'root',
-    render: (
+    render: () => (
       <>
         <span>I was here first</span>
         <Slot name="root" />
@@ -23,7 +23,7 @@ it('decorates any future plugs applied on same slot', () => {
   const p2 = createPlugin({ name: 'test2' });
   p2.plug({
     slotName: 'root',
-    render: <span>I was here second</span>,
+    render: () => <span>I was here second</span>,
   });
   p2.register();
 

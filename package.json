@@ -20,23 +20,21 @@
     "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
     "lodash": "^4.17.11",
-    "react-is": "^16.6.3",
     "ui-plugin": "^2.0.0-alpha.2"
   },
   "devDependencies": {
-    "@skidding/async-retry": "^1.0.2",
-    "@types/jest": "^23.3.10",
-    "@types/lodash": "^4.14.119",
-    "@types/react": "^16.7.17",
-    "@types/react-is": "^16.5.0",
-    "@types/react-test-renderer": "^16.0.3",
-    "jest": "^23.6.0",
-    "prettier": "^1.15.3",
-    "react": "^16.6.3",
-    "react-test-renderer": "^16.6.3",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.2"
+    "@skidding/async-retry": "^2.0.0",
+    "@types/jest": "^24.0.12",
+    "@types/lodash": "^4.14.123",
+    "@types/react": "^16.8.16",
+    "@types/react-test-renderer": "^16.8.1",
+    "jest": "^24.8.0",
+    "prettier": "^1.17.0",
+    "react": "^16.8.6",
+    "react-test-renderer": "^16.8.6",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
   }
 }

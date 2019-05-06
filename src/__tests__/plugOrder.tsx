@@ -45,7 +45,7 @@ function registerPreviewIframe() {
   const { plug, register } = createPlugin({ name: 'preview' });
   plug({
     slotName: 'root',
-    render: (
+    render: () => (
       <Slot name="root">
         <Preview />
       </Slot>
