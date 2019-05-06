@@ -71,7 +71,6 @@ export class Slot extends React.Component<Props, State> {
 
   handlePluginLoad = () => {
     const newPlugs = getEnabledPlugsForSlot(this.props.name);
-
     if (!isEqual(newPlugs, this.state.plugs)) {
       this.setState({ plugs: newPlugs });
     }
@@ -79,19 +78,9 @@ export class Slot extends React.Component<Props, State> {
 }
 
 function getPlugNode(plug: Plug, slotProps: object, children?: React.ReactNode) {
-  const { pluginName, render, getProps } = plug;
-
-  if (typeof getProps !== 'function') {
-    return React.createElement(render, slotProps, children);
-  }
-
+  const { pluginName, component } = plug;
   return (
-    <PlugConnect
-      pluginName={pluginName}
-      component={render}
-      slotProps={slotProps}
-      getProps={getProps}
-    >
+    <PlugConnect pluginName={pluginName} component={component} slotProps={slotProps}>
       {children}
     </PlugConnect>
   );

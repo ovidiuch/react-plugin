@@ -22,10 +22,8 @@ it('updates plug props on state change', async () => {
     name: 'test',
     initialState: 'Sarah',
   });
-  plug({
-    slotName: 'root',
-    render: HelloMessage,
-    getProps: ({ getState }) => ({ name: getState() }),
+  plug('root', ({ pluginContext }) => {
+    return <HelloMessage name={pluginContext.getState()} />;
   });
   register();
 

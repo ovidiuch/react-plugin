@@ -13,10 +13,7 @@ function HelloWorld() {
 
 it('ignores plug of disabled plugin', () => {
   const { plug, register } = createPlugin({ name: 'test' });
-  plug({
-    slotName: 'root',
-    render: HelloWorld,
-  });
+  plug('root', HelloWorld);
   register();
   enablePlugin('test', false);
 
@@ -30,10 +27,7 @@ it('ignores plug of disabled plugin', () => {
 
 it('renders plug after enabling plugin', () => {
   const { plug, register } = createPlugin({ name: 'test' });
-  plug({
-    slotName: 'root',
-    render: HelloWorld,
-  });
+  plug('root', HelloWorld);
   register();
   enablePlugin('test', false);
 
@@ -46,10 +40,7 @@ it('renders plug after enabling plugin', () => {
 
 it('renders plug after enabling loaded plugin', async () => {
   const { plug, register } = createPlugin({ name: 'test' });
-  plug({
-    slotName: 'root',
-    render: HelloWorld,
-  });
+  plug('root', HelloWorld);
   register();
   enablePlugin('test', false);
 

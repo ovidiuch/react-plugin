@@ -16,38 +16,32 @@ interface Test {
   state: { age: number };
 }
 
+// TODO: Is this test needed?
 it('receives props returned by getProps', () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
   });
-  plug({
-    slotName: 'root',
-    render: AgeComponent,
-    getProps: () => ({ age: 29 }),
-  });
+  plug('root', () => <AgeComponent age={29} />);
   register();
 
   loadPlugins();
-
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
+// TODO: Is this test needed?
 it('calls getProps with plugin context', () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 29 },
   });
-  plug({
-    slotName: 'root',
-    render: AgeComponent,
-    getProps: ({ getState }) => ({ age: getState().age }),
-  });
+  plug('root', ({ pluginContext }) => (
+    <AgeComponent age={pluginContext.getState().age} />
+  ));
   register();
 
   loadPlugins();
-
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
@@ -57,15 +51,10 @@ it('calls getProps with slot props', () => {
     name: 'test',
     initialState: { age: 28 },
   });
-  plug({
-    slotName: 'root',
-    render: AgeComponent,
-    getProps: (context, slotProps) => ({ age: slotProps.age }),
-  });
+  plug<{ age: number }>('root', ({ slotProps }) => <AgeComponent age={slotProps.age} />);
   register();
 
   loadPlugins();
-
   const renderer = create(<Slot name="root" props={{ age: 29 }} />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
@@ -80,11 +69,9 @@ it('updates plug on plugin state change', async () => {
       setState({ age: 30 });
     });
   });
-  plug({
-    slotName: 'root',
-    render: AgeComponent,
-    getProps: ({ getState }) => ({ age: getState().age }),
-  });
+  plug('root', ({ pluginContext }) => (
+    <AgeComponent age={pluginContext.getState().age} />
+  ));
   register();
 
   loadPlugins();

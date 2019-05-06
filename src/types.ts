@@ -1,27 +1,19 @@
 import { PluginSpec, PluginContext } from 'ui-plugin';
 
-type RenderableWithProps<Spec extends PluginSpec, Props extends object> = {
-  render: React.ComponentType<Props & { children?: React.ReactNode }>;
-  getProps?: GetProps<Spec, Props>;
+export type PlugProps<Spec extends PluginSpec, SlotProps extends {}> = {
+  children?: React.ReactNode;
+  pluginContext: PluginContext<Spec>;
+  slotProps: SlotProps;
 };
 
-export type GetProps<Spec extends PluginSpec = any, Props extends object = any> = (
-  context: PluginContext<Spec>,
-  slotProps: { [key: string]: any },
-) => Props;
-
-export type PlugArgs<
+export type PlugComponentType<
   Spec extends PluginSpec,
-  Props extends object
-> = RenderableWithProps<Spec, Props> & {
-  slotName: string;
-};
+  SlotProps extends {}
+> = React.ComponentType<PlugProps<Spec, SlotProps>>;
 
-export type Plug<
-  Spec extends PluginSpec = any,
-  Props extends object = any
-> = RenderableWithProps<Spec, Props> & {
+export type Plug<Spec extends PluginSpec = any> = {
   pluginName: Spec['name'];
+  component: PlugComponentType<any, any>;
 };
 
 export type Plugs = { [slotName: string]: Plug[] };
