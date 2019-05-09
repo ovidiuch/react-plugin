@@ -16,8 +16,7 @@ interface Test {
   state: { age: number };
 }
 
-// TODO: Is this test needed?
-it('receives props returned by getProps', () => {
+it('renders component', () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
@@ -30,8 +29,7 @@ it('receives props returned by getProps', () => {
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
-// TODO: Is this test needed?
-it('calls getProps with plugin context', () => {
+it('passes down pluginContext prop', () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 29 },
@@ -46,7 +44,7 @@ it('calls getProps with plugin context', () => {
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
-it('calls getProps with slot props', () => {
+it('passes down slot props', () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
@@ -75,7 +73,6 @@ it('updates plug on plugin state change', async () => {
   register();
 
   loadPlugins();
-
   const renderer = create(<Slot name="root" />);
   await retry(() => {
     // expect().toMatchInlineSnapshot can't be placed inside async retry()
