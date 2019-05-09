@@ -10,7 +10,7 @@ import { PlugConnect } from './PlugConnect';
 type Props = {
   name: string;
   children?: React.ReactNode;
-  props?: object;
+  slotProps?: object;
 };
 
 type State = {
@@ -25,7 +25,7 @@ export class Slot extends React.Component<Props, State> {
   removePluginLoadHandler: null | (() => unknown) = null;
 
   render() {
-    const { name, children, props = {} } = this.props;
+    const { name, children, slotProps = {} } = this.props;
     const { plugs } = this.state;
     const { Provider, Consumer } = getSlotContext(name);
 
@@ -51,7 +51,7 @@ export class Slot extends React.Component<Props, State> {
           }
 
           return (
-            <Provider value={next()}>{getPlugNode(plug, props, children)}</Provider>
+            <Provider value={next()}>{getPlugNode(plug, slotProps, children)}</Provider>
           );
         }}
       </Consumer>

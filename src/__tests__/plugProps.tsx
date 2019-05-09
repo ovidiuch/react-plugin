@@ -53,7 +53,7 @@ it('passes down slot props', () => {
   register();
 
   loadPlugins();
-  const renderer = create(<Slot name="root" props={{ age: 29 }} />);
+  const renderer = create(<Slot name="root" slotProps={{ age: 29 }} />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
