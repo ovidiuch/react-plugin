@@ -43,28 +43,22 @@ it('composes plugs registered outside-in', () => {
 
 function registerPreviewIframe() {
   const { plug, register } = createPlugin({ name: 'preview' });
-  plug({
-    slotName: 'root',
-    render: (
-      <Slot name="root">
-        <Preview />
-      </Slot>
-    ),
-  });
+  plug('root', () => (
+    <Slot name="root">
+      <Preview />
+    </Slot>
+  ));
   register();
 }
 
 function registerNav() {
   const { plug, register } = createPlugin({ name: 'nav' });
-  plug({
-    slotName: 'root',
-    render: ({ children }: { children?: React.ReactNode }) => (
-      <div>
-        <Nav />
-        <Slot name="root">{children}</Slot>
-      </div>
-    ),
-  });
+  plug('root', ({ children }: { children?: React.ReactNode }) => (
+    <div>
+      <Nav />
+      <Slot name="root">{children}</Slot>
+    </div>
+  ));
   register();
 }
 

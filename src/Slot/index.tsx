@@ -1,7 +1,6 @@
 import createLinkedList from '@skidding/linked-list';
 import { isEqual } from 'lodash';
 import * as React from 'react';
-import { isValidElementType } from 'react-is';
 import { onPluginLoad } from 'ui-plugin';
 import { Plug } from '../types';
 import { getEnabledPlugsForSlot } from '../store';
@@ -11,7 +10,7 @@ import { PlugConnect } from './PlugConnect';
 type Props = {
   name: string;
   children?: React.ReactNode;
-  props?: object;
+  slotProps?: object;
 };
 
 type State = {
@@ -26,7 +25,7 @@ export class Slot extends React.Component<Props, State> {
   removePluginLoadHandler: null | (() => unknown) = null;
 
   render() {
-    const { name, children, props = {} } = this.props;
+    const { name, children, slotProps = {} } = this.props;
     const { plugs } = this.state;
     const { Provider, Consumer } = getSlotContext(name);
 
@@ -52,7 +51,7 @@ export class Slot extends React.Component<Props, State> {
           }
 
           return (
-            <Provider value={next()}>{getPlugNode(plug, props, children)}</Provider>
+            <Provider value={next()}>{getPlugNode(plug, slotProps, children)}</Provider>
           );
         }}
       </Consumer>
@@ -72,7 +71,6 @@ export class Slot extends React.Component<Props, State> {
 
   handlePluginLoad = () => {
     const newPlugs = getEnabledPlugsForSlot(this.props.name);
-
     if (!isEqual(newPlugs, this.state.plugs)) {
       this.setState({ plugs: newPlugs });
     }
@@ -80,26 +78,12 @@ export class Slot extends React.Component<Props, State> {
 }
 
 function getPlugNode(plug: Plug, slotProps: object, children?: React.ReactNode) {
-  const { pluginName, render, getProps } = plug;
-
-  if (typeof render === 'string' || !isValidElementType(render)) {
-    return render;
-  }
-
-  if (typeof getProps === 'function') {
-    return (
-      <PlugConnect
-        pluginName={pluginName}
-        component={render}
-        slotProps={slotProps}
-        getProps={getProps}
-      >
-        {children}
-      </PlugConnect>
-    );
-  }
-
-  return React.createElement(render, slotProps, children);
+  const { pluginName, component } = plug;
+  return (
+    <PlugConnect pluginName={pluginName} component={component} slotProps={slotProps}>
+      {children}
+    </PlugConnect>
+  );
 }
 
 function getFirstLinkedPlug(plugs: Plug[]) {
