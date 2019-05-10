@@ -37,16 +37,12 @@ export class PlugConnect extends React.Component<Props> {
     // rendering is async, it takes a while for the Slot components to process
     // plugin changes, so PlugConnect components might receive state changes
     // for plugins that are no longer enabled.
-    if (!getPlugin(this.props.pluginName).enabled) {
-      return;
+    if (getPlugin(this.props.pluginName).enabled) {
+      this.forceUpdate();
     }
-
-    // Is this the best solution?
-    this.forceUpdate();
   };
 
   getPlugProps() {
-    // FIXME: Move 'slotProps = {}' default value one level up
     const { pluginName, slotProps = {} } = this.props;
     return { pluginContext: getPluginContext(pluginName), slotProps };
   }
