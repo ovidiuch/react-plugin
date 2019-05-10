@@ -8,14 +8,11 @@ export function resetPlugins() {
   plugs = {};
 }
 
-export function getEnabledPlugsForSlot(slotName: string) {
+export function getEnabledSlotPlugs(slotName: string) {
   const plugins = UiPlugin.getPlugins();
-
-  if (!plugs[slotName]) {
-    return [];
-  }
-
-  return plugs[slotName].filter(plug => plugins[plug.pluginName].enabled);
+  return plugs[slotName]
+    ? plugs[slotName].filter(plug => plugins[plug.pluginName].enabled)
+    : [];
 }
 
 export function registerPlug(slotName: string, plug: Plug) {

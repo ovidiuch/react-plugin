@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import * as React from 'react';
 import { onPluginLoad } from 'ui-plugin';
 import { Plug } from '../types';
-import { getEnabledPlugsForSlot } from '../store';
+import { getEnabledSlotPlugs } from '../store';
 import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
 
@@ -19,7 +19,7 @@ type State = {
 
 export class Slot extends React.Component<Props, State> {
   state = {
-    plugs: getEnabledPlugsForSlot(this.props.name),
+    plugs: getEnabledSlotPlugs(this.props.name),
   };
 
   removePluginLoadHandler: null | (() => unknown) = null;
@@ -70,7 +70,7 @@ export class Slot extends React.Component<Props, State> {
   }
 
   handlePluginLoad = () => {
-    const newPlugs = getEnabledPlugsForSlot(this.props.name);
+    const newPlugs = getEnabledSlotPlugs(this.props.name);
     if (!isEqual(newPlugs, this.state.plugs)) {
       this.setState({ plugs: newPlugs });
     }
