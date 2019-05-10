@@ -10,7 +10,7 @@ type Props = {
 };
 
 export function PlugConnect({ children, component, pluginName, slotProps }: Props) {
-  const [lastUpdate, setLastUpdate] = React.useState(0);
+  const [plugProps, setPlugProps] = React.useState(getPlugProps(pluginName, slotProps));
 
   React.useEffect(
     () =>
@@ -22,12 +22,15 @@ export function PlugConnect({ children, component, pluginName, slotProps }: Prop
         // plugin changes, so PlugConnect components might receive state changes
         // for plugins that are no longer enabled.
         if (getPlugin(pluginName).enabled) {
-          setLastUpdate(lastUpdate + 1);
+          setPlugProps(getPlugProps(pluginName, slotProps));
         }
       }),
-    [pluginName, lastUpdate],
+    [pluginName, slotProps],
   );
 
-  const plugProps = { pluginContext: getPluginContext(pluginName), slotProps };
   return React.createElement(component, plugProps, children);
+}
+
+function getPlugProps(pluginName: string, slotProps: object) {
+  return { pluginContext: getPluginContext(pluginName), slotProps };
 }
