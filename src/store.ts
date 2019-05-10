@@ -1,6 +1,7 @@
 import * as UiPlugin from 'ui-plugin';
-import { Plug, Plugs } from './shared/types';
+import { PlugComponentType, Plugs } from './shared/types';
 
+let plugId = 0;
 let plugs: Plugs = {};
 
 export function resetPlugins() {
@@ -15,10 +16,21 @@ export function getEnabledSlotPlugs(slotName: string) {
     : [];
 }
 
-export function registerPlug(slotName: string, plug: Plug) {
+type RegisterPlugArgs = {
+  slotName: string;
+  pluginName: string;
+  component: PlugComponentType<any, any>;
+};
+
+export function registerPlug({ slotName, pluginName, component }: RegisterPlugArgs) {
   if (!plugs[slotName]) {
     plugs[slotName] = [];
   }
 
-  plugs[slotName].push(plug);
+  plugId++;
+  plugs[slotName].push({
+    id: plugId,
+    pluginName,
+    component,
+  });
 }

@@ -30,7 +30,7 @@ export function createPlugin<Spec extends PluginSpec>(
     register: () => {
       plugin.register();
       plugs.forEach(({ slotName, component }) => {
-        registerPlug(slotName, { pluginName: args.name, component });
+        registerPlug({ slotName, pluginName: args.name, component });
       });
     },
   };

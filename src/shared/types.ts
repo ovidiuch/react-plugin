@@ -12,6 +12,7 @@ export type PlugComponentType<
 > = React.ComponentType<PlugProps<Spec, SlotProps>>;
 
 export type Plug<Spec extends PluginSpec = any> = {
+  id: number;
   pluginName: Spec['name'];
   component: PlugComponentType<any, any>;
 };
