@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useSlotPlugs } from './shared/useSlotPlugs';
-import { PlugConnect } from './shared/PlugConnect';
+import { useSlotPlugs } from '../shared/useSlotPlugs';
+import { PlugConnect } from '../shared/PlugConnect';
 
 // Possible future features: Sorting and custom plug decoration
 type Props = {
