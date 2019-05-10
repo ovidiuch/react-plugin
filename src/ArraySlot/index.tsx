@@ -9,11 +9,12 @@ type Props = {
 };
 
 export function ArraySlot({ name, slotProps = {} }: Props) {
+  const plugs = useSlotPlugs(name);
   return (
     // TS isn't happy with function components returning non-JSX.Elements
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20544
     <>
-      {useSlotPlugs(name).map(plug => (
+      {plugs.map(plug => (
         <PlugConnect
           key={plug.id}
           pluginName={plug.pluginName}
