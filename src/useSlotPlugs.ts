@@ -5,7 +5,6 @@ import { getEnabledSlotPlugs } from './store';
 
 export function useSlotPlugs(slotName: string) {
   const [plugs, setPlugs] = React.useState(getEnabledSlotPlugs(slotName));
-
   React.useEffect(
     () =>
       onPluginLoad(() => {
@@ -16,6 +15,5 @@ export function useSlotPlugs(slotName: string) {
       }),
     [plugs, slotName],
   );
-
   return plugs;
 }

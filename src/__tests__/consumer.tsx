@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { create } from 'react-test-renderer';
+import { act } from 'react-test-renderer';
+import { createRenderer } from '../testHelpers';
 import {
   enablePlugin,
   loadPlugins,
@@ -19,7 +20,7 @@ it('calls the consumer render fn with plugin list', () => {
   createPlugin({ name: 'Michael Palin' }).register();
   loadPlugins();
 
-  const renderer = create(<EnabledPluginNames />);
+  const renderer = createRenderer(<EnabledPluginNames />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones, Michael Palin"`,
   );
@@ -36,7 +37,7 @@ it('calls the consumer render fn with enabled plugin list', () => {
   enablePlugin('Michael Palin', false);
   loadPlugins();
 
-  const renderer = create(<EnabledPluginNames />);
+  const renderer = createRenderer(<EnabledPluginNames />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`,
   );
@@ -50,11 +51,13 @@ it('calls the consumer render fn with enabled plugin list', () => {
   createPlugin({ name: 'Terry Jones' }).register();
   createPlugin({ name: 'Michael Palin' }).register();
 
-  const renderer = create(<EnabledPluginNames />);
+  const renderer = createRenderer(<EnabledPluginNames />);
   loadPlugins();
 
-  enablePlugin('Terry Jones', false);
-  enablePlugin('Michael Palin', false);
+  act(() => {
+    enablePlugin('Terry Jones', false);
+    enablePlugin('Michael Palin', false);
+  });
 
   expect(renderer.toJSON()).toMatchInlineSnapshot(
     `"Graham Chapman, John Cleese, Terry Gilliam, Eric Idle"`,

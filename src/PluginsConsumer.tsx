@@ -1,5 +1,5 @@
-import { isEqual } from 'lodash';
 import * as React from 'react';
+import { isEqual } from 'lodash';
 import { enablePlugin, getPlugins, Plugin, onPluginLoad } from 'ui-plugin';
 
 type Props = {
@@ -9,47 +9,35 @@ type Props = {
   }) => React.ReactNode;
 };
 
-type State = {
-  plugins: Plugin[];
-};
+export function PluginsConsumer({ children }: Props) {
+  const plugins = usePlugins();
+  return (
+    // TS isn't happy with function components returning non-JSX.Elements
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20544
+    <>
+      {children({
+        plugins,
+        enable: (pluginName: string, enabled: boolean) => {
+          enablePlugin(pluginName, enabled);
+        },
+      })}
+    </>
+  );
+}
 
-export class PluginsConsumer extends React.Component<Props, State> {
-  state = {
-    plugins: getPluginArray(),
-  };
-
-  removePluginLoadHandler: null | (() => unknown) = null;
-
-  render() {
-    const { children } = this.props;
-    const { plugins } = this.state;
-    return children({
-      plugins,
-      enable: this.handleEnable,
-    });
-  }
-
-  componentDidMount() {
-    this.removePluginLoadHandler = onPluginLoad(this.handlePluginLoad);
-  }
-
-  componentWillUnmount() {
-    if (this.removePluginLoadHandler) {
-      this.removePluginLoadHandler();
-      this.removePluginLoadHandler = null;
-    }
-  }
-
-  handlePluginLoad = () => {
-    const newPlugins = getPluginArray();
-    if (!isEqual(newPlugins, this.state.plugins)) {
-      this.setState({ plugins: newPlugins });
-    }
-  };
-
-  handleEnable = (pluginName: string, enabled: boolean) => {
-    enablePlugin(pluginName, enabled);
-  };
+function usePlugins() {
+  const [plugins, setPlugins] = React.useState(getPluginArray());
+  React.useEffect(
+    () =>
+      onPluginLoad(() => {
+        const newPlugins = getPluginArray();
+        if (!isEqual(newPlugins, plugins)) {
+          setPlugins(newPlugins);
+        }
+      }),
+    [plugins],
+  );
+  return plugins;
 }
 
 function getPluginArray() {
