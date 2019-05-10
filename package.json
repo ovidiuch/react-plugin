@@ -11,7 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "tslint --project tsconfig.json",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json"
@@ -28,13 +28,15 @@
     "@types/lodash": "^4.14.123",
     "@types/react": "^16.8.17",
     "@types/react-test-renderer": "^16.8.1",
+    "@typescript-eslint/parser": "^1.7.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
     "jest": "^24.8.0",
     "prettier": "^1.17.0",
     "react": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.16.0",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.5"
   }
 }
