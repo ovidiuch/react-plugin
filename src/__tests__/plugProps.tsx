@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import * as React from 'react';
 import { create, ReactTestRenderer } from 'react-test-renderer';
-import { loadPlugins, createPlugin, resetPlugins, Slot } from '..';
+import { PluginContext, loadPlugins, createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
 
@@ -42,6 +42,32 @@ it('passes down pluginContext prop', () => {
   loadPlugins();
   const renderer = create(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
+});
+
+// This is an integration test because the memoization is done by ui-plugin
+it('passes down memoized pluginContext prop', async () => {
+  const { onLoad, plug, register } = createPlugin<Test>({
+    name: 'test',
+    initialState: { age: 29 },
+  });
+  const pluginContexts: Array<PluginContext<Test>> = [];
+  plug('root', ({ pluginContext }) => {
+    pluginContexts.push(pluginContext);
+    return null;
+  });
+  onLoad(({ setState }) => {
+    setTimeout(() => {
+      setState({ age: 30 });
+    });
+  });
+  register();
+
+  loadPlugins();
+  create(<Slot name="root" />);
+  await retry(() => {
+    expect(pluginContexts.length).toBe(2);
+    expect(pluginContexts[0]).toBe(pluginContexts[1]);
+  });
 });
 
 it('passes down slot props', () => {
