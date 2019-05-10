@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import * as React from 'react';
-import { create, ReactTestRenderer } from 'react-test-renderer';
+import { create, ReactTestRenderer, act } from 'react-test-renderer';
 import { PluginContext, loadPlugins, createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -16,7 +16,15 @@ interface Test {
   state: { age: number };
 }
 
-it('renders component', () => {
+function createRenderer(element: React.ReactElement): ReactTestRenderer {
+  let renderer: ReactTestRenderer;
+  act(() => {
+    renderer = create(element);
+  });
+  return renderer!;
+}
+
+it('renders component', async () => {
   const { plug, register } = createPlugin<Test>({
     name: 'test',
     initialState: { age: 28 },
@@ -25,7 +33,7 @@ it('renders component', () => {
   register();
 
   loadPlugins();
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
@@ -40,7 +48,7 @@ it('passes down pluginContext prop', () => {
   register();
 
   loadPlugins();
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
@@ -57,13 +65,15 @@ it('passes down memoized pluginContext prop', async () => {
   });
   onLoad(({ setState }) => {
     setTimeout(() => {
-      setState({ age: 30 });
+      act(() => {
+        setState({ age: 30 });
+      });
     });
   });
   register();
 
   loadPlugins();
-  create(<Slot name="root" />);
+  createRenderer(<Slot name="root" />);
   await retry(() => {
     expect(pluginContexts.length).toBe(2);
     expect(pluginContexts[0]).toBe(pluginContexts[1]);
@@ -79,7 +89,7 @@ it('passes down slot props', () => {
   register();
 
   loadPlugins();
-  const renderer = create(<Slot name="root" slotProps={{ age: 29 }} />);
+  const renderer = createRenderer(<Slot name="root" slotProps={{ age: 29 }} />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 
@@ -90,7 +100,9 @@ it('updates plug on plugin state change', async () => {
   });
   onLoad(({ setState }) => {
     setTimeout(() => {
-      setState({ age: 30 });
+      act(() => {
+        setState({ age: 30 });
+      });
     });
   });
   plug('root', ({ pluginContext }) => (
@@ -99,7 +111,7 @@ it('updates plug on plugin state change', async () => {
   register();
 
   loadPlugins();
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
   await retry(() => {
     // expect().toMatchInlineSnapshot can't be placed inside async retry()
     expect(getAgeProp(renderer)).toEqual(30);
