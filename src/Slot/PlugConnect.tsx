@@ -3,10 +3,10 @@ import { getPlugin, getPluginContext, onStateChange } from 'ui-plugin';
 import { PlugComponentType } from '../types';
 
 type Props = {
-  pluginName: string;
-  component: PlugComponentType<any, any>;
-  slotProps: object;
   children?: React.ReactNode;
+  component: PlugComponentType<any, any>;
+  pluginName: string;
+  slotProps: object;
 };
 
 export function PlugConnect({ children, component, pluginName, slotProps }: Props) {
