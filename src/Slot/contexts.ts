@@ -1,6 +1,6 @@
 import { LinkedItem } from '@skidding/linked-list';
 import * as React from 'react';
-import { Plug } from '../types';
+import { Plug } from '../shared/types';
 
 type SlotContextValue = undefined | LinkedItem<Plug>;
 

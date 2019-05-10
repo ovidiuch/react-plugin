@@ -1,5 +1,5 @@
 import * as UiPlugin from 'ui-plugin';
-import { Plug, Plugs } from './types';
+import { Plug, Plugs } from './shared/types';
 
 let plugs: Plugs = {};
 

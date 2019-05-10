@@ -10,8 +10,9 @@ export {
   loadPlugins,
   onStateChange,
 } from 'ui-plugin';
-export { PlugProps, PlugComponentType, Plug } from './types';
+export { PlugProps, PlugComponentType, Plug } from './shared/types';
 export { createPlugin } from './createPlugin';
 export { resetPlugins } from './store';
 export { Slot } from './Slot';
+export { ArraySlot } from './ArraySlot';
 export { PluginsConsumer } from './PluginsConsumer';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getPlugin, getPluginContext, onStateChange } from 'ui-plugin';
-import { PlugComponentType } from '../types';
+import { PlugComponentType } from './types';
 
 type Props = {
   children?: React.ReactNode;
