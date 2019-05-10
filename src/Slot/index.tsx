@@ -13,12 +13,6 @@ type Props = {
 
 export function Slot({ children, name, slotProps = {} }: Props) {
   const plugs = useSlotPlugs(name);
-  if (!plugs) {
-    // No plugs are registered for this slot in this render-cycle. Plugs
-    // for this slot may be registered later.
-    return null;
-  }
-
   const { Provider, Consumer } = getSlotContext(name);
   return (
     // Children are either
