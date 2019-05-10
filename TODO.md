@@ -1,8 +1,7 @@
 - [x] Rename Slot props to `slotProps`
 - [x] Test new plug API in react-cosmos with yarn link
 - [x] Test for context memoization in plugs
-- [ ] Create useArraySlot
-- [ ] Maybe: createPluginStore
+- [x] Create ArraySlot component
 
 ---
 

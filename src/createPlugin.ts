@@ -4,7 +4,7 @@ import {
   PluginCreateArgs,
   PluginCreateApi,
 } from 'ui-plugin';
-import { PlugComponentType } from './types';
+import { PlugComponentType } from './shared/types';
 import { registerPlug } from './store';
 
 interface ReactPluginCreateApi<Spec extends PluginSpec> extends PluginCreateApi<Spec> {
@@ -30,7 +30,7 @@ export function createPlugin<Spec extends PluginSpec>(
     register: () => {
       plugin.register();
       plugs.forEach(({ slotName, component }) => {
-        registerPlug(slotName, { pluginName: args.name, component });
+        registerPlug({ slotName, pluginName: args.name, component });
       });
     },
   };

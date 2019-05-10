@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { create } from 'react-test-renderer';
-import { loadPlugins, PluginsConsumer, createPlugin, resetPlugins } from '..';
+import { act } from 'react-test-renderer';
+import { createRenderer } from '../../testHelpers';
+import { loadPlugins, PluginsConsumer, createPlugin, resetPlugins } from '../..';
 
 afterEach(resetPlugins);
 
@@ -9,7 +10,7 @@ it('updates plugins from consumer methods', () => {
   createPlugin({ name: 'Wiz Khalifa' }).register();
   loadPlugins();
 
-  const renderer = create(<PluginList />);
+  const renderer = createRenderer(<PluginList />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
   <p
@@ -27,8 +28,10 @@ Array [
 
   // Disable both
   const [snoop, wiz] = renderer.root.findAllByType('p');
-  snoop.props.onClick();
-  wiz.props.onClick();
+  act(() => {
+    snoop.props.onClick();
+    wiz.props.onClick();
+  });
 
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [
@@ -46,7 +49,9 @@ Array [
 `);
 
   // Bring back Wiz
-  wiz.props.onClick();
+  act(() => {
+    wiz.props.onClick();
+  });
 
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
 Array [

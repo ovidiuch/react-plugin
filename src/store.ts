@@ -1,6 +1,7 @@
 import * as UiPlugin from 'ui-plugin';
-import { Plug, Plugs } from './types';
+import { PlugComponentType, Plugs } from './shared/types';
 
+let plugId = 0;
 let plugs: Plugs = {};
 
 export function resetPlugins() {
@@ -8,20 +9,28 @@ export function resetPlugins() {
   plugs = {};
 }
 
-export function getEnabledPlugsForSlot(slotName: string) {
+export function getEnabledSlotPlugs(slotName: string) {
   const plugins = UiPlugin.getPlugins();
-
-  if (!plugs[slotName]) {
-    return [];
-  }
-
-  return plugs[slotName].filter(plug => plugins[plug.pluginName].enabled);
+  return plugs[slotName]
+    ? plugs[slotName].filter(plug => plugins[plug.pluginName].enabled)
+    : [];
 }
 
-export function registerPlug(slotName: string, plug: Plug) {
+type RegisterPlugArgs = {
+  slotName: string;
+  pluginName: string;
+  component: PlugComponentType<any, any>;
+};
+
+export function registerPlug({ slotName, pluginName, component }: RegisterPlugArgs) {
   if (!plugs[slotName]) {
     plugs[slotName] = [];
   }
 
-  plugs[slotName].push(plug);
+  plugId++;
+  plugs[slotName].push({
+    id: plugId,
+    pluginName,
+    component,
+  });
 }
