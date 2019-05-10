@@ -1,6 +1,7 @@
 import retry from '@skidding/async-retry';
 import * as React from 'react';
-import { create } from 'react-test-renderer';
+import { act } from 'react-test-renderer';
+import { createRenderer } from '../testHelpers';
 import { enablePlugin, loadPlugins, createPlugin, resetPlugins, Slot } from '..';
 
 afterEach(resetPlugins);
@@ -19,7 +20,7 @@ it('ignores plug of disabled plugin', () => {
 
   loadPlugins();
 
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
   expect(() => {
     renderer.root.findByType(HelloWorld);
   }).toThrow();
@@ -34,7 +35,7 @@ it('renders plug after enabling plugin', () => {
   loadPlugins();
   enablePlugin('test', true);
 
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
   expect(renderer.root.findByType(HelloWorld)).toBeTruthy();
 });
 
@@ -45,10 +46,12 @@ it('renders plug after enabling loaded plugin', async () => {
   enablePlugin('test', false);
 
   loadPlugins();
-  const renderer = create(<Slot name="root" />);
+  const renderer = createRenderer(<Slot name="root" />);
 
   setTimeout(() => {
-    enablePlugin('test', true);
+    act(() => {
+      enablePlugin('test', true);
+    });
   });
 
   await retry(() => expect(renderer.root.findByType(HelloWorld)).toBeTruthy());

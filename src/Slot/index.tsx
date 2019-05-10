@@ -1,80 +1,46 @@
-import createLinkedList from '@skidding/linked-list';
-import { isEqual } from 'lodash';
 import * as React from 'react';
-import { onPluginLoad } from 'ui-plugin';
+import createLinkedList from '@skidding/linked-list';
 import { Plug } from '../types';
-import { getEnabledSlotPlugs } from '../store';
+import { useSlotPlugs } from '../useSlotPlugs';
 import { getSlotContext } from './contexts';
 import { PlugConnect } from './PlugConnect';
 
 type Props = {
-  name: string;
   children?: React.ReactNode;
+  name: string;
   slotProps?: object;
 };
 
-type State = {
-  plugs: Plug[];
-};
+export function Slot({ children, name, slotProps = {} }: Props) {
+  const plugs = useSlotPlugs(name);
+  if (!plugs) {
+    // No plugs are registered for this slot in this render-cycle. Plugs
+    // for this slot may be registered later.
+    return null;
+  }
 
-export class Slot extends React.Component<Props, State> {
-  state = {
-    plugs: getEnabledSlotPlugs(this.props.name),
-  };
-
-  removePluginLoadHandler: null | (() => unknown) = null;
-
-  render() {
-    const { name, children, slotProps = {} } = this.props;
-    const { plugs } = this.state;
-    const { Provider, Consumer } = getSlotContext(name);
-
-    if (!plugs) {
-      // No plugs are registered for this slot in this render-cycle. Plugs
-      // for this slot may be registered later.
-      return null;
-    }
-
+  const { Provider, Consumer } = getSlotContext(name);
+  return (
     // Children are either
     // - passed to the next plug or,
     // - if this is the last plug for this slot, rendered directly.
-    return (
-      <Consumer>
-        {(linkedSlotItem = getFirstLinkedPlug(plugs)) => {
-          const { value: plug, next } = linkedSlotItem;
+    <Consumer>
+      {(linkedSlotItem = getFirstLinkedPlug(plugs)) => {
+        const { value: plug, next } = linkedSlotItem;
 
-          // All registered plugs for this slot have been rendered (for
-          // now). More plugs for this slot can be registered later, which
-          // will re-render all plugs from scratch.
-          if (!plug) {
-            return children;
-          }
+        // All registered plugs for this slot have been rendered (for
+        // now). More plugs for this slot can be registered later, which
+        // will re-render all plugs from scratch.
+        if (!plug) {
+          return children;
+        }
 
-          return (
-            <Provider value={next()}>{getPlugNode(plug, slotProps, children)}</Provider>
-          );
-        }}
-      </Consumer>
-    );
-  }
-
-  componentDidMount() {
-    this.removePluginLoadHandler = onPluginLoad(this.handlePluginLoad);
-  }
-
-  componentWillUnmount() {
-    if (this.removePluginLoadHandler) {
-      this.removePluginLoadHandler();
-      this.removePluginLoadHandler = null;
-    }
-  }
-
-  handlePluginLoad = () => {
-    const newPlugs = getEnabledSlotPlugs(this.props.name);
-    if (!isEqual(newPlugs, this.state.plugs)) {
-      this.setState({ plugs: newPlugs });
-    }
-  };
+        return (
+          <Provider value={next()}>{getPlugNode(plug, slotProps, children)}</Provider>
+        );
+      }}
+    </Consumer>
+  );
 }
 
 function getPlugNode(plug: Plug, slotProps: object, children?: React.ReactNode) {
