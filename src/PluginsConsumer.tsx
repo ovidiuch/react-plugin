@@ -3,12 +3,10 @@ import * as React from 'react';
 import { enablePlugin, getPlugins, Plugin, onPluginLoad } from 'ui-plugin';
 
 type Props = {
-  children: (
-    props: {
-      plugins: Plugin[];
-      enable: (pluginName: string, enabled: boolean) => void;
-    },
-  ) => React.ReactNode;
+  children: (props: {
+    plugins: Plugin[];
+    enable: (pluginName: string, enabled: boolean) => void;
+  }) => React.ReactNode;
 };
 
 type State = {
@@ -25,7 +23,6 @@ export class PluginsConsumer extends React.Component<Props, State> {
   render() {
     const { children } = this.props;
     const { plugins } = this.state;
-
     return children({
       plugins,
       enable: this.handleEnable,
@@ -45,7 +42,6 @@ export class PluginsConsumer extends React.Component<Props, State> {
 
   handlePluginLoad = () => {
     const newPlugins = getPluginArray();
-
     if (!isEqual(newPlugins, this.state.plugins)) {
       this.setState({ plugins: newPlugins });
     }
@@ -58,6 +54,5 @@ export class PluginsConsumer extends React.Component<Props, State> {
 
 function getPluginArray() {
   const allPlugins = getPlugins();
-
   return Object.keys(allPlugins).map(pluginName => allPlugins[pluginName]);
 }
