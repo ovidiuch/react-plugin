@@ -12,21 +12,22 @@ type Props = {
 export function PlugConnect({ children, component, pluginName, slotProps }: Props) {
   const [plugProps, setPlugProps] = React.useState(getPlugProps(pluginName, slotProps));
 
-  React.useEffect(
-    () =>
-      onStateChange(() => {
-        // This check covers a scenario that can't be tested easily. It occurs when
-        // the React renderer is async and Slot's componentWillUnmount is called
-        // asynchronously, which is not the case with react-test-renderer. When
-        // rendering is async, it takes a while for the Slot components to process
-        // plugin changes, so PlugConnect components might receive state changes
-        // for plugins that are no longer enabled.
-        if (getPlugin(pluginName).enabled) {
-          setPlugProps(getPlugProps(pluginName, slotProps));
-        }
-      }),
-    [pluginName, slotProps],
-  );
+  const updatePlugProps = React.useCallback(() => {
+    // This check covers a scenario that can't be tested easily. It occurs in
+    // async React, but not with react-test-renderer. When  rendering is async,
+    // it takes a while for the Slot components to process plugin changes, so
+    // PlugConnect components might receive state changes for plugins that are
+    // no longer enabled.
+    if (getPlugin(pluginName).enabled) {
+      setPlugProps(getPlugProps(pluginName, slotProps));
+    }
+  }, [pluginName, slotProps]);
+
+  React.useEffect(() => {
+    // Plugin state might've changed since the component rendered
+    updatePlugProps();
+    return onStateChange(updatePlugProps);
+  }, [updatePlugProps]);
 
   return React.createElement(component, plugProps, children);
 }
