@@ -43,7 +43,7 @@ export class PlugConnect extends React.Component<Props> {
   };
 
   getPlugProps() {
-    const { pluginName, slotProps = {} } = this.props;
+    const { pluginName, slotProps } = this.props;
     return { pluginContext: getPluginContext(pluginName), slotProps };
   }
 }
