@@ -10,7 +10,10 @@ type Props = {
 };
 
 export function PlugConnect({ children, component, pluginName, slotProps }: Props) {
-  const [plugProps, setPlugProps] = React.useState(getPlugProps(pluginName, slotProps));
+  const [plugProps, setPlugProps] = React.useState(
+    // Avoid getting plugin context after initial PlugConnect state is created
+    () => getPlugProps(pluginName, slotProps),
+  );
 
   const updatePlugProps = React.useCallback(() => {
     // This check covers a scenario that can't be tested easily. It occurs in
