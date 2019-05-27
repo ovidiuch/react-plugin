@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
