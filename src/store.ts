@@ -20,9 +20,15 @@ type RegisterPlugArgs = {
   slotName: string;
   pluginName: string;
   component: PlugComponentType<any, any>;
+  plugName?: string;
 };
 
-export function registerPlug({ slotName, pluginName, component }: RegisterPlugArgs) {
+export function registerPlug({
+  slotName,
+  pluginName,
+  component,
+  plugName,
+}: RegisterPlugArgs) {
   if (!plugs[slotName]) {
     plugs[slotName] = [];
   }
@@ -32,5 +38,6 @@ export function registerPlug({ slotName, pluginName, component }: RegisterPlugAr
     id: plugId,
     pluginName,
     component,
+    plugName,
   });
 }
