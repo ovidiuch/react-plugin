@@ -15,6 +15,7 @@ export type Plug<Spec extends PluginSpec = any> = {
   id: number;
   pluginName: Spec['name'];
   component: PlugComponentType<any, any>;
+  plugName?: string;
 };
 
 export type Plugs = { [slotName: string]: Plug[] };
