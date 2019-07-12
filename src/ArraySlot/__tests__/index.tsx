@@ -30,12 +30,12 @@ it('renders each plug', async () => {
   loadPlugins();
   const renderer = createRenderer(<ArraySlot name="root" />);
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
-    Array [
-      "29y old",
-      "30y old",
-      "31y old",
-    ]
-  `);
+        Array [
+          "29y old",
+          "30y old",
+          "31y old",
+        ]
+    `);
 });
 
 it('passes down pluginContext prop', () => {
