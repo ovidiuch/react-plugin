@@ -1,9 +1,9 @@
 import React from 'react';
 import { act } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { PluginsConsumer } from '..';
+import { PluginsConsumer } from '../PluginsConsumer';
 import { createPlugin } from '../../createPlugin';
-import { resetPlugins } from '../../store';
+import { resetPlugins } from '../../pluginStore';
 import { createRenderer } from '../../testHelpers/createRenderer';
 
 afterEach(resetPlugins);

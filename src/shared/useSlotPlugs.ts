@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { onPluginLoad } from 'ui-plugin';
-import { getEnabledSlotPlugs } from '../store';
+import { getEnabledSlotPlugs } from '../pluginStore';
 
 export function useSlotPlugs(slotName: string) {
   const [plugs, setPlugs] = useState(() => getEnabledSlotPlugs(slotName));

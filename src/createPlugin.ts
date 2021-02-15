@@ -5,7 +5,7 @@ import {
   PluginSpec,
 } from 'ui-plugin';
 import { PlugComponentType } from './shared/types';
-import { registerPlug } from './store';
+import { registerPlug } from './pluginStore';
 
 interface ReactPluginCreateApi<T extends PluginSpec>
   extends PluginCreateApi<T> {
