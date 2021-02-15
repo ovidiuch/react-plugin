@@ -2,7 +2,13 @@ import retry from '@skidding/async-retry';
 import * as React from 'react';
 import { ReactTestRenderer, act } from 'react-test-renderer';
 import { createRenderer } from '../../testHelpers';
-import { PluginContext, loadPlugins, createPlugin, resetPlugins, Slot } from '../..';
+import {
+  PluginContext,
+  loadPlugins,
+  createPlugin,
+  resetPlugins,
+  Slot,
+} from '../..';
 
 afterEach(resetPlugins);
 
@@ -78,7 +84,9 @@ it('passes down slot props', () => {
     name: 'test',
     initialState: { age: 28 },
   });
-  plug<{ age: number }>('root', ({ slotProps }) => <AgeComponent age={slotProps.age} />);
+  plug<{ age: number }>('root', ({ slotProps }) => (
+    <AgeComponent age={slotProps.age} />
+  ));
   register();
 
   loadPlugins();

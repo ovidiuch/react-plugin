@@ -16,7 +16,9 @@ it('sorts plugs', async () => {
   register();
 
   loadPlugins();
-  const renderer = createRenderer(<ArraySlot name="root" plugOrder={['A', 'B', 'C']} />);
+  const renderer = createRenderer(
+    <ArraySlot name="root" plugOrder={['A', 'B', 'C']} />,
+  );
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
     Array [
       "A",
@@ -36,7 +38,9 @@ it('places unsorted plugs last', async () => {
   register();
 
   loadPlugins();
-  const renderer = createRenderer(<ArraySlot name="root" plugOrder={['A', 'B', 'C']} />);
+  const renderer = createRenderer(
+    <ArraySlot name="root" plugOrder={['A', 'B', 'C']} />,
+  );
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
     Array [
       "A",
@@ -49,7 +53,9 @@ it('places unsorted plugs last', async () => {
 });
 
 it('places unnamed plugs last', async () => {
-  const { namedPlug, plug, register } = createPlugin<SortTest>({ name: 'test' });
+  const { namedPlug, plug, register } = createPlugin<SortTest>({
+    name: 'test',
+  });
   namedPlug('root', 'B', () => <>B</>);
   namedPlug('root', 'A', () => <>A</>);
   namedPlug('root', 'C', () => <>C</>);
@@ -58,7 +64,9 @@ it('places unnamed plugs last', async () => {
   register();
 
   loadPlugins();
-  const renderer = createRenderer(<ArraySlot name="root" plugOrder={['A', 'B', 'C']} />);
+  const renderer = createRenderer(
+    <ArraySlot name="root" plugOrder={['A', 'B', 'C']} />,
+  );
   expect(renderer.toJSON()).toMatchInlineSnapshot(`
     Array [
       "A",

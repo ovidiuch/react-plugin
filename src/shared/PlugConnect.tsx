@@ -9,7 +9,12 @@ type Props = {
   slotProps: object;
 };
 
-export function PlugConnect({ children, component, pluginName, slotProps }: Props) {
+export function PlugConnect({
+  children,
+  component,
+  pluginName,
+  slotProps,
+}: Props) {
   const [plugProps, setPlugProps] = React.useState(
     // Avoid getting plugin context after initial PlugConnect state is created
     () => getPlugProps(pluginName, slotProps),

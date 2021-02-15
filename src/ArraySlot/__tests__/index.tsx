@@ -58,11 +58,15 @@ it('passes down slot props', () => {
     name: 'test',
     initialState: { age: 28 },
   });
-  plug<{ age: number }>('root', ({ slotProps }) => <AgeComponent age={slotProps.age} />);
+  plug<{ age: number }>('root', ({ slotProps }) => (
+    <AgeComponent age={slotProps.age} />
+  ));
   register();
 
   loadPlugins();
-  const renderer = createRenderer(<ArraySlot name="root" slotProps={{ age: 29 }} />);
+  const renderer = createRenderer(
+    <ArraySlot name="root" slotProps={{ age: 29 }} />,
+  );
   expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
 });
 

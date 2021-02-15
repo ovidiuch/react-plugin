@@ -7,7 +7,8 @@ import {
 import { PlugComponentType } from './shared/types';
 import { registerPlug } from './store';
 
-interface ReactPluginCreateApi<Spec extends PluginSpec> extends PluginCreateApi<Spec> {
+interface ReactPluginCreateApi<Spec extends PluginSpec>
+  extends PluginCreateApi<Spec> {
   plug<SlotProps extends {} = {}>(
     slotName: string,
     component: PlugComponentType<Spec, SlotProps>,
