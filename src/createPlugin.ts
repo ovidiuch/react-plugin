@@ -1,34 +1,34 @@
 import {
   createPlugin as createUPlugin,
-  PluginSpec,
-  PluginCreateArgs,
+  PluginArgs,
   PluginCreateApi,
+  PluginSpec,
 } from 'ui-plugin';
 import { PlugComponentType } from './shared/types';
 import { registerPlug } from './store';
 
-interface ReactPluginCreateApi<Spec extends PluginSpec>
-  extends PluginCreateApi<Spec> {
+interface ReactPluginCreateApi<T extends PluginSpec>
+  extends PluginCreateApi<T> {
   plug<SlotProps extends {} = {}>(
     slotName: string,
-    component: PlugComponentType<Spec, SlotProps>,
+    component: PlugComponentType<T, SlotProps>,
   ): void;
   namedPlug<SlotProps extends {} = {}>(
     slotName: string,
     plugName: string,
-    component: PlugComponentType<Spec, SlotProps>,
+    component: PlugComponentType<T, SlotProps>,
   ): void;
 }
 
-export function createPlugin<Spec extends PluginSpec>(
-  args: PluginCreateArgs<Spec>,
-): ReactPluginCreateApi<Spec> {
-  const plugin = createUPlugin<Spec>(args);
-  const plugs: Array<{
+export function createPlugin<T extends PluginSpec>(
+  args: PluginArgs<T>,
+): ReactPluginCreateApi<T> {
+  const plugin = createUPlugin<T>(args);
+  const plugs: {
     slotName: string;
-    component: PlugComponentType<Spec, any>;
+    component: PlugComponentType<T, any>;
     plugName?: string;
-  }> = [];
+  }[] = [];
 
   return {
     ...plugin,

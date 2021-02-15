@@ -1,12 +1,12 @@
-import * as React from 'react';
 import createLinkedList from '@skidding/linked-list';
+import React, { ReactNode } from 'react';
+import { PlugConnect } from '../shared/PlugConnect';
 import { Plug } from '../shared/types';
 import { useSlotPlugs } from '../shared/useSlotPlugs';
-import { PlugConnect } from '../shared/PlugConnect';
 import { getSlotContext } from './contexts';
 
 type Props = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   name: string;
   slotProps?: object;
 };
@@ -25,9 +25,7 @@ export function Slot({ children, name, slotProps = {} }: Props) {
         // All registered plugs for this slot have been rendered (for
         // now). More plugs for this slot can be registered later, which
         // will re-render all plugs from scratch.
-        if (!plug) {
-          return children;
-        }
+        if (!plug) return children;
 
         return (
           <Provider value={next()}>
@@ -39,11 +37,7 @@ export function Slot({ children, name, slotProps = {} }: Props) {
   );
 }
 
-function getPlugNode(
-  plug: Plug,
-  slotProps: object,
-  children?: React.ReactNode,
-) {
+function getPlugNode(plug: Plug, slotProps: object, children?: ReactNode) {
   const { pluginName, component } = plug;
   return (
     <PlugConnect

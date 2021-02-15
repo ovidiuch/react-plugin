@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { create } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
 import { createPlugin, resetPlugins, Slot } from '../..';

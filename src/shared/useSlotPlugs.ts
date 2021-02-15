@@ -1,14 +1,14 @@
 import { isEqual } from 'lodash';
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { onPluginLoad } from 'ui-plugin';
 import { getEnabledSlotPlugs } from '../store';
 
 export function useSlotPlugs(slotName: string) {
-  const [plugs, setPlugs] = React.useState(() => getEnabledSlotPlugs(slotName));
+  const [plugs, setPlugs] = useState(() => getEnabledSlotPlugs(slotName));
 
   // Keep plugs in sync with slotName
-  const lastSlotName = React.useRef(slotName);
-  React.useEffect(() => {
+  const lastSlotName = useRef(slotName);
+  useEffect(() => {
     // Prevent setting plugs to state twice on mount
     if (slotName !== lastSlotName.current) {
       setPlugs(getEnabledSlotPlugs(slotName));
@@ -16,7 +16,7 @@ export function useSlotPlugs(slotName: string) {
     }
   }, [slotName]);
 
-  React.useEffect(
+  useEffect(
     () =>
       onPluginLoad(() => {
         const newPlugs = getEnabledSlotPlugs(slotName);

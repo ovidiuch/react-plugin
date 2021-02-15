@@ -1,14 +1,14 @@
 import retry from '@skidding/async-retry';
-import * as React from 'react';
-import { ReactTestRenderer, act } from 'react-test-renderer';
-import { createRenderer } from '../../testHelpers';
+import React from 'react';
+import { act, ReactTestRenderer } from 'react-test-renderer';
 import {
-  PluginContext,
-  loadPlugins,
   createPlugin,
+  loadPlugins,
+  PluginContext,
   resetPlugins,
   Slot,
 } from '../..';
+import { createRenderer } from '../../testHelpers';
 
 afterEach(resetPlugins);
 
@@ -57,7 +57,7 @@ it('passes down memoized pluginContext prop', async () => {
     name: 'test',
     initialState: { age: 29 },
   });
-  const pluginContexts: Array<PluginContext<Test>> = [];
+  const pluginContexts: PluginContext<Test>[] = [];
   plug('root', ({ pluginContext }) => {
     pluginContexts.push(pluginContext);
     return null;

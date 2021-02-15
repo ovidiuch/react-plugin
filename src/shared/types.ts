@@ -1,7 +1,8 @@
-import { PluginSpec, PluginContext } from 'ui-plugin';
+import { ComponentType, ReactNode } from 'react';
+import { PluginContext, PluginSpec } from 'ui-plugin';
 
 export type PlugProps<Spec extends PluginSpec, SlotProps extends {}> = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   pluginContext: PluginContext<Spec>;
   slotProps: SlotProps;
 };
@@ -9,7 +10,7 @@ export type PlugProps<Spec extends PluginSpec, SlotProps extends {}> = {
 export type PlugComponentType<
   Spec extends PluginSpec,
   SlotProps extends {}
-> = React.ComponentType<PlugProps<Spec, SlotProps>>;
+> = ComponentType<PlugProps<Spec, SlotProps>>;
 
 export type Plug<Spec extends PluginSpec = any> = {
   id: number;
