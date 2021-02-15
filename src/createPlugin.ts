@@ -19,15 +19,17 @@ interface CreateApi<T extends PluginSpec> extends PluginCreateApi<T> {
   ): void;
 }
 
+type PendingPlug = {
+  slotName: string;
+  component: PlugComponentType<any, any>;
+  plugName?: string;
+};
+
 export function createPlugin<T extends PluginSpec>(
   args: PluginArgs<T>,
 ): CreateApi<T> {
   const plugin = createUiPlugin(args);
-  const plugs: {
-    slotName: string;
-    component: PlugComponentType<any, any>;
-    plugName?: string;
-  }[] = [];
+  const plugs: PendingPlug[] = [];
 
   return {
     ...plugin,
