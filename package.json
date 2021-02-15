@@ -11,6 +11,8 @@
     "dist"
   ],
   "scripts": {
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "check-types": "tsc --noEmit",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
