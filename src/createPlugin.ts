@@ -1,5 +1,5 @@
 import {
-  createPlugin as createUPlugin,
+  createPlugin as createUiPlugin,
   PluginArgs,
   PluginCreateApi,
   PluginSpec,
@@ -23,7 +23,7 @@ interface ReactPluginCreateApi<T extends PluginSpec>
 export function createPlugin<T extends PluginSpec>(
   args: PluginArgs<T>,
 ): ReactPluginCreateApi<T> {
-  const plugin = createUPlugin<T>(args);
+  const plugin = createUiPlugin<T>(args);
   const plugs: {
     slotName: string;
     component: PlugComponentType<T, any>;

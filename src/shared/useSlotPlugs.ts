@@ -20,9 +20,7 @@ export function useSlotPlugs(slotName: string) {
     () =>
       onPluginLoad(() => {
         const newPlugs = getEnabledSlotPlugs(slotName);
-        if (!isEqual(newPlugs, plugs)) {
-          setPlugs(newPlugs);
-        }
+        if (!isEqual(newPlugs, plugs)) setPlugs(newPlugs);
       }),
     [plugs, slotName],
   );

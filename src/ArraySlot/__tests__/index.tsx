@@ -1,8 +1,11 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { act, ReactTestRenderer } from 'react-test-renderer';
-import { ArraySlot, createPlugin, loadPlugins, resetPlugins } from '../..';
-import { createRenderer } from '../../testHelpers';
+import { loadPlugins } from 'ui-plugin';
+import { ArraySlot } from '..';
+import { createPlugin } from '../../createPlugin';
+import { resetPlugins } from '../../store';
+import { createRenderer } from '../../testHelpers/createRenderer';
 
 afterEach(resetPlugins);
 

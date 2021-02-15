@@ -36,9 +36,7 @@ function usePlugins() {
     () =>
       onPluginLoad(() => {
         const newPlugins = getPluginArray();
-        if (!isEqual(newPlugins, plugins)) {
-          setPlugins(newPlugins);
-        }
+        if (!isEqual(newPlugins, plugins)) setPlugins(newPlugins);
       }),
     [plugins],
   );

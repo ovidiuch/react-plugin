@@ -29,9 +29,7 @@ export function registerPlug({
   component,
   plugName,
 }: RegisterPlugArgs) {
-  if (!plugs[slotName]) {
-    plugs[slotName] = [];
-  }
+  if (!plugs[slotName]) plugs[slotName] = [];
 
   plugId++;
   plugs[slotName].push({
