@@ -1,9 +1,9 @@
 import createLinkedList from '@skidding/linked-list';
 import React, { ReactNode } from 'react';
-import { PlugConnect } from '../shared/PlugConnect';
-import { Plug } from '../shared/types';
-import { useSlotPlugs } from '../shared/useSlotPlugs';
-import { getSlotContext } from './contexts';
+import { PlugConnect } from './PlugConnect';
+import { getSlotContext } from './slotContexts';
+import { Plug } from './types';
+import { useSlotPlugs } from './useSlotPlugs';
 
 type Props = {
   children?: ReactNode;

@@ -10,9 +10,9 @@ export {
   PluginRecord,
   PluginSpec,
 } from 'ui-plugin';
-export { ArraySlot } from './ArraySlot/ArraySlot';
+export { ArraySlot } from './ArraySlot';
 export { createPlugin } from './createPlugin';
-export { PluginsConsumer } from './PluginsConsumer/PluginsConsumer';
-export { Plug, PlugComponentType, PlugProps } from './shared/types';
-export { Slot } from './Slot/Slot';
+export { PluginsConsumer } from './PluginsConsumer';
 export { resetPlugins } from './pluginStore';
+export { Slot } from './Slot';
+export { Plug, PlugComponentType, PlugProps } from './types';

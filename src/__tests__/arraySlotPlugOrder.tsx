@@ -1,9 +1,9 @@
 import React from 'react';
 import { loadPlugins } from 'ui-plugin';
 import { ArraySlot } from '../ArraySlot';
-import { createPlugin } from '../../createPlugin';
-import { resetPlugins } from '../../pluginStore';
-import { createRenderer } from '../../testHelpers/createRenderer';
+import { createPlugin } from '../createPlugin';
+import { resetPlugins } from '../pluginStore';
+import { createRenderer } from '../testHelpers/createRenderer';
 
 afterEach(resetPlugins);
 

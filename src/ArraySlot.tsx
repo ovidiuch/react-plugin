@@ -1,7 +1,7 @@
 import React from 'react';
-import { PlugConnect } from '../shared/PlugConnect';
-import { Plug } from '../shared/types';
-import { useSlotPlugs } from '../shared/useSlotPlugs';
+import { PlugConnect } from './PlugConnect';
+import { Plug } from './types';
+import { useSlotPlugs } from './useSlotPlugs';
 
 type Props = {
   name: string;
