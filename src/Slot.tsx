@@ -27,26 +27,20 @@ export function Slot({ children, name, slotProps = {} }: Props) {
         // will re-render all plugs from scratch.
         if (!plug) return children;
 
+        const { pluginName, component } = plug;
         return (
           <Provider value={next()}>
-            {getPlugNode(plug, slotProps, children)}
+            <PlugConnect
+              pluginName={pluginName}
+              component={component}
+              slotProps={slotProps}
+            >
+              {children}
+            </PlugConnect>
           </Provider>
         );
       }}
     </Consumer>
-  );
-}
-
-function getPlugNode(plug: Plug, slotProps: object, children?: ReactNode) {
-  const { pluginName, component } = plug;
-  return (
-    <PlugConnect
-      pluginName={pluginName}
-      component={component}
-      slotProps={slotProps}
-    >
-      {children}
-    </PlugConnect>
   );
 }
 

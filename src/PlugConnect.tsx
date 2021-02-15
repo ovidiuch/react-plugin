@@ -27,11 +27,7 @@ export function PlugConnect({
   );
 
   const updatePlugProps = useCallback(() => {
-    // This check covers a scenario that can't be tested easily. It occurs in
-    // async React, but not with react-test-renderer. When rendering is async,
-    // it takes a while for the Slot components to process plugin changes, so
-    // PlugConnect components might receive state changes for plugins that are
-    // no longer enabled.
+    // The plugin can be removed or disabled when this callback is called.
     const plugins = getPlugins();
     if (plugins[pluginName] && plugins[pluginName].enabled)
       setPlugProps(getPlugProps(pluginName, slotProps));

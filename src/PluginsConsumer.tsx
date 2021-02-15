@@ -22,9 +22,8 @@ export function PluginsConsumer({ children }: Props) {
     <>
       {children({
         plugins,
-        enable: (pluginName: string, enabled: boolean) => {
-          enablePlugin(pluginName, enabled);
-        },
+        enable: (pluginName: string, enabled: boolean) =>
+          enablePlugin(pluginName, enabled),
       })}
     </>
   );
