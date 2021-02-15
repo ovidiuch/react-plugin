@@ -12,9 +12,9 @@ export type PlugComponentType<
   TSlotProps extends {}
 > = ComponentType<PlugProps<TSpec, TSlotProps>>;
 
-export type Plug<T extends PluginSpec = any> = {
+export type Plug = {
   id: number;
-  pluginName: T['name'];
+  pluginName: string;
   component: PlugComponentType<any, any>;
   plugName?: string;
 };

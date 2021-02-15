@@ -7,13 +7,12 @@ import {
 import { registerPlug } from './pluginStore';
 import { PlugComponentType } from './types';
 
-interface ReactPluginCreateApi<T extends PluginSpec>
-  extends PluginCreateApi<T> {
-  plug<SlotProps extends {} = {}>(
+interface CreateApi<T extends PluginSpec> extends PluginCreateApi<T> {
+  plug<SlotProps extends {}>(
     slotName: string,
     component: PlugComponentType<T, SlotProps>,
   ): void;
-  namedPlug<SlotProps extends {} = {}>(
+  namedPlug<SlotProps extends {}>(
     slotName: string,
     plugName: string,
     component: PlugComponentType<T, SlotProps>,
@@ -22,11 +21,11 @@ interface ReactPluginCreateApi<T extends PluginSpec>
 
 export function createPlugin<T extends PluginSpec>(
   args: PluginArgs<T>,
-): ReactPluginCreateApi<T> {
-  const plugin = createUiPlugin<T>(args);
+): CreateApi<T> {
+  const plugin = createUiPlugin(args);
   const plugs: {
     slotName: string;
-    component: PlugComponentType<T, any>;
+    component: PlugComponentType<any, any>;
     plugName?: string;
   }[] = [];
 

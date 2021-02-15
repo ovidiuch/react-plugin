@@ -27,7 +27,7 @@ export function ArraySlot({ name, slotProps = {}, plugOrder = [] }: Props) {
   );
 }
 
-function getSortedPlugs(plugs: Plug<any>[], plugOrder: string[]) {
+function getSortedPlugs(plugs: Plug[], plugOrder: string[]) {
   const orderedPlugs = plugs
     .filter(
       p =>
