@@ -9,6 +9,8 @@ export {
   PluginMethodHandlers,
   PluginRecord,
   PluginSpec,
+  PluginWithEvents,
+  PluginWithMethods,
 } from 'ui-plugin';
 export { ArraySlot } from './ArraySlot';
 export { createPlugin } from './createPlugin';
