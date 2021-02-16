@@ -1,11 +1,11 @@
 import { LinkedItem } from '@skidding/linked-list';
-import * as React from 'react';
-import { Plug } from '../shared/types';
+import { Context, createContext } from 'react';
+import { Plug } from './types';
 
 type SlotContextValue = undefined | LinkedItem<Plug>;
 
 type SlotContexts = {
-  [slotName: string]: React.Context<SlotContextValue>;
+  [slotName: string]: Context<SlotContextValue>;
 };
 
 // Slots are nested, so higher-level Slots can contain lower-level Slots.
@@ -16,9 +16,8 @@ type SlotContexts = {
 const slotContexts: SlotContexts = {};
 
 export function getSlotContext(slotName: string) {
-  if (!slotContexts[slotName]) {
-    slotContexts[slotName] = React.createContext<SlotContextValue>(undefined);
-  }
+  if (!slotContexts[slotName])
+    slotContexts[slotName] = createContext<SlotContextValue>(undefined);
 
   return slotContexts[slotName];
 }

@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "2.0.0-alpha.8",
+  "version": "3.0.0-alpha.3",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
@@ -11,6 +11,8 @@
     "dist"
   ],
   "scripts": {
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "check-types": "tsc --noEmit",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
@@ -19,24 +21,24 @@
   "dependencies": {
     "@skidding/linked-list": "^1.0.2",
     "array-find-index": "^1.0.2",
-    "lodash": "^4.17.11",
-    "ui-plugin": "^2.0.0-alpha.4"
+    "lodash": "^4.17.20",
+    "ui-plugin": "^3.0.0-alpha.4"
   },
   "devDependencies": {
     "@skidding/async-retry": "^2.0.0",
-    "@types/jest": "^24.0.12",
-    "@types/lodash": "^4.14.123",
-    "@types/react": "^16.8.17",
-    "@types/react-test-renderer": "^16.8.1",
-    "@typescript-eslint/parser": "^1.7.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
-    "jest": "^24.8.0",
-    "prettier": "^1.17.0",
-    "react": "^16.8.6",
-    "react-test-renderer": "^16.8.6",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.4.5"
+    "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.168",
+    "@types/react": "^17.0.2",
+    "@types/react-test-renderer": "^17.0.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint": "^7.20.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.1.5"
   }
 }

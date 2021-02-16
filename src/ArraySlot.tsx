@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { useSlotPlugs } from '../shared/useSlotPlugs';
-import { PlugConnect } from '../shared/PlugConnect';
-import { Plug } from '../shared/types';
+import React from 'react';
+import { PlugConnect } from './PlugConnect';
+import { Plug } from './types';
+import { useSlotPlugs } from './useSlotPlugs';
 
 type Props = {
   name: string;
@@ -27,10 +27,16 @@ export function ArraySlot({ name, slotProps = {}, plugOrder = [] }: Props) {
   );
 }
 
-function getSortedPlugs(plugs: Array<Plug<any>>, plugOrder: string[]) {
+function getSortedPlugs(plugs: Plug[], plugOrder: string[]) {
   const orderedPlugs = plugs
-    .filter(p => typeof p.plugName === 'string' && plugOrder.indexOf(p.plugName) !== -1)
-    .sort((p1, p2) => plugOrder.indexOf(p1.plugName!) - plugOrder.indexOf(p2.plugName!));
+    .filter(
+      p =>
+        typeof p.plugName === 'string' && plugOrder.indexOf(p.plugName) !== -1,
+    )
+    .sort(
+      (p1, p2) =>
+        plugOrder.indexOf(p1.plugName!) - plugOrder.indexOf(p2.plugName!),
+    );
   const unorderedPlugs = plugs.filter(p => orderedPlugs.indexOf(p) === -1);
   return [...orderedPlugs, ...unorderedPlugs];
 }

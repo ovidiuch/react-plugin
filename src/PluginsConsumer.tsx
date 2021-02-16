@@ -1,12 +1,17 @@
-import * as React from 'react';
 import { isEqual } from 'lodash';
-import { enablePlugin, getPlugins, Plugin, onPluginLoad } from 'ui-plugin';
+import React, { ReactNode, useEffect, useState } from 'react';
+import {
+  enablePlugin,
+  getPlugins,
+  onPluginLoad,
+  PluginRecord,
+} from 'ui-plugin';
 
 type Props = {
   children: (props: {
-    plugins: Plugin[];
+    plugins: PluginRecord[];
     enable: (pluginName: string, enabled: boolean) => void;
-  }) => React.ReactNode;
+  }) => ReactNode;
 };
 
 export function PluginsConsumer({ children }: Props) {
@@ -17,23 +22,20 @@ export function PluginsConsumer({ children }: Props) {
     <>
       {children({
         plugins,
-        enable: (pluginName: string, enabled: boolean) => {
-          enablePlugin(pluginName, enabled);
-        },
+        enable: (pluginName: string, enabled: boolean) =>
+          enablePlugin(pluginName, enabled),
       })}
     </>
   );
 }
 
 function usePlugins() {
-  const [plugins, setPlugins] = React.useState(getPluginArray());
-  React.useEffect(
+  const [plugins, setPlugins] = useState(getPluginArray());
+  useEffect(
     () =>
       onPluginLoad(() => {
         const newPlugins = getPluginArray();
-        if (!isEqual(newPlugins, plugins)) {
-          setPlugins(newPlugins);
-        }
+        if (!isEqual(newPlugins, plugins)) setPlugins(newPlugins);
       }),
     [plugins],
   );

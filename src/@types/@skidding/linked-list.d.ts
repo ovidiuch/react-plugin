@@ -4,5 +4,7 @@ declare module '@skidding/linked-list' {
     next: () => LinkedItem<Item>;
   };
 
-  export default function createLinkedList<Item>(items: Item[]): LinkedItem<Item>;
+  export default function createLinkedList<Item>(
+    items: Item[],
+  ): LinkedItem<Item>;
 }

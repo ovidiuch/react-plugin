@@ -1,13 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { act } from 'react-test-renderer';
-import { createRenderer } from '../../testHelpers';
-import {
-  enablePlugin,
-  loadPlugins,
-  PluginsConsumer,
-  createPlugin,
-  resetPlugins,
-} from '../..';
+import { enablePlugin, loadPlugins } from 'ui-plugin';
+import { createPlugin } from '../createPlugin';
+import { PluginsConsumer } from '../PluginsConsumer';
+import { resetPlugins } from '../pluginStore';
+import { createRenderer } from '../testHelpers/createRenderer';
 
 afterEach(resetPlugins);
 

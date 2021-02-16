@@ -1,12 +1,12 @@
-import * as React from 'react';
 import createLinkedList from '@skidding/linked-list';
-import { Plug } from '../shared/types';
-import { useSlotPlugs } from '../shared/useSlotPlugs';
-import { PlugConnect } from '../shared/PlugConnect';
-import { getSlotContext } from './contexts';
+import React, { ReactNode } from 'react';
+import { PlugConnect } from './PlugConnect';
+import { getSlotContext } from './slotContexts';
+import { Plug } from './types';
+import { useSlotPlugs } from './useSlotPlugs';
 
 type Props = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   name: string;
   slotProps?: object;
 };
@@ -25,24 +25,22 @@ export function Slot({ children, name, slotProps = {} }: Props) {
         // All registered plugs for this slot have been rendered (for
         // now). More plugs for this slot can be registered later, which
         // will re-render all plugs from scratch.
-        if (!plug) {
-          return children;
-        }
+        if (!plug) return children;
 
+        const { pluginName, component } = plug;
         return (
-          <Provider value={next()}>{getPlugNode(plug, slotProps, children)}</Provider>
+          <Provider value={next()}>
+            <PlugConnect
+              pluginName={pluginName}
+              component={component}
+              slotProps={slotProps}
+            >
+              {children}
+            </PlugConnect>
+          </Provider>
         );
       }}
     </Consumer>
-  );
-}
-
-function getPlugNode(plug: Plug, slotProps: object, children?: React.ReactNode) {
-  const { pluginName, component } = plug;
-  return (
-    <PlugConnect pluginName={pluginName} component={component} slotProps={slotProps}>
-      {children}
-    </PlugConnect>
   );
 }
 

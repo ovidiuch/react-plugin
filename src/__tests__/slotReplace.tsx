@@ -1,6 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { create } from 'react-test-renderer';
-import { loadPlugins, createPlugin, resetPlugins, Slot } from '../..';
+import { loadPlugins } from 'ui-plugin';
+import { createPlugin } from '../createPlugin';
+import { resetPlugins } from '../pluginStore';
+import { Slot } from '../Slot';
 
 afterEach(resetPlugins);
 

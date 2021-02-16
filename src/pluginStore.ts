@@ -1,5 +1,5 @@
 import * as UiPlugin from 'ui-plugin';
-import { PlugComponentType, Plugs } from './shared/types';
+import { PlugComponentType, Plugs } from './types';
 
 let plugId = 0;
 let plugs: Plugs = {};
@@ -29,9 +29,7 @@ export function registerPlug({
   component,
   plugName,
 }: RegisterPlugArgs) {
-  if (!plugs[slotName]) {
-    plugs[slotName] = [];
-  }
+  if (!plugs[slotName]) plugs[slotName] = [];
 
   plugId++;
   plugs[slotName].push({

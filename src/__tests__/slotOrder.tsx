@@ -1,7 +1,9 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 import { create } from 'react-test-renderer';
 import { loadPlugins } from 'ui-plugin';
-import { createPlugin, resetPlugins, Slot } from '../..';
+import { createPlugin } from '../createPlugin';
+import { resetPlugins } from '../pluginStore';
+import { Slot } from '../Slot';
 
 afterEach(resetPlugins);
 
@@ -53,7 +55,7 @@ function registerPreviewIframe() {
 
 function registerNav() {
   const { plug, register } = createPlugin({ name: 'nav' });
-  plug('root', ({ children }: { children?: React.ReactNode }) => (
+  plug('root', ({ children }: { children?: ReactNode }) => (
     <div>
       <Nav />
       <Slot name="root">{children}</Slot>

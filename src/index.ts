@@ -1,18 +1,20 @@
 export {
-  PluginSpec,
-  Plugin,
-  PluginContext,
-  MethodHandlers,
-  EventHandlers,
   enablePlugin,
   getPluginContext,
   getPlugins,
   loadPlugins,
   onStateChange,
+  PluginContext,
+  PluginEventHandlers,
+  PluginMethodHandlers,
+  PluginRecord,
+  PluginSpec,
+  PluginWithEvents,
+  PluginWithMethods,
 } from 'ui-plugin';
-export { PlugProps, PlugComponentType, Plug } from './shared/types';
-export { createPlugin } from './createPlugin';
-export { resetPlugins } from './store';
-export { Slot } from './Slot';
 export { ArraySlot } from './ArraySlot';
+export { createPlugin } from './createPlugin';
 export { PluginsConsumer } from './PluginsConsumer';
+export { resetPlugins } from './pluginStore';
+export { Slot } from './Slot';
+export { Plug, PlugComponentType, PlugProps } from './types';
