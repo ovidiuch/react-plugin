@@ -4376,10 +4376,10 @@ typescript@^4.1.5:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
   integrity sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
 
-ui-plugin@^3.0.0-alpha.1:
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-3.0.0-alpha.1.tgz#76a29f6aa22e9542bfe71ef48c702508edd8eec3"
-  integrity sha512-eTIlzTGXV3WuWaJdUIMbc9eSoftVqBnXGeVp1jvNM4IznsXrsdcQE6Rf8a+DgWdRUHYrp3ATHcIcZfZhwkFYIQ==
+ui-plugin@^3.0.0-alpha.2:
+  version "3.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-3.0.0-alpha.2.tgz#4399facf8c592123fef152f40c2075ec7f871056"
+  integrity sha512-0H95Ev150+hr8qGSaMo+xasbtXy/QP3SW+gmJHlv19Kdhon0bv8sZa2wCPuxVcJSAlEk2/7oNLgCHmd9n88DtQ==
   dependencies:
     lodash "^4.17.20"
 
