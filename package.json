@@ -1,6 +1,6 @@
 {
   "name": "react-plugin",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-alpha.4",
   "description": "API for composable 3rd party React plugins",
   "repository": "https://github.com/skidding/react-plugin.git",
   "author": "Ovidiu Cherecheș <skidding@gmail.com>",
@@ -19,26 +19,26 @@
     "build": "rm -rf dist && yarn lint && yarn tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@skidding/linked-list": "^1.0.2",
+    "@skidding/linked-list": "^2.0.0",
     "array-find-index": "^1.0.2",
-    "lodash": "^4.17.20",
-    "ui-plugin": "^3.0.0-alpha.4"
+    "lodash": "^4.17.21",
+    "ui-plugin": "^3.0.0-alpha.5"
   },
   "devDependencies": {
-    "@skidding/async-retry": "^2.0.0",
-    "@types/jest": "^26.0.20",
-    "@types/lodash": "^4.14.168",
-    "@types/react": "^17.0.2",
+    "@skidding/async-retry": "^3.0.0",
+    "@types/jest": "^27.4.0",
+    "@types/lodash": "^4.14.178",
+    "@types/react": "^17.0.38",
     "@types/react-test-renderer": "^17.0.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "eslint": "^7.20.0",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "react": "^17.0.1",
-    "react-test-renderer": "^17.0.1",
-    "ts-jest": "^26.5.1",
-    "typescript": "^4.1.5"
+    "@typescript-eslint/parser": "^5.9.1",
+    "eslint": "^8.7.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^27.4.7",
+    "prettier": "^2.5.1",
+    "react": "^17.0.2",
+    "react-test-renderer": "^17.0.2",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.4"
   }
 }

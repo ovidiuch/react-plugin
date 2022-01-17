@@ -9,7 +9,7 @@ export type PlugProps<TSpec extends PluginSpec, TSlotProps extends {}> = {
 
 export type PlugComponentType<
   TSpec extends PluginSpec,
-  TSlotProps extends {}
+  TSlotProps extends {},
 > = ComponentType<PlugProps<TSpec, TSlotProps>>;
 
 export type Plug = {

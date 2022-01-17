@@ -1,0 +1,4 @@
+.vscode
+coverage
+dist
+package.json
