@@ -14,6 +14,7 @@ export {
 } from 'ui-plugin';
 export { ArraySlot } from './ArraySlot';
 export { createPlugin } from './createPlugin';
+export { usePlugContext } from './PlugContext';
 export { PluginsConsumer } from './PluginsConsumer';
 export { resetPlugins } from './pluginStore';
 export { Slot } from './Slot';
