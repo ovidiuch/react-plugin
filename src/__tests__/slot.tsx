@@ -3,6 +3,7 @@ import React from 'react';
 import { act, ReactTestRenderer } from 'react-test-renderer';
 import { loadPlugins, PluginContext } from 'ui-plugin';
 import { createPlugin } from '../createPlugin';
+import { usePlugContext } from '../PlugContext';
 import { resetPlugins } from '../pluginStore';
 import { Slot } from '../Slot';
 import { createRenderer } from '../testHelpers/createRenderer';
@@ -84,6 +85,38 @@ it('passes down slot props', () => {
   plug<{ age: number }>('root', ({ slotProps }) => (
     <AgeComponent age={slotProps.age} />
   ));
+  register();
+
+  loadPlugins();
+  const renderer = createRenderer(<Slot name="root" slotProps={{ age: 29 }} />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
+});
+
+it('passes down pluginContext via plug context', () => {
+  const { plug, register } = createPlugin<Test>({
+    name: 'test',
+    initialState: { age: 29 },
+  });
+  plug('root', () => {
+    const { pluginContext } = usePlugContext<Test>();
+    return <AgeComponent age={pluginContext.getState().age} />;
+  });
+  register();
+
+  loadPlugins();
+  const renderer = createRenderer(<Slot name="root" />);
+  expect(renderer.toJSON()).toMatchInlineSnapshot(`"29y old"`);
+});
+
+it('passes down slot props via plug context', () => {
+  const { plug, register } = createPlugin<Test>({
+    name: 'test',
+    initialState: { age: 28 },
+  });
+  plug<{ age: number }>('root', () => {
+    const { slotProps } = usePlugContext<Test, { age: number }>();
+    return <AgeComponent age={slotProps.age} />;
+  });
   register();
 
   loadPlugins();
