@@ -13,7 +13,7 @@ export type PlugContextValue<
 > = {
   pluginContext: PluginContext<TSpec>;
   slotProps: TSlotProps;
-} | null;
+};
 
 export type PlugComponentType<
   TSpec extends PluginSpec,
