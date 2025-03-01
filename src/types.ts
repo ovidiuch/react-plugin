@@ -7,6 +7,14 @@ export type PlugProps<TSpec extends PluginSpec, TSlotProps extends {}> = {
   slotProps: TSlotProps;
 };
 
+export type PlugContextValue<
+  TSpec extends PluginSpec,
+  TSlotProps extends {},
+> = {
+  pluginContext: PluginContext<TSpec>;
+  slotProps: TSlotProps;
+} | null;
+
 export type PlugComponentType<
   TSpec extends PluginSpec,
   TSlotProps extends {},

@@ -1,11 +1,13 @@
-import {
+import React, {
   createElement,
   ReactNode,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { getPluginContext, getPlugins, onStateChange } from 'ui-plugin';
+import { PlugContext } from './PlugContext';
 import { PlugComponentType } from './types';
 
 type Props = {
@@ -39,7 +41,16 @@ export function PlugConnect({
     return onStateChange(updatePlugProps);
   }, [updatePlugProps]);
 
-  return createElement(component, plugProps, children);
+  const contextValue = useMemo(
+    () => ({ pluginContext: getPluginContext(pluginName), slotProps }),
+    [pluginName, slotProps],
+  );
+
+  return (
+    <PlugContext.Provider value={contextValue}>
+      {createElement(component, plugProps, children)}
+    </PlugContext.Provider>
+  );
 }
 
 function getPlugProps(pluginName: string, slotProps: object) {
